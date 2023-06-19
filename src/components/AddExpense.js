@@ -1,5 +1,4 @@
 export default function AddExpense() {
-    return (
-        <div>I'm in the Add Expense</div>
-    )
+  console.log("I'm in the Add Expense");
+  return <div>I'm in the Add Expense</div>;
 }
