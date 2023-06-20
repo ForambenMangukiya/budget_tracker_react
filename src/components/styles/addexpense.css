@@ -1,0 +1,27 @@
+:root {
+    --red: #c80048;
+    --blue: #453f78;
+  
+    --gray-1: #e9e9e9;
+    --gray-2: #d9d9d9;
+    --gray-3: #b9b9b9;
+  
+    --header: linear-gradient(#c80048, #961c48);
+  
+    /* use these predefined colors by adding .. var()
+    for example color : var(--red) */
+  }
+
+  .css-cuefkz-MuiContainer-root {
+    background-color: white;
+    border: 1px dashed grey;
+    
+  }
+
+.addexp_box .css-q8hpuo-MuiFormControl-root{
+    margin-top: 1rem;
+}
+
+.addexp_box .css-1rwt2y5-MuiButtonBase-root-MuiButton-root{
+    margin-top: 1rem;
+}

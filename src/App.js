@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import "./App.css";
 import AddExpense from "./components/AddExpense";
+import AddExpense2 from "./components/AddExpense2";
 import AddIncome from "./components/AddIncome";
 import Budget from "./components/Budget";
 import Dashboard from "./components/Dashboard";
@@ -28,7 +29,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           {/* <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} /> */}
-          <Route path="/addexpense" element={<AddExpense />} />
+          <Route path="/addexpense" element={<AddExpense2 />} />
           <Route path="/addincome" element={<AddIncome />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/reports" element={<Reports />} />
