@@ -1,26 +1,30 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-// import LoadingOverlay from "react-loading-overlay";
+import { useNavigate } from  "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("null");
-  const [isLoading, setIsLoading] = useState("false");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [country_code, setCountry_code] = useState("DE");
+  const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
-    setError(null);
 
     const response = await fetch("http://localhost:8080/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, first_name, last_name }),
+      body: JSON.stringify({ email, password, first_name, last_name, country_code }),
     });
 
     const data = await response.json();
@@ -31,20 +35,34 @@ export default function Signup() {
     }
 
     if (response.ok) {
-      setTimeout(() => {
+      // setTimeout(() => {
         localStorage.setItem("token", data.token);
         setIsLoading(false);
         login(data.token);
-      }, 5000);
+      // }, 5000);
+    }
+    
+    if (data.token !== null && data.token !== undefined) {
+      navigate("/dashboard");
     }
   };
 
   return (
     <div>
-      I'm in the Registration
-      {/* <LoadingOverlay active={isLoading} spinner text="Signing up..."> */}
+      I'm in the Signup Form
+      { isLoading ? (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+      ) : (
       <form className="signup" onSubmit={handleSubmit}>
         <h3>Sign up</h3>
+        <label>Country:</label>
+        <input
+          type="text"
+          value={country_code}
+          onChange={(e) => setCountry_code(e.target.value)}
+        />
 
         <label>Firstname:</label>
         <input
@@ -76,7 +94,7 @@ export default function Signup() {
         <button>Sign up</button>
         {error && <div className="error">{error}</div>}
       </form>
-      {/* </LoadingOverlay> */}
+      )}
     </div>
   );
 }

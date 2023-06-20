@@ -1,7 +1,18 @@
+import { useJwt } from "react-jwt";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 import LinearProgress from "@mui/material/LinearProgress";
 import "./styles/dashboard.css";
 
 export default function Dashboard() {
+  const { token } = useContext(AuthContext);
+  const { decodedToken } = useJwt(token);
+
+  console.log("decodedToken", decodedToken);
+  //TODO : there is no decodedToken.name.
+  // Need to fetch from user by user object id to get the name
+
   return (
     <div>
       <div className="dash-container">
