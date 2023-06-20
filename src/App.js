@@ -13,6 +13,7 @@ import Transactions from "./components/Transactions";
 import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Menu from "./components/Menu";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -23,17 +24,22 @@ function App() {
       <Navbar />
       {/* <Landingpage /> */}
       {token ? (
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/addexpense" element={<AddExpense />} />
-          <Route path="/addincome" element={<AddIncome />} />
-          <Route path="/budget" element={<Budget />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <div>
+      
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/addexpense" element={<AddExpense />} />
+            <Route path="/addincome" element={<AddIncome />} />
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+
+          <Menu />
+        </div>
       ) : (
         <Routes>
           <Route path="/" element={<Landingpage />} />
