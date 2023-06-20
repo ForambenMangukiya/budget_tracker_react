@@ -20,9 +20,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome to PiggyBank</h1>
-      <Navbar />
-      <Landingpage />
+      {/* <h1>Welcome to PiggyBank</h1> */}
+      {/* <Navbar />
+      <Landingpage /> */}
+
       {token ? (
         <Routes>
           <Route path="/" element={<Dashboard />} />
