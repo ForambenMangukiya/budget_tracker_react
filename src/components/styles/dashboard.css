@@ -1,0 +1,73 @@
+.dash-progress {
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  padding: 1em;
+}
+
+.linear-progress {
+  margin: 1em 0;
+}
+
+.dash-h2 {
+  text-align: left;
+  color: var(--red);
+}
+.dash-expected {
+  text-align: left;
+  color: var(--gray-3);
+}
+/* 
+================0===========
+MUI styles
+=========================== */
+.MuiLinearProgress-bar1Determinate {
+  background-color: var(--red);
+  height: 50px;
+}
+/* .css-eglki6-MuiLinearProgress-root {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: 4px;
+  z-index: 0;
+  background-color: rgb(17, 33, 49);
+} */
+
+/* 
+================0===========
+Top spending
+=========================== */
+.dash-topSpending {
+  display: flex;
+  justify-content: space-between;
+}
+.dash-title {
+  text-align: left;
+}
+.dash-icon-title {
+  margin: 0;
+}
+.dash-budget-title {
+  text-align: left;
+  font-size: 16px;
+  margin: 0em;
+}
+.dash-budget {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.dash-icon {
+  width: 50px;
+  height: 50px;
+}
+.dash-budget-info {
+  color: var(--gray-3);
+  font-size: 10px;
+  margin: 0;
+}
