@@ -20,15 +20,13 @@ function App() {
 
   return (
     <div className="App">
-      {/* <h1>Welcome to PiggyBank</h1> */}
-      {/* <Navbar />
-      <Landingpage /> */}
-
+      <Navbar />
+      {/* <Landingpage /> */}
       {token ? (
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          {/* <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/addexpense" element={<AddExpense />} />
           <Route path="/addincome" element={<AddIncome />} />
           <Route path="/budget" element={<Budget />} />
@@ -38,7 +36,7 @@ function App() {
         </Routes>
       ) : (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="*" element={<Navigate to="/" />} /> */}
