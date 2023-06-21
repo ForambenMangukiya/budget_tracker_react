@@ -7,17 +7,55 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers";
 export default function AddIncome() {
-  const [category, setCatgeroy] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [deposits, setDeposits] = useState("");
-  const [savings, setSavings] = useState("");
+  const [category_name, setCatgeroy] = useState("");
+  const [tran_date, setDate] = useState(null);
+  const [tran_description, setDescription] = useState("");
+  const [tran_amount, setAmount] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [user, setUser] = useState("");
+  const handleAddIncomesChange = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch("http://localhost:8080/Transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+          category_name, // HOUSE, TRANSPORTATION
+          tran_description,
+          tran_amount,
+          tran_sign: "DR", //DR (income) or CR(expense)
+          tran_currency: "US",
+          tran_date,
+          user,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to add income");
+      }
+      setIsLoading(true);
+      setCatgeroy("");
+      setDate(null);
+      setDescription("");
+      setAmount("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handlecategoryChange = (event) => {
     setCatgeroy(event.target.value);
   };
-  const handDateChange = (event) => {
-    setDate(event.target.value);
+
+  const handleDateChange = (date) => {
+    setDate(date);
   };
 
   const handleDescriptionChange = (event) => {
@@ -28,87 +66,50 @@ export default function AddIncome() {
     setAmount(event.target.value);
   };
 
-  const handleDepositsChange = (event) => {
-    setDeposits(event.target.value);
-  };
-
-  const handleSavingsChange = (event) => {
-    setSavings(event.target.value);
-  };
-
-  const handleAddIncomesChange = (event) => {
-    setCatgeroy("");
-    setDate("");
-    setDescription("");
-    setAmount("");
-    setDeposits("");
-    setSavings("");
-  };
-  const commonStyles = {
-    bgcolor: "background.paper",
-    borderColor: "text.primary",
-    m: 1,
-    border: 1,
-    width: "5rem",
-    height: "5rem",
-  };
   return (
     <div>
       <Box className="income_container">
-        <InputLabel className="text-field-label">Choose category</InputLabel>
+        {/* <InputLabel className="text-field-label">Choose category</InputLabel> */}
 
         <TextField
           className="addincome-textfield"
           label="Choose category"
           select
-          value={category}
+          value={category_name}
           onChange={handlecategoryChange}
         >
           <MenuItem value="Salary">salary </MenuItem>
-          <MenuItem value="others"> Others</MenuItem>
+          <MenuItem value="Deposits"> Deposits</MenuItem>
+          <MenuItem value="Savings"> Savings</MenuItem>
+          <MenuItem value="Others"> Others</MenuItem>
         </TextField>
-        <InputLabel className="text-field-label">Date</InputLabel>
+        {/* <InputLabel className="text-field-label">Date</InputLabel> */}
 
-        <LocalizationProvider
-          dateAdapter={AdapterDayjs}
-          onChange={handDateChange}
-        >
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateTimePicker"]}>
-            <DateTimePicker label="Pick the date" />
+            <DateTimePicker
+              label="Pick the date"
+              value={tran_date}
+              onChange={handleDateChange}
+            />
           </DemoContainer>
         </LocalizationProvider>
 
-        <InputLabel className="text-field-label">Description </InputLabel>
+        {/* <InputLabel className="text-field-label">Description </InputLabel> */}
 
         <TextField
           className="addincome-textfield"
           label=" add Description"
-          value={description}
+          value={tran_description}
           onChange={handleDescriptionChange}
         ></TextField>
-        <InputLabel className="text-field-label">Amount </InputLabel>
+        {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
 
         <TextField
           className="addincome-textfield"
           label=" add your amount"
-          value={amount}
+          value={tran_amount}
           onChange={handleAmountChange}
-        ></TextField>
-        <InputLabel className="text-field-label">Deposites </InputLabel>
-
-        <TextField
-          className="addincome-textfield"
-          label="add your deposites"
-          value={deposits}
-          onChange={handleDepositsChange}
-        ></TextField>
-        <InputLabel className="text-field-label">Savings</InputLabel>
-
-        <TextField
-          className="addincome-textfield"
-          label="add your savings"
-          value={savings}
-          onChange={handleSavingsChange}
         ></TextField>
 
         <button className="addincome-btn " onClick={handleAddIncomesChange}>
