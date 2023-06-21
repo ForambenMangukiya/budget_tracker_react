@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Fragment } from "react";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
@@ -15,12 +15,16 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
+import { Typography } from "@mui/material";
 
 export default function Navbar() {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const location = useLocation();
+
+  console.log("Current route:", location.pathname);
 
   const handleClick = () => {
     localStorage.removeItem("token");
@@ -43,32 +47,92 @@ export default function Navbar() {
     navigate("/signup");
   };
 
+  const page = () => {
+    if (location.pathname == '/login') {
+      return 'Login'
+    }
+
+    if (location.pathname == '/signup') {
+      return 'Signup'
+    }
+
+    if (location.pathname == '/addexpense') {
+      return 'Add Expense'
+    }
+
+    if (location.pathname == '/addincome') {
+      return 'Add Income'
+    }
+
+    if (location.pathname == '/budget') {
+      return 'Planner'
+    }
+
+    if (location.pathname == '/reports') {
+      return 'Graph'
+    }
+
+    if (location.pathname == '/transactions') {
+      return 'Transactions'
+    }
+
+    if (location.pathname == '/') {
+      return 'Dashboard'
+    }
+
+    return "";
+  }
+  const currentPage = page();
+  console.log("Current page:", currentPage);
+
+  const paperStyles = {
+    // Customize the background color here
+    background: "linear-gradient(#c80048, #961c48)",
+};
+
+
   return (
-    <Container
-      maxWidth="sm"
+    <Container  
       sx={{
-        backgroundColor: "#C80048",
-        height: "100%",
-        padding: "2px",
-        display: "flex",
-        alignItems: "flex-start",
-        boxSizing: "border-box",
-      }}
+      maxWidth: "600px",
+      background: "linear-gradient(#c80048, #961c48)",
+      height: "100%",
+      padding: "35px",
+      paddingTop: "70px",
+      display: "flex",
+      justifyContent: "space-evenly",
+      boxSizing: "border-box",
+    }}
     >
+      <Box>
+        <Typography variant="h4" gutterBottom
+          component="a"
+          sx={{
+          ml: 10,
+          fontFamily: 'Inter',
+          fontWeight: 700,
+          color: '#FFFF',
+          textDecoration: 'none'
+          }}>
+          {currentPage}
+        </Typography>
+      </Box>
+  
       <Fragment>
         <Box
           sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
+
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClickAvatar}
               size="small"
-              sx={{ ml: 1 }}
+              sx={{ ml: 5 }}
               aria-controls={open ? "account-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <MenuIcon sx={{ width: 25, height: 25 }} />
+              <MenuIcon sx={{ width: 25, height: 25, color: "white" }} />
             </IconButton>
           </Tooltip>
         </Box>
@@ -80,6 +144,7 @@ export default function Navbar() {
           onClick={handleClose}
           PaperProps={{
             elevation: 0,
+            style: paperStyles,
             sx: {
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
@@ -104,39 +169,72 @@ export default function Navbar() {
               },
             },
           }}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    
+          transformOrigin={{ horizontal: "right", vertical: "top", }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom",}}
         >
           <MenuItem onClick={handleClose}>
-            <Box onClick={handleLogin}>
-              <ListItemIcon>
+            <Box onClick={handleLogin} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+              <ListItemIcon sx={{ color: '#FFFF'}}>
                 <Login />
-                .Login
               </ListItemIcon>
+              <Typography
+              sx={{
+                fontFamily: 'Inter',
+                fontWeight: 700,
+                color: '#FFFF',
+                textDecoration: 'none'
+                }}>
+                  Login
+              </Typography>
             </Box>
           </MenuItem>
 
           <Divider />
           <MenuItem onClick={handleClose}>
-            <Box onClick={handleSignup}>
-              <ListItemIcon>
+            <Box onClick={handleSignup} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+              <ListItemIcon  sx={{ color: '#FFFF'}}>
                 <PersonAdd fontSize="small" />
-                .Signup
               </ListItemIcon>
+              <Typography
+              sx={{
+                fontFamily: 'Inter',
+                fontWeight: 700,
+                color: '#FFFF',
+                textDecoration: 'none'
+                }}>
+                  Signup
+              </Typography>
             </Box>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
+          <MenuItem onClick={handleClose} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+            <ListItemIcon  sx={{ color: '#FFFF'}}>
               <Settings fontSize="small" />
-              .Settings
             </ListItemIcon>
+            <Typography
+              sx={{
+                fontFamily: 'Inter',
+                fontWeight: 700,
+                color: '#FFFF',
+                textDecoration: 'none'
+                }}>
+                  Settings
+              </Typography>
           </MenuItem>
           <MenuItem onClick={handleClose}>
-            <Box onClick={handleClick}>
-              <ListItemIcon>
+            <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+              <ListItemIcon  sx={{ color: '#FFFF'}}>
                 <Logout fontSize="small" />
-                .Logout
               </ListItemIcon>
+              <Typography
+              sx={{
+                fontFamily: 'Inter',
+                fontWeight: 700,
+                color: '#FFFF',
+                textDecoration: 'none'
+                }}>
+                  Logout
+              </Typography>
             </Box>
           </MenuItem>
         </Menu>
@@ -160,5 +258,6 @@ export default function Navbar() {
         )}
       </nav> */}
     </Container>
+  
   );
 }
