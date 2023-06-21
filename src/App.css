@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 :root {
   --red: #c80048;
   --blue: #453f78;
@@ -14,9 +16,12 @@
 
 .App {
   text-align: center;
+  min-width: 320px;
   max-width: 600px;
   min-height: 100vh;
   border: solid 2px green;
   margin: 0 auto;
+  padding: 1em;
+  font-family: "Inter", sans-serif;
   position: relative;
 }
