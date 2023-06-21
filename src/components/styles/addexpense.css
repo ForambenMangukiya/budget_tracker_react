@@ -14,6 +14,12 @@
 
   .css-cuefkz-MuiContainer-root {
     background-color: white;
+      text-align: center;
+      max-width: 600px;
+      min-height: 100vh;
+      border: solid 2px green;
+      margin: 0 auto;
+      position: relative;
   }
 
 .addexp_box .css-q8hpuo-MuiFormControl-root{
