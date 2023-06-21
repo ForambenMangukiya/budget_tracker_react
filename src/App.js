@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import "./App.css";
 import AddExpense from "./components/AddExpense";
+import AddExpense2 from "./components/AddExpense2";
 import AddIncome from "./components/AddIncome";
 import Budget from "./components/Budget";
 import Dashboard from "./components/Dashboard";
@@ -13,6 +14,7 @@ import Transactions from "./components/Transactions";
 import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Menu from "./components/Menu";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -20,24 +22,27 @@ function App() {
 
   return (
     <div className="App">
-      {/* <h1>Welcome to PiggyBank</h1>
       <Navbar />
-      <Landingpage /> */}
+      {/* <Landingpage /> */}
       {token ? (
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          {/* <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} /> */}
-          <Route path="/addexpense" element={<AddExpense />} />
-          <Route path="/addincome" element={<AddIncome />} />
-          <Route path="/budget" element={<Budget />} />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+        <div>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/addexpense" element={<AddExpense2 />} />
+            <Route path="/addincome" element={<AddIncome />} />
+            <Route path="/budget" element={<Budget />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+
+          <Menu />
+        </div>
       ) : (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Landingpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="*" element={<Navigate to="/" />} /> */}
