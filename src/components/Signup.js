@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import countryList from "./Countrylist";
-// import LoadingOverlay from "react-loading-overlay";
+import { useNavigate } from  "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -9,15 +10,17 @@ export default function Signup() {
   const [last_name, setLast_name] = useState("");
   const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("null");
-  const [isLoading, setIsLoading] = useState("false");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [country_code, setCountry_code] = useState("DE");
+  const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     setIsLoading(true);
-    setError(null);
 
     const response = await fetch("http://localhost:8080/users/signup", {
       method: "POST",
@@ -39,13 +42,21 @@ export default function Signup() {
         login(data.token);
       }, 5000);
     }
+
+    if (data.token !== null && data.token !== undefined) {
+      navigate("/dashboard");
+    }
   };
 
   return (
     <div>
-      I'm in the Registration
-      {/* <LoadingOverlay active={isLoading} spinner text="Signing up..."> */}
-      <form className="registration" onSubmit={handleSubmit}>
+      I'm in the Signup Form
+      { isLoading ? (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+      ) : (
+      <form className="signup" onSubmit={handleSubmit}>
         <h3>Sign up</h3>
 
         <label className="firstname">Firstname:</label>
