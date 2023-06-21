@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Box from '@mui/material/Box';
+import Home from './svg/IconHome';
+import Planner from './svg/IconPlanner';
+import Transactions from './svg/IconTransactions';
+import Graph from './svg/IconGraph';
+import Games from './svg/IconGame'
 
 export default function Menu() {
     const [value, setValue] = useState('home');
@@ -35,33 +37,36 @@ export default function Menu() {
 
 
     return (
+    <Box sx={{ maxWidth: "600px",}}>
         <BottomNavigation value={value} onChange={handleChange}>
         <BottomNavigationAction
-        label="Home"
+        // label="Home"
         value="home"
-        icon={<RestoreIcon />}
+        icon={<Home />}
         />
         <BottomNavigationAction
-        label="Planner"
+        // label="Planner"
         value="planner"
-        icon={<FavoriteIcon />}
+        icon={<Planner />}
         />
         <BottomNavigationAction
-        label="Transactions"
+        // label="Transactions"
         value="transactions"
-        icon={<LocationOnIcon />}
+        icon={<Transactions />}
         />
 
         <BottomNavigationAction
-        label="Graph"
+        // label="Graph"
         value="graph"
-        icon={<LocationOnIcon />}
+        icon={<Graph />}
         />
 
         <BottomNavigationAction 
-        label="Games" 
+        // label="Games" 
         value="games" 
-        icon={<FolderIcon />} />
-        </BottomNavigation>     
+        icon={<Games />} />
+        </BottomNavigation>  
+
+    </Box>
     )
 }
