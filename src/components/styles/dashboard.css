@@ -8,34 +8,68 @@
   padding: 1em;
 }
 
-.linear-progress {
+/* 
+================0===========
+MUI styles
+=========================== */
+.linear-progress-container1 .MuiLinearProgress-bar1Determinate {
+  background-color: var(--red);
+  border-radius: 1rem;
+}
+
+.linear-progress-container1 .MuiLinearProgress-determinate {
+  padding: 7px;
   margin: 1em 0;
+  background-color: var(--gray-1);
+  border-radius: 1em;
+}
+.linear-progress-container2 .MuiLinearProgress-bar1Determinate {
+  background-color: var(--blue);
+  border-radius: 1rem;
+}
+
+.linear-progress-container2 .MuiLinearProgress-determinate {
+  padding: 7px;
+  margin: 1em 0;
+  background-color: var(--gray-1);
+  border-radius: 1em;
 }
 
 .dash-h2 {
   text-align: left;
   color: var(--red);
+  margin-top: 0.5em;
 }
 .dash-expected {
   text-align: left;
   color: var(--gray-3);
+  font-size: 15px;
+  margin: 0;
 }
-/* 
-================0===========
-MUI styles
-=========================== */
-.MuiLinearProgress-bar1Determinate {
-  background-color: var(--red);
-  height: 50px;
-}
-/* .css-eglki6-MuiLinearProgress-root {
+
+.linear-progress-container1 {
   position: relative;
-  overflow: hidden;
-  display: block;
-  height: 4px;
-  z-index: 0;
-  background-color: rgb(17, 33, 49);
-} */
+}
+.linear-progress-container2 {
+  position: relative;
+}
+.progress-left {
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  z-index: 2;
+  margin: 0;
+  color: white;
+}
+.progress-right {
+  position: absolute;
+  top: 2px;
+  right: 7px;
+  z-index: 2;
+  margin: 0;
+  font-size: 10px;
+  color: var(--gray-3);
+}
 
 /* 
 ================0===========

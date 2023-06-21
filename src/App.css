@@ -16,7 +16,9 @@
 
 .App {
   text-align: center;
-  max-width: 320px;
+  min-width: 320px;
+  width: 320px;
+  max-width: 1023px;
   border: solid 2px green;
   margin: 0 auto;
   padding: 1em;

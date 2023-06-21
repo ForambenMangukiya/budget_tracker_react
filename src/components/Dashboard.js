@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 
 import LinearProgress from "@mui/material/LinearProgress";
 import "./styles/dashboard.css";
+import IconHome from "./svg/IconHome";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -18,17 +19,19 @@ export default function Dashboard() {
       <div className="dash-container">
         <div className="dash-progress">
           <p className="dash-expected">Expected savings</p>
-          <h2 className="dash-h2">1250,00</h2>
-          <LinearProgress
-            className="linear-progress"
-            variant="determinate"
-            value={40}
-          />
-          <LinearProgress
-            className="linear-progress"
-            variant="determinate"
-            value={90}
-          />
+          <h2 className="dash-h2">1250,00 €</h2>
+
+          <div className="linear-progress-container1">
+            <h6 className="progress-left">Budget</h6>
+            <span className="progress-right">amount</span>
+            <LinearProgress variant="determinate" value={50} />
+          </div>
+
+          <div className="linear-progress-container2">
+            <h6 className="progress-left">spent</h6>
+            <span className="progress-right">amount</span>
+            <LinearProgress variant="determinate" value={70} />
+          </div>
         </div>
         <div>
           <h3 className="dash-title">Top spending</h3>
@@ -59,12 +62,11 @@ export default function Dashboard() {
                 <p className="dash-budget-info">Budget 260€ / Month</p>
               </div>
             </div>
-
-            <LinearProgress
-              className="linear-progress"
-              variant="determinate"
-              value={20}
-            />
+            <div className="linear-progress-container2">
+              <h6 className="progress-left">amount</h6>
+              <span className="progress-right">amount</span>
+              <LinearProgress variant="determinate" value={60} />
+            </div>
           </div>
         </div>
       </div>
