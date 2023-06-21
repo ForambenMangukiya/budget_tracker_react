@@ -14,8 +14,6 @@
 
   .css-cuefkz-MuiContainer-root {
     background-color: white;
-    border: 1px dashed grey;
-    
   }
 
 .addexp_box .css-q8hpuo-MuiFormControl-root{
@@ -24,4 +22,8 @@
 
 .addexp_box .css-1rwt2y5-MuiButtonBase-root-MuiButton-root{
     margin-top: 1rem;
+}
+
+.addexp_box .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input {
+   
 }
