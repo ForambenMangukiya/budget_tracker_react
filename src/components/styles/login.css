@@ -1,16 +1,12 @@
-.signup-container {
+.login-container {
   text-align: left;
   max-width: 320px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
 }
-
-.firstname,
-.lastname,
-.country,
-.email,
-.password {
+.login-email,
+.login-password {
   display: flex;
   position: relative;
   width: 100%;
@@ -18,23 +14,9 @@
   margin-left: 5px;
   margin-right: 5px;
 }
-/* 
-.firstname::after,
-.lastname::after,
-.country::after,
-.email::after,
-.password::after {
-  content: ":";
-  position: absolute;
-  top: 6px;
-  right: -5px;
-} */
 
-#firstnameinput,
-#lastnameinput,
-#countryselectinput,
-#emailinput,
-#passwordinput {
+#login-emailinput,
+#login-passwordinput {
   flex: 1;
   width: 90%;
   max-width: 100%;
@@ -51,7 +33,8 @@
   margin-right: 5px;
   margin-bottom: 10px;
 }
-.signup {
+
+.login {
   width: 50%;
   max-width: 100%;
   margin: 20px auto;
@@ -68,8 +51,7 @@
   justify-content: center;
   align-items: center;
 }
-
-.backtologin {
+.backtosignup {
   display: flex;
   justify-content: center;
   width: 100%;

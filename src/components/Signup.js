@@ -1,6 +1,10 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import countryList from "./Countrylist";
+import { NavLink } from "react-router-dom";
+import React from "react";
+import "./styles/signup.css";
+
 // import LoadingOverlay from "react-loading-overlay";
 
 export default function Signup() {
@@ -42,13 +46,13 @@ export default function Signup() {
   };
 
   return (
-    <div>
+    <div className="signup-container">
       I'm in the Registration
       {/* <LoadingOverlay active={isLoading} spinner text="Signing up..."> */}
-      <form className="registration" onSubmit={handleSubmit}>
+      <form className="signup-header" onSubmit={handleSubmit}>
         <h3>Sign up</h3>
 
-        <label className="firstname">Firstname:</label>
+        <label className="firstname">First name:</label>
         <input
           id="firstnameinput"
           type="text"
@@ -57,7 +61,7 @@ export default function Signup() {
           placeholder="Please fill in this field"
         />
 
-        <label className="lastname">Lastname:</label>
+        <label className="lastname">Last name:</label>
         <input
           id="lastnameinput"
           type="text"
@@ -98,14 +102,16 @@ export default function Signup() {
 
         <label className="password">Password:</label>
         <input
-          id="psswordinput"
+          id="passwordinput"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Please fill in this field"
         />
-        <button className="signup">Sign up</button>
-        <button className="backtologin">Login</button>
+        <button className="signup">Register</button>
+        <NavLink to="/login" className="backtologin">
+          Login
+        </NavLink>
         {error && <div className="error">{error}</div>}
       </form>
       {/* </LoadingOverlay> */}

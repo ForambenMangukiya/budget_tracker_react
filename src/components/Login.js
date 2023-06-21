@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { NavLink } from "react-router-dom";
+import "./styles/login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,23 +36,30 @@ export default function Login() {
     }
   };
   return (
-    <form className="login" onSubmit={handleSubmit}>
+    <form className="login-container" onSubmit={handleSubmit}>
       <h3>Log in</h3>
-      <label>email: </label>
+      <label className="login-email">Email: </label>
       <input
+        id="login-emailinput"
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        placeholder="Please enter your Email"
       />
 
-      <label>password: </label>
+      <label className="login-password">Password: </label>
       <input
+        id="login-passwordinput"
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        placeholder="Please enter your Password"
       />
 
-      <button>Log in</button>
+      <button className="login">Login</button>
+      <NavLink to="/signup" className="backtosignup">
+        Sign Up
+      </NavLink>
       {error && <div className="error">{error}</div>}
     </form>
   );
