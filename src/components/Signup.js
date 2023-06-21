@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import countryList from "./Countrylist";
 import React from "react";
 import "./styles/signup.css";
 
@@ -12,11 +13,10 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
-  const [country, setCountry] = useState("");
+  const [country_code, setCountry_code] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [country_code, setCountry_code] = useState("DE");
   const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
@@ -29,7 +29,13 @@ export default function Signup() {
     const response = await fetch("http://localhost:8080/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, country, first_name, last_name }),
+      body: JSON.stringify({
+        email,
+        password,
+        country_code,
+        first_name,
+        last_name,
+      }),
     });
 
     const data = await response.json();
@@ -40,11 +46,11 @@ export default function Signup() {
     }
 
     if (response.ok) {
-      setTimeout(() => {
-        localStorage.setItem("token", data.token);
-        setIsLoading(false);
-        login(data.token);
-      }, 5000);
+      // setTimeout(() => {
+      localStorage.setItem("token", data.token);
+      setIsLoading(false);
+      login(data.token);
+      // }, 5000);
     }
 
     if (data.token !== null && data.token !== undefined) {
@@ -84,8 +90,8 @@ export default function Signup() {
           <label className="country">Country:</label>
           <select
             id="countryselectinput"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            value={country_code}
+            onChange={(e) => setCountry_code(e.target.value)}
           >
             <option value="countryselectinput">Select Country</option>
             <option value="US">US</option>
@@ -126,7 +132,6 @@ export default function Signup() {
           {error && <div className="error">{error}</div>}
         </form>
       )}
-      {/* </LoadingOverlay> */}
     </div>
   );
 }

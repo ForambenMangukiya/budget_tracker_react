@@ -12,6 +12,8 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -29,12 +31,16 @@ export default function Login() {
       setError(data.error);
     }
     if (response.ok) {
-      setTimeout(() => {
-        localStorage.setItem("token", data.token);
+      // setTimeout(() => {
+      localStorage.setItem("token", data.token);
+      setIsLoading(false);
+      login(data.token);
+      // }, 5000);
+    }
+    console.log("token:", data.token);
 
-        setIsLoading(false);
-        login(data.token);
-      }, 5000);
+    if (data.token !== null && data.token !== undefined) {
+      navigate("/dashboard");
     }
   };
   return (

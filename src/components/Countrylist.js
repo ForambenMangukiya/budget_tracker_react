@@ -1,3 +1,3 @@
-const countryList = ["DE", "US", "Uk"];
+const countryList = ["DE", "US", "UK"];
 
 export default countryList;
