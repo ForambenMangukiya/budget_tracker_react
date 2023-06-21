@@ -1,0 +1,107 @@
+.dash-progress {
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  padding: 1em;
+}
+
+/* 
+================0===========
+MUI styles
+=========================== */
+.linear-progress-container1 .MuiLinearProgress-bar1Determinate {
+  background-color: var(--red);
+  border-radius: 1rem;
+}
+
+.linear-progress-container1 .MuiLinearProgress-determinate {
+  padding: 7px;
+  margin: 1em 0;
+  background-color: var(--gray-1);
+  border-radius: 1em;
+}
+.linear-progress-container2 .MuiLinearProgress-bar1Determinate {
+  background-color: var(--blue);
+  border-radius: 1rem;
+}
+
+.linear-progress-container2 .MuiLinearProgress-determinate {
+  padding: 7px;
+  margin: 1em 0;
+  background-color: var(--gray-1);
+  border-radius: 1em;
+}
+
+.dash-h2 {
+  text-align: left;
+  color: var(--red);
+  margin-top: 0.5em;
+}
+.dash-expected {
+  text-align: left;
+  color: var(--gray-3);
+  font-size: 15px;
+  margin: 0;
+}
+
+.linear-progress-container1 {
+  position: relative;
+}
+.linear-progress-container2 {
+  position: relative;
+}
+.progress-left {
+  position: absolute;
+  top: 2px;
+  left: 7px;
+  z-index: 2;
+  margin: 0;
+  color: white;
+}
+.progress-right {
+  position: absolute;
+  top: 2px;
+  right: 7px;
+  z-index: 2;
+  margin: 0;
+  font-size: 10px;
+  color: var(--gray-3);
+}
+
+/* 
+================0===========
+Top spending
+=========================== */
+.dash-topSpending {
+  display: flex;
+  justify-content: space-between;
+}
+.dash-title {
+  text-align: left;
+}
+.dash-icon-title {
+  margin: 0;
+}
+.dash-budget-title {
+  text-align: left;
+  font-size: 16px;
+  margin: 0em;
+}
+.dash-budget {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+
+.dash-icon {
+  width: 50px;
+  height: 50px;
+}
+.dash-budget-info {
+  color: var(--gray-3);
+  font-size: 10px;
+  margin: 0;
+}
