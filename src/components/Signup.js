@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from  "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -51,75 +51,75 @@ export default function Signup() {
   return (
     <div>
       I'm in the Signup Form
-      { isLoading ? (
-      <Box sx={{ display: 'flex' }}>
-        <CircularProgress />
-      </Box>
+      {isLoading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
       ) : (
-      <form className="signup" onSubmit={handleSubmit}>
-        <h3>Sign up</h3>
+        <form className="signup" onSubmit={handleSubmit}>
+          <h3>Sign up</h3>
 
-        <label className="firstname">Firstname:</label>
-        <input
-          id="firstnameinput"
-          type="text"
-          value={first_name}
-          onChange={(e) => setFirst_name(e.target.value)}
-          placeholder="Please fill in this field"
-        />
+          <label className="firstname">Firstname:</label>
+          <input
+            id="firstnameinput"
+            type="text"
+            value={first_name}
+            onChange={(e) => setFirst_name(e.target.value)}
+            placeholder="Please fill in this field"
+          />
 
-        <label className="lastname">Lastname:</label>
-        <input
-          id="lastnameinput"
-          type="text"
-          value={last_name}
-          onChange={(e) => setLast_name(e.target.value)}
-          placeholder="Please fill in this field"
-        />
+          <label className="lastname">Lastname:</label>
+          <input
+            id="lastnameinput"
+            type="text"
+            value={last_name}
+            onChange={(e) => setLast_name(e.target.value)}
+            placeholder="Please fill in this field"
+          />
 
-        <label className="country">Country:</label>
-        <select
-          id="countryselectinput"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        >
-          <option value="countryselectinput">Select Country</option>
-          <option value="US">US</option>
-          <option value="DE">DE</option>
-          {countryList.map((countryCode) => {
-            if (countryCode !== "US" && countryCode !== "DE") {
-              return (
-                <option key={countryCode} value={countryCode}>
-                  {countryCode}
-                </option>
-              );
-            }
-            return null;
-          })}
-        </select>
+          <label className="country">Country:</label>
+          <select
+            id="countryselectinput"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+          >
+            <option value="countryselectinput">Select Country</option>
+            <option value="US">US</option>
+            <option value="DE">DE</option>
+            {countryList.map((countryCode) => {
+              if (countryCode !== "US" && countryCode !== "DE") {
+                return (
+                  <option key={countryCode} value={countryCode}>
+                    {countryCode}
+                  </option>
+                );
+              }
+              return null;
+            })}
+          </select>
 
-        <label className="email">Email:</label>
-        <input
-          id="emailinput"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Please fill in this field"
-        />
+          <label className="email">Email:</label>
+          <input
+            id="emailinput"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Please fill in this field"
+          />
 
-        <label className="password">Password:</label>
-        <input
-          id="psswordinput"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Please fill in this field"
-        />
-        <button className="signup">Sign up</button>
-        <button className="backtologin">Login</button>
-        {error && <div className="error">{error}</div>}
-      </form>
-      {/* </LoadingOverlay> */}
+          <label className="password">Password:</label>
+          <input
+            id="psswordinput"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Please fill in this field"
+          />
+          <button className="signup">Sign up</button>
+          <button className="backtologin">Login</button>
+          {error && <div className="error">{error}</div>}
+        </form>
+      )}
     </div>
   );
 }
