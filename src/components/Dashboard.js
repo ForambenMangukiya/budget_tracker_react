@@ -1,18 +1,48 @@
 import { useJwt } from "react-jwt";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-
 import LinearProgress from "@mui/material/LinearProgress";
 import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
+import { DataContext } from "../context/DataContext";
+import { FunctionsOutlined } from "@mui/icons-material";
+import { async } from "q";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
 
+  const { tranData, setTranData } = useContext(DataContext);
+
+  const fetchUrl = `http://localhost:8080`;
+
   console.log("decodedToken", decodedToken);
   //TODO : there is no decodedToken.name.
   // Need to fetch from user by user object id to get the name
+
+  useEffect(() => {
+    const getData = async function () {
+      try {
+        const res = await fetch("http://localhost:8080/transaction", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+        setTranData(data);
+        // setLoading(false)
+      } catch (error) {
+        console.log(error);
+        // setLoading(false);
+      }
+    };
+    if (token) {
+      getData();
+    }
+  }, [token]);
+
+  console.log(tranData);
 
   return (
     <div>
