@@ -4,17 +4,12 @@ export const DataContext = createContext();
 
 export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState();
-
-  //   useEffect(() => {
-  //     first;
-
-  //     return () => {
-  //       second;
-  //     };
-  //   }, [third]);
+  const [budgetData, setBudgetData] = useState();
 
   return (
-    <DataContext.Provider value={{ tranData, setTranData }}>
+    <DataContext.Provider
+      value={{ tranData, setTranData, budgetData, setBudgetData }}
+    >
       {props.children}
     </DataContext.Provider>
   );

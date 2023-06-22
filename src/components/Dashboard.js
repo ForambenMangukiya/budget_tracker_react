@@ -6,28 +6,32 @@ import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
 import { FunctionsOutlined } from "@mui/icons-material";
-import { async } from "q";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
 
   const { tranData, setTranData } = useContext(DataContext);
-
-  const fetchUrl = `http://localhost:8080`;
+  const { budgetData, setBudgetData } = useContext(DataContext);
 
   console.log("decodedToken", decodedToken);
+
+  const timeperiod = "3months";
   //TODO : there is no decodedToken.name.
   // Need to fetch from user by user object id to get the name
 
   useEffect(() => {
+    // getting all transactions for one user within specific period
     const getData = async function () {
       try {
-        const res = await fetch("http://localhost:8080/transaction", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `http://localhost:8080/transaction?timeperiod=${timeperiod}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await res.json();
         setTranData(data);
@@ -37,12 +41,35 @@ export default function Dashboard() {
         // setLoading(false);
       }
     };
+    // getting all budgets for one user
+    const getBudget = async function () {
+      try {
+        const res = await fetch(
+          `http://localhost:8080/users/${decodedToken._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const data = await res.json();
+        setBudgetData(data);
+        // setLoading(false)
+      } catch (error) {
+        console.log(error);
+        // setLoading(false);
+      }
+    };
     if (token) {
       getData();
+      getBudget();
     }
   }, [token]);
 
-  console.log(tranData);
+  console.log("transaction data:", tranData);
+  console.log("Budget data:", budgetData);
+  console.log("decoded token id:", decodedToken);
 
   return (
     <div>
