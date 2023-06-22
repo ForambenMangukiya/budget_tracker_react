@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import "./App.css";
 import AddExpense from "./components/AddExpense";
-import AddExpense2 from "./components/AddExpense2";
 import AddIncome from "./components/AddIncome";
 import Budget from "./components/Budget";
 import Dashboard from "./components/Dashboard";
@@ -15,6 +14,7 @@ import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Menu from "./components/Menu";
+import Client from "./plaid/Client";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -23,21 +23,20 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      {/* <Landingpage /> */}
       {token ? (
         <div>
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/addexpense" element={<AddExpense2 />} />
+            <Route path="/addexpense" element={<AddExpense />} />
             <Route path="/addincome" element={<AddIncome />} />
             <Route path="/budget" element={<Budget />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/link" element={<Client />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-
           <Menu />
         </div>
       ) : (
