@@ -19,8 +19,6 @@ import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-import { borders } from "@mui/system";
-
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
   const [tran_date, setDate] = useState(null);
