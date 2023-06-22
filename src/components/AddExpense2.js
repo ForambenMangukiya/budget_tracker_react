@@ -17,8 +17,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./styles/addexpense.css";
-import { Menu } from "@mui/material";
-import { CoPresent } from "@mui/icons-material";
 
 import { AuthContext } from "../context/AuthContext";
 
@@ -41,7 +39,6 @@ export default function AddExpense() {
       description === "" ||
       amount === ""
     ) {
-      // setError("Please fill in all the fields");
       setAlert(<Alert severity="warning">Please fill in all the fields</Alert>);
     } else {
       setIsLoading(true);
@@ -75,16 +72,11 @@ export default function AddExpense() {
             Couldn't post the transaction, take a look at the console for more
             information about the error!
           </Alert>
-          // "Couldn't post the transaction, take a look at the console for more information about the error!"
         );
         console.log("Here is the Error with more Info:", error);
       }
     }
   };
-
-  //email: '3@4.de', password: 'Pw12345!'
-
-  //Check whether the state resetting works properly after submitting
 
   return (
     <>
