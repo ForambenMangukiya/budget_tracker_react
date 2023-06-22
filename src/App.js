@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Menu from "./components/Menu";
+import Client from "./plaid/Client";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -21,10 +22,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Landingpage /> */}
+      <Navbar />
       {token ? (
         <div>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
@@ -34,6 +34,7 @@ function App() {
             <Route path="/budget" element={<Budget />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/link" element={<Client />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
           <Menu />

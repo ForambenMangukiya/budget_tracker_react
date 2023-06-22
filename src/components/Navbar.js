@@ -16,7 +16,6 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
-import Client from "../plaid/Client";
 
 export default function Navbar() {
   const { token, logout } = useContext(AuthContext);
@@ -48,10 +47,6 @@ export default function Navbar() {
     navigate("/signup");
   };
 
-  const handleLink = () => {
-    return <Client />
-  }
-
   const page = () => {
     if (location.pathname == '/login') {
       return 'Login'
@@ -81,7 +76,7 @@ export default function Navbar() {
       return 'Transactions'
     }
 
-    if (location.pathname == '/') {
+    if ( token && location.pathname == '/') {
       return 'Dashboard'
     }
 
@@ -232,7 +227,7 @@ export default function Navbar() {
 
         {token !== null && (
             <MenuItem onClick={handleClose}>
-            <Box onClick={handleLink} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+            <Box onClick={handleClose} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
                 
                 <ListItemIcon  sx={{ color: '#FFFF'}}>
                   <Settings fontSize="small" />
@@ -245,10 +240,9 @@ export default function Navbar() {
                     color: '#FFFF',
                     textDecoration: 'none'
                     }}>
-                      Link an Account
+                      Settings
                   </Typography>
               </Box>
-              <Client />
           </MenuItem>
           )}
 
