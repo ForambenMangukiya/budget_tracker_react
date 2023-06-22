@@ -22,10 +22,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
       {/* <Landingpage /> */}
       {token ? (
         <div>
+          <Navbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
@@ -37,7 +37,6 @@ function App() {
             <Route path="/transactions" element={<Transactions />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
-
           <Menu />
         </div>
       ) : (
