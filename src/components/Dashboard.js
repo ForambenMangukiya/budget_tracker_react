@@ -71,6 +71,11 @@ export default function Dashboard() {
   console.log("Budget data:", budgetData);
   console.log("decoded token id:", decodedToken);
 
+  //find all credit transactions
+  // creditTrans = tranData.filter((trans) => (trans.transign = "CR"));
+  //find all debit transactions
+  //calculate budgets
+
   return (
     <div>
       <div className="dash-container">
