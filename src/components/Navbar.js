@@ -9,8 +9,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import Login from "@mui/icons-material/Login";
-import PersonAdd from "@mui/icons-material/PersonAdd";
+// import Login from "@mui/icons-material/Login";
+// import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -39,13 +39,13 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  // const handleLogin = () => {
+  //   navigate("/login");
+  // };
 
-  const handleSignup = () => {
-    navigate("/signup");
-  };
+  // const handleSignup = () => {
+  //   navigate("/signup");
+  // };
 
   const page = () => {
     if (location.pathname == '/login') {
@@ -79,6 +79,11 @@ export default function Navbar() {
     if ( token && location.pathname == '/') {
       return 'Dashboard'
     }
+
+    if ( token && location.pathname == '/link') {
+      return 'Link Account'
+    }
+
 
     return "";
   }
@@ -173,7 +178,7 @@ export default function Navbar() {
           transformOrigin={{ horizontal: "right", vertical: "top", }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom",}}
         >
-          <MenuItem onClick={handleClose}>
+          {/* <MenuItem onClick={handleClose}>
             <Box onClick={handleLogin} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
               <ListItemIcon sx={{ color: '#FFFF'}}>
                 <Login />
@@ -188,9 +193,9 @@ export default function Navbar() {
                   Login
               </Typography>
             </Box>
-          </MenuItem>
+          </MenuItem> */}
 
-          <MenuItem onClick={handleClose}>
+          {/* <MenuItem onClick={handleClose}>
             <Box onClick={handleSignup} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
               <ListItemIcon  sx={{ color: '#FFFF'}}>
                 <PersonAdd fontSize="small" />
@@ -205,7 +210,7 @@ export default function Navbar() {
                   Signup
               </Typography>
             </Box>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem onClick={handleClose}>
             <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
               <ListItemIcon  sx={{ color: '#FFFF'}}>
