@@ -1,0 +1,34 @@
+:root {
+  --red: #c80048;
+  --blue: #453f78;
+
+  --gray-1: #e9e9e9;
+  --gray-2: #d9d9d9;
+  --gray-3: #b9b9b9;
+
+  --header: linear-gradient(#c80048, #961c48);
+
+  /* use these predefined colors by adding .. var()
+    for example color : var(--red) */
+}
+
+.container {
+  /* Add container styles if needed */
+}
+
+.transaction-item {
+  flex: 1;
+  margin-right: 15px;
+  padding: 6px 0px 6px 0px;
+}
+
+.transactions-container .transaction-div {
+  background-color: var(--gray-1);
+  border-radius: 32px;
+  margin-bottom: 15px;
+}
+/* By assigning a flexible width to each element (amount, category, date), and adding a margin to the right side, the elements will align consistently even if the content length varies.
+  
+  Make sure to update the CSS file path in the import statement according to your project structure.
+  
+  Note: This solution assumes that you have a separate CSS file (transactions.css) where you define your styles. If you don't have one, you can either create a new CSS file and import it or add the CSS styles inline using the style prop on the respective elements. */
