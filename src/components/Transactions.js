@@ -36,14 +36,14 @@ export default function Transactions() {
   const [income, setIncome] = useState(null);
   const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
-
+  //navigate
+  const navigate = useNavigate();
   //context
   const { tranData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
   console.log(tranData);
 
-  const navigate = useNavigate();
-
+  //handlers
   const handleOpen = () => {
     setOpen(true);
   };
@@ -64,6 +64,20 @@ export default function Transactions() {
     setCatgeroy(event.target.value);
   };
 
+  //Currency Format
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  let euro = Intl.NumberFormat("en-DE", {
+    style: "currency",
+    currency: "EUR",
+  });
+  let pounds = Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  });
+  //useEffect
   useEffect(() => {
     //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
   }, []);
@@ -101,7 +115,7 @@ export default function Transactions() {
                 className="transaction-item"
                 sx={{ fontWeight: "bold" }}
               >
-                {element.tran_amount}
+                {USDollar.format(element.tran_amount)}
               </Typography>
               <Typography
                 variant="p"
