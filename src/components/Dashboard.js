@@ -13,107 +13,130 @@ export default function Dashboard() {
 
   const { tranData, setTranData } = useContext(DataContext);
   const { budgetData, setBudgetData } = useContext(DataContext);
+  const { categories, setCategories } = useContext(DataContext);
+
+  const [budgetBar, setBudgetBar] = useState();
+  const [budgetSum, setBudgetSum] = useState();
+  const [spentBar, setSpentBar] = useState();
+  const [savings, setSavings] = useState();
+  const [debitTrans, setDebitTrans] = useState([]);
+  const [creditTrans, setCreditTrans] = useState([]);
+  const [incomeSum, setIncomeSum] = useState();
 
   console.log("decodedToken", decodedToken);
 
-  const timeperiod = "3months";
   //TODO : there is no decodedToken.name.
   // Need to fetch from user by user object id to get the name
 
+  //find all credit&debit transactions //DR (expense) or CR(income)
+  console.log(" trandata from Dashboard: ", tranData);
+
   useEffect(() => {
-    // getting all transactions for one user within specific period
-    const getData = async function () {
-      try {
-        const res = await fetch(
-          `http://localhost:8080/transaction?timeperiod=${timeperiod}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+    if (tranData.length > 0) {
+      setCreditTrans(tranData?.filter((trans) => trans.tran_sign === "CR"));
+      setDebitTrans(tranData?.filter((trans) => trans.tran_sign === "DR"));
 
-        const data = await res.json();
-        setTranData(data);
-        // setLoading(false)
-      } catch (error) {
-        console.log(error);
-        // setLoading(false);
-      }
-    };
-    // getting all budgets for one user
-    const getBudget = async function () {
-      try {
-        const res = await fetch(
-          `http://localhost:8080/users/${decodedToken._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+      const incomeSum = creditTrans.reduce(
+        (accumulator, currentValue) =>
+          accumulator + Number(currentValue.tran_amount),
+        0
+      );
 
-        const data = await res.json();
-        setBudgetData(data);
-        // setLoading(false)
-      } catch (error) {
-        console.log(error);
-        // setLoading(false);
-      }
-    };
-    if (token) {
-      getData();
-      getBudget();
+      const expensesSum = debitTrans.reduce(
+        (accumulator, currentValue) =>
+          accumulator + Number(currentValue.tran_amount),
+        0
+      );
+
+      //calculate budgets
+
+      const budgetSum = budgetData?.reduce(
+        (accumulator, currentValue) =>
+          accumulator + Number(currentValue.limit_amount),
+        0
+      );
+      setBudgetSum(budgetSum);
+      setIncomeSum(incomeSum);
+
+      //expected to save
+
+      setSavings(incomeSum - budgetSum);
+
+      console.log("income:", incomeSum);
+      console.log("expenses:", expensesSum);
+      console.log("budget:", budgetSum);
+
+      //graphic bars
+
+      setBudgetBar((budgetSum * 100) / incomeSum);
+      setSpentBar((expensesSum * 100) / budgetSum);
     }
-  }, [token]);
 
-  console.log("transaction data:", tranData);
-  console.log("Budget data:", budgetData);
-  console.log("decoded token id:", decodedToken);
+    //================
+    //Top Spendings
+    //================
 
-  //find all credit transactions
-  // creditTrans = tranData.filter((trans) => (trans.transign = "CR"));
-  //find all debit transactions
-  //calculate budgets
+    const groupedObjects = debitTrans.reduce((result, obj) => {
+      const { category_name, tran_amount } = obj;
+      if (!result[category_name]) {
+        result[category_name] = { name: category_name, spent: 0, limit: 0 };
+      }
+      result[category_name].spent += Number(tran_amount);
+      return result;
+    }, {});
+
+    const filteredArray = Object.values(groupedObjects);
+    const sortedArray = filteredArray.sort((a, b) => b.spent - a.spent);
+    setCategories(sortedArray);
+
+    console.log(groupedObjects);
+    console.log("sortedArray", sortedArray);
+  }, [tranData]);
+
+  console.log("savings", savings);
+
+  // const array = [
+  //   { category_name: "transport", tran_amount: 100 },
+  //   { category_name: "food", tran_amount: 200 },
+  //   { category_name: "transport", tran_amount: 420 },
+  //   { category_name: "food", tran_amount: 150 },
+  //   { category_name: "transport", tran_amount: 100 },
+  // ];
 
   return (
     <div>
       <div className="dash-container">
         <div className="dash-progress">
           <p className="dash-expected">Expected savings</p>
-          <h2 className="dash-h2">1250,00 €</h2>
+          <h2 className="dash-h2">{savings} $</h2>
 
           <div className="linear-progress-container1">
             <h6 className="progress-left">Budget</h6>
-            <span className="progress-right">amount</span>
-            <LinearProgress variant="determinate" value={50} />
+            <span className="progress-right">{incomeSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={budgetBar > 100 ? 100 : budgetBar}
+            />
           </div>
 
           <div className="linear-progress-container2">
             <h6 className="progress-left">spent</h6>
-            <span className="progress-right">amount</span>
-            <LinearProgress variant="determinate" value={70} />
+            <span className="progress-right">{budgetSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={spentBar > 100 ? 100 : spentBar}
+            />
           </div>
         </div>
         <div>
           <h3 className="dash-title">Top spending</h3>
           <div className="dash-topSpending">
-            <div>
-              <img className="dash-icon" src="../img/education.png" />
-              <p className="dash-icon-title">title</p>
-            </div>
-            <div>
-              <img className="dash-icon" src="../img/entertainment.png" />
-              <p className="dash-icon-title">title</p>
-            </div>
-            <div>
-              <img className="dash-icon" src="../img/bills.png" />
-              <p className="dash-icon-title">title</p>
-            </div>
-            <div>
-              <img className="dash-icon" src="../img/medicine.png" />
-              <p className="dash-icon-title">title</p>
-            </div>
+            {categories.map((category) => (
+              <div>
+                <img className="dash-icon" src="../img/education.png" />
+                <p className="dash-icon-title">{category.name}</p>
+              </div>
+            ))}
           </div>
           <h3 className="dash-title">Monthly Budgets</h3>
           <div className="dash-progress">
