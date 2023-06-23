@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
@@ -8,9 +9,6 @@ import ScanReceipt from "./svg/IconScanReciept";
 import LinkAccount from "./svg/IconPayWithCard";
 import ManualEntry from "./svg/IconManuallyEnter";
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { AuthContext } from "../context/AuthContext";
@@ -22,8 +20,14 @@ import {
   Alert,
   OutlinedInput,
 } from "@mui/material";
-import { DataContext } from "../context/DataContext";
 import { useContext } from "react";
+
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+
+import { DataContext } from "../context/DataContext";
+import "./styles/transactions.css";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -38,7 +42,7 @@ export default function Transactions() {
   const [category_name, setCatgeroy] = useState("");
   const { tranData, setTranData } = useContext(DataContext);
   const { token } = React.useContext(AuthContext);
-
+  console.log(tranData);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -61,38 +65,63 @@ export default function Transactions() {
   const handleCategoryChange = (event) => {
     setCatgeroy(event.target.value);
   };
-  console.log(tranData);
-
-  useEffect(() => {
-    const getData = async function () {
-      try {
-        const res = await fetch(`http://localhost:8080/transaction`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = await res.json();
-        setTranData(data);
-        // setLoading(false)
-      } catch (error) {
-        console.log(error);
-        // setLoading(false);
-      }
-      if (token) {
-        getData();
-      }
-    };
-  }, []);
 
   return (
     <Container maxWidth="sm">
       <Tabs value={transaction} onChange={handleChange} centered>
-        if (transaction === "Expenses") {}
         <Tab label="expenses" value="expenses" />
         <Tab label="income" value="income" />
       </Tabs>
-      {transaction === "expenses" && <Box> </Box>}
+
+      {transaction === "expenses" && (
+        <Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              ml: 0.5,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
+          </Box>
+
+          {tranData.map((element) => (
+            <Box
+              component="div"
+              className="transaction-div"
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+                sx={{ fontWeight: "bold" }}
+              >
+                {element.amount}
+              </Typography>
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+              >
+                {element.category}
+              </Typography>
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+              >
+                {element.date}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      )}
+
       {transaction === "income" && (
         <Box>
           <FormControl fullWidth>
@@ -112,15 +141,14 @@ export default function Transactions() {
               <MenuItem value="Others"> Others</MenuItem>
             </Select>
           </FormControl>
+
+          {tranData?.map((item) => (
+            <div key={item.id}>
+              <h5>{item.category_name}</h5>
+            </div>
+          ))}
         </Box>
       )}
-      <div>
-        {tranData?.map((item) => (
-          <div key={item.id}>
-            <h1>{item.category_name}</h1>
-          </div>
-        ))}
-      </div>
 
       <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Backdrop open={open} />
@@ -146,17 +174,3 @@ export default function Transactions() {
     </Container>
   );
 }
-//     const response = await fetch("http://localhost:8080/transaction", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         category_name,
-//         tran_description,
-//         tran_amount,
-//         tran_sign,
-//         tran_curency,
-//         tran_date,
-//       }),
-//     });
-//     const data = await response.json();
-//   };
