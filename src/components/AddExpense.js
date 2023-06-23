@@ -105,11 +105,19 @@ export default function AddExpense() {
                   onChange={(e) => setCategory(e.target.value)}
                   sx={{ textAlign: "left", borderRadius: "31px" }}
                 >
-                  <MenuItem value={"transport"}>Transport</MenuItem>
-                  <MenuItem value={"food"}>Food</MenuItem>
+                  <MenuItem value={"eduaction"}>Eduaction</MenuItem>
+                  <MenuItem value={"communication"}>Communication</MenuItem>
                   <MenuItem value={"bills"}>Bills</MenuItem>
-                  <MenuItem value={"energy"}>Energy</MenuItem>
+                  <MenuItem value={"rent"}>Rent</MenuItem>
+                  <MenuItem value={"medicine"}>Medicine</MenuItem>
                   <MenuItem value={"groceries"}>Groceries</MenuItem>
+                  <MenuItem value={"eatingOut"}>Eating Out</MenuItem>
+                  <MenuItem value={"entertainment"}>Entertainment</MenuItem>
+                  <MenuItem value={"pets"}>Pets</MenuItem>
+                  <MenuItem value={"repairs"}>Repairs</MenuItem>
+                  <MenuItem value={"work"}>Work</MenuItem>
+                  <MenuItem value={"insurance"}>Insurance</MenuItem>
+                  <MenuItem value={"others"}>Others</MenuItem>
                 </Select>
               </FormControl>
               {/*Recurrence */}
