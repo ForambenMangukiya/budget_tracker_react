@@ -1,5 +1,8 @@
+import Container from '@mui/material/Container';
 export default function Reports() {
     return (
-        <div>I'm in the Reports</div>
+        <Container maxWidth="sm">
+            I'm in the Reports
+        </Container>
     )
 }

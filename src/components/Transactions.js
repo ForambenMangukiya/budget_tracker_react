@@ -33,6 +33,12 @@ const handleActionClick = (route) => {
     handleClose();
 };
 
+const paperStyles = {
+    // Customize the background color here
+    background: "linear-gradient(#c80048, #961c48)",
+};
+
+
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     setIsLoading(true);
@@ -54,15 +60,18 @@ const handleActionClick = (route) => {
 //   };
 return (
 <Container maxWidth="sm">
-<Box sx={{ height: 330, transform: 'translateZ(0px)', flexGrow: 1 }}>
+<Box sx={{height: 330, transform: 'translateZ(0px)', flexGrow: 1,}}>
     <Backdrop open={open} />
     <SpeedDial
         ariaLabel="SpeedDial tooltip example"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        sx={{ position: 'absolute', bottom: 16, right: 16, }}
+        icon={<SpeedDialIcon sx={{color: "#FFFF"}} />}
         onClose={handleClose}
         onOpen={handleOpen}
         open={open}
+        FabProps={{
+        style: paperStyles
+        }}
     >
         {actions.map((action) => (
         <SpeedDialAction
