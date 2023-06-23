@@ -18,7 +18,7 @@ MUI styles
 }
 
 .linear-progress-container1 .MuiLinearProgress-determinate {
-  padding: 7px;
+  padding: 8px;
   margin: 1em 0;
   background-color: var(--gray-1);
   border-radius: 1em;
@@ -29,7 +29,7 @@ MUI styles
 }
 
 .linear-progress-container2 .MuiLinearProgress-determinate {
-  padding: 7px;
+  padding: 8px;
   margin: 1em 0;
   background-color: var(--gray-1);
   border-radius: 1em;
@@ -55,7 +55,7 @@ MUI styles
 }
 .progress-left {
   position: absolute;
-  top: 2px;
+  top: 3px;
   left: 7px;
   z-index: 2;
   margin: 0;
@@ -63,7 +63,7 @@ MUI styles
 }
 .progress-right {
   position: absolute;
-  top: 2px;
+  top: 4px;
   right: 7px;
   z-index: 2;
   margin: 0;
