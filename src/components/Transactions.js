@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
@@ -9,12 +8,17 @@ import Container from "@mui/material/Container";
 import ScanReceipt from "./svg/IconScanReciept";
 import LinkAccount from "./svg/IconPayWithCard";
 import ManualEntry from "./svg/IconManuallyEnter";
-
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 
+import { useState, useEffect, useContext } from "react";
+import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
+
 import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
 
 const actions = [
@@ -25,12 +29,20 @@ const actions = [
 ];
 
 export default function Transactions() {
+  //state
+  const [transaction, setTransaction] = useState("expenses");
+  const [filter, setFilter] = useState("");
+  const [category_name, setCatgeroy] = useState("");
+  const [income, setIncome] = useState(null);
+  const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
-  const [transaction, setTransaction] = useState(0);
+
+  //context
+  const { tranData } = useContext(DataContext);
+  const { token } = useContext(AuthContext);
+  console.log(tranData);
+
   const navigate = useNavigate();
-  const handleChange = (event, newValue) => {
-    setTransaction(newValue);
-  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,31 +55,37 @@ export default function Transactions() {
     navigate(route);
     handleClose();
   };
-  const sampleData = [
-    { amount: "200.00€", category: "Food", date: "13.07.2023" },
-    { amount: "50.00€", category: "Transport", date: "13.07.2023" },
-    { amount: "3000.00€", category: "Rent", date: "10.07.2023" },
-    { amount: "2.99€", category: "Food", date: "10.07.2023" },
-    { amount: "56.46€", category: "Energy", date: "09.07.2023" },
-  ];
+
+  //transactions functions
+  const handleChange = (event, newValue) => {
+    setTransaction(newValue);
+  };
+  const handleCategoryChange = (event) => {
+    setCatgeroy(event.target.value);
+  };
+
+  useEffect(() => {
+    //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
+  }, []);
   return (
     <Container maxWidth="sm" className="transactions-container">
       <Tabs value={transaction} onChange={handleChange} centered>
-        <Tab label="expenses" />
-        <Tab label="income" />
+        <Tab label="expenses" value="expenses" />
+        <Tab label="income" value="income" />
       </Tabs>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          ml: 0.5,
-        }}
-      >
-        <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
-      </Box>
-      {transaction === 0 ? (
+      {/* Expenses */}
+      {transaction === "expenses" && (
         <Box>
-          {sampleData.map((element) => (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              ml: 0.5,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
+          </Box>
+          {tranData.map((element) => (
             <Box
               component="div"
               className="transaction-div"
@@ -83,26 +101,49 @@ export default function Transactions() {
                 className="transaction-item"
                 sx={{ fontWeight: "bold" }}
               >
-                {element.amount}
+                {element.tran_amount}
               </Typography>
               <Typography
                 variant="p"
                 component="p"
                 className="transaction-item"
               >
-                {element.category}
+                {element.category_name}
               </Typography>
               <Typography
                 variant="p"
                 component="p"
                 className="transaction-item"
               >
-                {element.date}
+                {element.tran_date}
               </Typography>
             </Box>
           ))}
         </Box>
-      ) : null}
+      )}
+      {/* Income */}
+      {transaction === "income" && (
+        <Box>
+          <FormControl fullWidth>
+            <InputLabel id="category-label">Filter by Category</InputLabel>
+
+            <Select
+              required
+              className="addincome-textfield"
+              label="Filter by Category "
+              value={category_name}
+              onChange={handleCategoryChange}
+              sx={{ textAlign: "left", borderRadius: "31px" }}
+            >
+              <MenuItem value="Salary">salary </MenuItem>
+              <MenuItem value="Deposits"> Deposits</MenuItem>
+              <MenuItem value="Savings"> Savings</MenuItem>
+              <MenuItem value="Others"> Others</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      )}
+
       <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Backdrop open={open} />
         <SpeedDial
