@@ -18,7 +18,7 @@ import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 
 export default function Navbar() {
-  const { logout } = useContext(AuthContext);
+  const { token, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -76,7 +76,7 @@ export default function Navbar() {
       return 'Transactions'
     }
 
-    if (location.pathname == '/') {
+    if ( token && location.pathname == '/') {
       return 'Dashboard'
     }
 
@@ -190,7 +190,6 @@ export default function Navbar() {
             </Box>
           </MenuItem>
 
-          <Divider />
           <MenuItem onClick={handleClose}>
             <Box onClick={handleSignup} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
               <ListItemIcon  sx={{ color: '#FFFF'}}>
@@ -206,20 +205,6 @@ export default function Navbar() {
                   Signup
               </Typography>
             </Box>
-          </MenuItem>
-          <MenuItem onClick={handleClose} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-            <ListItemIcon  sx={{ color: '#FFFF'}}>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            <Typography
-              sx={{
-                fontFamily: 'Inter',
-                fontWeight: 700,
-                color: '#FFFF',
-                textDecoration: 'none'
-                }}>
-                  Settings
-              </Typography>
           </MenuItem>
           <MenuItem onClick={handleClose}>
             <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -237,6 +222,30 @@ export default function Navbar() {
               </Typography>
             </Box>
           </MenuItem>
+
+        <Divider />
+
+        {token !== null && (
+            <MenuItem onClick={handleClose}>
+            <Box onClick={handleClose} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+                
+                <ListItemIcon  sx={{ color: '#FFFF'}}>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+
+                <Typography
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontWeight: 700,
+                    color: '#FFFF',
+                    textDecoration: 'none'
+                    }}>
+                      Settings
+                  </Typography>
+              </Box>
+          </MenuItem>
+          )}
+
         </Menu>
       </Fragment>
 

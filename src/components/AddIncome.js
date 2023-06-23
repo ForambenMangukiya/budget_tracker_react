@@ -55,7 +55,7 @@ export default function AddIncome() {
           category_name, // HOUSE, TRANSPORTATION
           tran_description,
           tran_amount,
-          tran_sign: "DR", //DR (income) or CR(expense)
+          tran_sign: "CR", //DR (income) or CR(expense)
           tran_currency: "US",
           tran_date,
           user,
