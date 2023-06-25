@@ -5,6 +5,7 @@ import "./styles/login.css";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import Container from '@mui/material/Container';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -31,11 +32,11 @@ export default function Login() {
       setError(data.error);
     }
     if (response.ok) {
-      // setTimeout(() => {
+      setTimeout(() => {
       localStorage.setItem("token", data.token);
       setIsLoading(false);
       login(data.token);
-      // }, 5000);
+      }, 5000);
     }
     console.log("token:", data.token);
 
@@ -44,14 +45,14 @@ export default function Login() {
     }
   };
   return (
-    <div>
+    <Container maxWidth="sm">
       {isLoading ? (
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress />
+        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px"  }}>
+          <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
         <form className="login-container" onSubmit={handleSubmit}>
-          <h3>Log in</h3>
+    
           <label className="login-email">Email: </label>
           <input
             id="login-emailinput"
@@ -77,6 +78,6 @@ export default function Login() {
           {error && <div className="error">{error}</div>}
         </form>
       )}
-    </div>
+    </Container>
   );
 }
