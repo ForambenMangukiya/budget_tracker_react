@@ -8,7 +8,8 @@
 
 .budget_category,
 .budget_date,
-.budget_amount {
+.budget_amount,
+.budget_description {
   display: flex;
   position: relative;
   margin-bottom: 5px;
@@ -20,7 +21,8 @@
 
 #budget_select_category,
 #budget_datepick,
-#budget_amount_option {
+#budget_amount_option,
+#budget_description_input {
   flex: 1;
   width: 80%;
   height: fit-content;

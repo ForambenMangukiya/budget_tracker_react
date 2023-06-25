@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles/budget.css";
+import axios from "axios"; //last
 
-// Rest of your code
 export default function Budget() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("$");
-  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState(""); //last
 
   const handleCurrencyChange = (e) => {
     setSelectedCurrency(e.target.value);
@@ -17,9 +18,27 @@ export default function Budget() {
     setAmount(e.target.value);
   };
 
-  const handleAddExpense = () => {
-    // Add our logic here to handle the expense addition
-    console.log("Expense added");
+  // const handleAddBudget = () => {
+  //   console.log("Budget added");
+  // };
+
+  //last
+  const handleAddBudget = () => {
+    const budgetData = {
+      category_name: document.getElementById("budget_select_category").value,
+      budget_description: description,
+      limit_amount: selectedCurrency + amount,
+      budget_date: selectedDate,
+    };
+
+    axios
+      .post(" http://localhost:8080/users/:id/budget", budgetData)
+      .then((response) => {
+        console.log("Budget added");
+      })
+      .catch((error) => {
+        console.error("Error adding budget:", error);
+      });
   };
 
   return (
@@ -46,6 +65,15 @@ export default function Budget() {
           <option value="budget_energy">Energy</option>
           <option value="budget_entertainment">Entertainment</option>
         </select>
+
+        <label className="budget_description">Description:</label>
+        <input
+          id="budget_description_input"
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Please fill in this field"
+        />
 
         <label className="budget_date">Date:</label>
         <DatePicker
@@ -76,7 +104,7 @@ export default function Budget() {
             onChange={handleAmountChange}
           />
         </div>
-        <button className="Add_budget" onClick={handleAddExpense}>
+        <button className="Add_budget" onClick={handleAddBudget}>
           Add Budget
         </button>
       </div>
