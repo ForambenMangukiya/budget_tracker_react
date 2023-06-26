@@ -8,6 +8,7 @@ import Planner from './svg/IconPlanner';
 import Transactions from './svg/IconTransactions';
 import Graph from './svg/IconGraph';
 import Games from './svg/IconGame'
+import Container from '@mui/material/Container';
 
 export default function Menu() {
     const [value, setValue] = useState('home');
@@ -37,7 +38,8 @@ export default function Menu() {
 
 
     return (
-    <Box sx={{ maxWidth: "600px",}}>
+    <Box sx={{ maxWidth: "600px"  }}>
+    {/* <Box> */}
         <BottomNavigation value={value} onChange={handleChange}>
         <BottomNavigationAction
         // label="Home"
