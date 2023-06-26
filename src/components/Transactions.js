@@ -8,25 +8,17 @@ import Container from "@mui/material/Container";
 import ScanReceipt from "./svg/IconScanReciept";
 import LinkAccount from "./svg/IconPayWithCard";
 import ManualEntry from "./svg/IconManuallyEnter";
-import * as React from "react";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import { AuthContext } from "../context/AuthContext";
-import { useState, useEffect } from "react";
-import {
-  TextField,
-  MenuItem,
-  InputLabel,
-  Alert,
-  OutlinedInput,
-} from "@mui/material";
-import { useContext } from "react";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 
+import { useState, useEffect, useContext } from "react";
+import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
+
 import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
 
 const actions = [
@@ -37,13 +29,19 @@ const actions = [
 ];
 
 export default function Transactions() {
-  const [transaction, setTransaction] = React.useState("expenses");
-  const [filter, setFilter] = React.useState("");
+  //state
+  const [transaction, setTransaction] = useState("expenses");
+  const [filter, setFilter] = useState("");
   const [category_name, setCatgeroy] = useState("");
-  const { tranData, setTranData } = useContext(DataContext);
-  const { token } = React.useContext(AuthContext);
-  console.log(tranData);
+  const [income, setIncome] = useState(null);
+  const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
+
+  //context
+  const { tranData } = useContext(DataContext);
+  const { token } = useContext(AuthContext);
+  console.log(tranData);
+
   const navigate = useNavigate();
 
   const handleOpen = () => {
@@ -66,13 +64,16 @@ export default function Transactions() {
     setCatgeroy(event.target.value);
   };
 
+  useEffect(() => {
+    //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
+  }, []);
   return (
     <Container maxWidth="sm">
       <Tabs value={transaction} onChange={handleChange} centered>
         <Tab label="expenses" value="expenses" />
         <Tab label="income" value="income" />
       </Tabs>
-
+      {/* Expenses */}
       {transaction === "expenses" && (
         <Box>
           <Box
@@ -84,7 +85,6 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
-
           {tranData.map((element) => (
             <Box
               component="div"
@@ -101,27 +101,27 @@ export default function Transactions() {
                 className="transaction-item"
                 sx={{ fontWeight: "bold" }}
               >
-                {element.amount}
+                {element.tran_amount}
               </Typography>
               <Typography
                 variant="p"
                 component="p"
                 className="transaction-item"
               >
-                {element.category}
+                {element.category_name}
               </Typography>
               <Typography
                 variant="p"
                 component="p"
                 className="transaction-item"
               >
-                {element.date}
+                {element.tran_date}
               </Typography>
             </Box>
           ))}
         </Box>
       )}
-
+      {/* Income */}
       {transaction === "income" && (
         <Box>
           <FormControl fullWidth>
@@ -142,10 +142,50 @@ export default function Transactions() {
             </Select>
           </FormControl>
 
-          {tranData?.map((item) => (
-            <div key={item.id}>
-              <h5>{item.category_name}</h5>
-            </div>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              ml: 0.5,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
+          </Box>
+          {tranData.map((element) => (
+            <Box
+              component="div"
+              className="transaction-div"
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                borderRadius: "31px",
+                background: "grey",
+              }}
+            >
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+                sx={{ fontWeight: "bold" }}
+              >
+                {element.tran_amount}
+              </Typography>
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+              >
+                {element.category_name}
+              </Typography>
+              <Typography
+                variant="p"
+                component="p"
+                className="transaction-item"
+              >
+                {element.tran_date}
+              </Typography>
+            </Box>
           ))}
         </Box>
       )}
