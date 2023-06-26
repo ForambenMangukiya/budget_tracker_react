@@ -28,22 +28,23 @@ const actions = [
   { icon: <ScanReceipt />, name: "Scan", route: "/" },
 ];
 
+//Date Filtering in Transaction Component
+//Modal? OPTIONAL
+
 export default function Transactions() {
   //state
   const [transaction, setTransaction] = useState("expenses");
   const [filter, setFilter] = useState("");
-  const [category_name, setCatgeroy] = useState("");
-  const [income, setIncome] = useState(null);
-  const [expenses, setExpenses] = useState(null);
+  const [category_name, setCategory] = useState("");
   const [open, setOpen] = useState(false);
-
+  //navigate
+  const navigate = useNavigate();
   //context
   const { tranData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
-  console.log(tranData);
+  // console.log(tranData);
 
-  const navigate = useNavigate();
-
+  //handlers
   const handleOpen = () => {
     setOpen(true);
   };
@@ -61,23 +62,38 @@ export default function Transactions() {
     setTransaction(newValue);
   };
   const handleCategoryChange = (event) => {
-    setCatgeroy(event.target.value);
+    setCategory(event.target.value);
   };
-  
+
   const paperStyles = {
-      // Customize the background color here
-      background: "linear-gradient(#c80048, #961c48)",
+    // Customize the background color here
+    background: "linear-gradient(#c80048, #961c48)",
   };
 
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     setIsLoading(true);
+  //     setError(null);
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setIsLoading(true);
-//     setError(null);
+  //Currency Format
+  let USDollar = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+  let euro = Intl.NumberFormat("en-DE", {
+    style: "currency",
+    currency: "EUR",
+  });
+  let pounds = Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  });
 
+  //useEffect
   useEffect(() => {
-    //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
-  }, []);
+    //Logic for the filtering, probably a new fetch to get the filtered array from the backend
+  }, [filter]);
+
   return (
     <Container maxWidth="sm" className="transactions-container">
       <Tabs value={transaction} onChange={handleChange} centered>
@@ -96,40 +112,55 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
-          {tranData.map((element) => (
-            <Box
-              component="div"
-              className="transaction-div"
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                variant="p"
-                component="p"
-                className="transaction-item"
-                sx={{ fontWeight: "bold" }}
-              >
-                {element.tran_amount}
-              </Typography>
-              <Typography
-                variant="p"
-                component="p"
-                className="transaction-item"
-              >
-                {element.category_name}
-              </Typography>
-              <Typography
-                variant="p"
-                component="p"
-                className="transaction-item"
-              >
-                {element.tran_date}
-              </Typography>
-            </Box>
-          ))}
+          {tranData
+            .filter((element) => element.tran_sign === "DR")
+            .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
+            .map((element) => {
+              const origDate = element.tran_date;
+              const newDate = new Date(origDate);
+              const newLocalDate = newDate
+                .toLocaleDateString("en-GB") //ADD different Country code here to format it
+                .replace(/[/]/g, ".");
+
+              const capitalizedDesc = element.tran_description.replace(
+                /./,
+                (c) => c.toUpperCase()
+              );
+              return (
+                <Box
+                  component="div"
+                  className="transaction-div"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {USDollar.format(element.tran_amount)}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                  >
+                    {capitalizedDesc}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                  >
+                    {newLocalDate}
+                  </Typography>
+                </Box>
+              );
+            })}
         </Box>
       )}
       {/* Income */}
@@ -160,13 +191,13 @@ export default function Transactions() {
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
           sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon sx={{color: "#FFFF"}} />}
+          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
           FabProps={{
-            style: paperStyles
-            }}
+            style: paperStyles,
+          }}
         >
           {actions.map((action) => (
             <SpeedDialAction
