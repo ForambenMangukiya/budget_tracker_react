@@ -36,15 +36,13 @@ export default function Transactions() {
   const [transaction, setTransaction] = useState("expenses");
   const [filter, setFilter] = useState("");
   const [category_name, setCategory] = useState("");
-  const [income, setIncome] = useState(null);
-  const [expenses, setExpenses] = useState(null);
   const [open, setOpen] = useState(false);
   //navigate
   const navigate = useNavigate();
   //context
   const { tranData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
-  console.log(tranData);
+  // console.log(tranData);
 
   //handlers
   const handleOpen = () => {
@@ -93,27 +91,16 @@ export default function Transactions() {
   //useEffect
 
   useEffect(() => {
-    //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
-    if (tranData.length) {
-      const cr = tranData.filter((element) => element.tran_sign === "CR");
-      const dr = tranData.filter((element) => element.tran_sign === "DR");
-      setIncome(cr);
-      setExpenses(dr);
-    }
-  }, [tranData]);
-  useEffect(() => {
     console.log(tranData);
   }, []);
   return (
     <Container maxWidth="sm" className="transactions-container">
-      <h2>aew</h2>
       <Tabs value={transaction} onChange={handleChange} centered>
         <Tab label="expenses" value="expenses" />
         <Tab label="income" value="income" />
       </Tabs>
-      {console.log(tranData)}
       {/* Expenses */}
-      {expenses.length && transaction === "expenses" && (
+      {transaction === "expenses" && (
         <Box>
           <Box
             sx={{
@@ -124,7 +111,8 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
-          {expenses
+          {tranData
+            .filter((element) => element.tran_sign === "DR")
             .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
             .map((element) => {
               const origDate = element.tran_date;
@@ -133,10 +121,10 @@ export default function Transactions() {
                 .toLocaleDateString("en-GB") //ADD different Country code here to format it
                 .replace(/[/]/g, ".");
 
-              // const capitalizedDesc = tranData.tran_description.replace(
-              //   /^[\w]/,
-              //   $1.toUpperCase()
-              // );
+              const capitalizedDesc = element.tran_description.replace(
+                /./,
+                (c) => c.toUpperCase()
+              );
               return (
                 <Box
                   component="div"
@@ -160,7 +148,7 @@ export default function Transactions() {
                     component="p"
                     className="transaction-item"
                   >
-                    {element.tran_description}
+                    {capitalizedDesc}
                   </Typography>
                   <Typography
                     variant="p"
