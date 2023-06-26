@@ -88,11 +88,12 @@ export default function Transactions() {
     style: "currency",
     currency: "GBP",
   });
-  //useEffect
 
+  //useEffect
   useEffect(() => {
-    console.log(tranData);
-  }, []);
+    //Logic for the filtering, probably a new fetch to get the filtered array from the backend
+  }, [filter]);
+
   return (
     <Container maxWidth="sm" className="transactions-container">
       <Tabs value={transaction} onChange={handleChange} centered>
