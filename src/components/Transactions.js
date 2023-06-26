@@ -37,12 +37,14 @@ export default function Transactions() {
   const [filter, setFilter] = useState("");
   const [category_name, setCategory] = useState("");
   const [open, setOpen] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   //navigate
   const navigate = useNavigate();
   //context
-  const { tranData } = useContext(DataContext);
+  const { tranData, setTranData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
-  // console.log(tranData);
+  console.log(tranData);
 
   //handlers
   const handleOpen = () => {
@@ -89,10 +91,98 @@ export default function Transactions() {
     currency: "GBP",
   });
 
-  //useEffect
+  //useEffect for Date Filtering
   useEffect(() => {
-    //Logic for the filtering, probably a new fetch to get the filtered array from the backend
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setEndDate(today);
+    const last5Years = new Date(
+      now.getFullYear() - 5,
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setStartDate(last5Years);
+  }, []);
+
+  useEffect(() => {
+    const now = new Date();
+    if (filter === "week") {
+      const lastWeek = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() - 7
+      ).getTime();
+      setStartDate(lastWeek);
+    }
+    if (filter === "month") {
+      const lastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      ).getTime();
+      setStartDate(lastMonth);
+    }
+    if (filter === "3months") {
+      const last3Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 3,
+        now.getDate()
+      ).getTime();
+      setStartDate(last3Months);
+    }
+    if (filter === "6months") {
+      const last6Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 6,
+        now.getDate()
+      ).getTime();
+      setStartDate(last6Months);
+    }
+    if (filter === "year") {
+      const lastYear = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(lastYear);
+    }
+    if (filter === "all") {
+      const last5Years = new Date(
+        now.getFullYear() - 5,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(last5Years);
+    }
   }, [filter]);
+
+  // useEffect(() => {
+  //   //Logic for the filtering, probably a new fetch to get the filtered array from the backend
+  //   const getData = async function () {
+  //     try {
+  //       const res = await fetch(
+  //         `http://localhost:8080/transaction?timeperiod=${filter}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+
+  //       const data = await res.json();
+  //       setTranData(data);
+  //       // setLoading(false)
+  //     } catch (error) {
+  //       console.log(error);
+  //       // setLoading(false);
+  //     }
+  //   };
+  //   getData();
+  // }, [filter]);
 
   return (
     <Container maxWidth="sm" className="transactions-container">
@@ -100,6 +190,33 @@ export default function Transactions() {
         <Tab label="expenses" value="expenses" />
         <Tab label="income" value="income" />
       </Tabs>
+      {/* Filtering by Date */}
+      <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filter}
+            label="Filter"
+            onChange={(e) => setFilter(e.target.value)}
+            sx={{
+              textAlign: "left",
+              "& fieldset": {
+                borderRadius: "31px",
+              },
+            }}
+          >
+            <MenuItem value={"all"}>All</MenuItem>
+            <MenuItem value={"week"}>Last Week</MenuItem>
+            <MenuItem value={"month"}>Last Month</MenuItem>
+            <MenuItem value={"3months"}>Last 3 Months</MenuItem>
+            <MenuItem value={"6months"}>Last 6 Months</MenuItem>
+            <MenuItem value={"year"}>Last Year</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       {/* Expenses */}
       {transaction === "expenses" && (
         <Box>
@@ -113,6 +230,12 @@ export default function Transactions() {
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
           {tranData
+            .filter((element) => {
+              const tran_date_timestamp = new Date(element.tran_date).getTime();
+              return (
+                tran_date_timestamp < endDate && tran_date_timestamp > startDate
+              );
+            })
             .filter((element) => element.tran_sign === "DR")
             .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
             .map((element) => {
@@ -130,6 +253,7 @@ export default function Transactions() {
                 <Box
                   component="div"
                   className="transaction-div"
+                  key={element._id}
                   sx={{
                     display: "flex",
                     justifyContent: "space-around",
