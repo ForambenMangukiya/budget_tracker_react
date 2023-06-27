@@ -72,32 +72,6 @@ export default function Budget() {
     setAmount(e.target.value);
   };
 
-<<<<<<< HEAD
-=======
-  // const handleAddBudget = () => {
-  //   console.log("Budget added");
-  // };
-
-  //last
-  const handleAddBudget = () => {
-    const budgetData = {
-      category_name: document.getElementById("budget_select_category").value,
-      budget_description: description,
-      limit_amount: selectedCurrency + amount,
-      budget_date: selectedDate,
-    };
-
-    axios
-      .put(`http://localhost:8080/users/`, budgetData)
-      .then((response) => {
-        console.log("Budget added");
-      })
-      .catch((error) => {
-        console.error("Error adding budget:", error);
-      });
-  };
-
->>>>>>> main
   return (
     <div>
       I'm in the Budget
