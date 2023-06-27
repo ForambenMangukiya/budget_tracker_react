@@ -31,6 +31,15 @@
 //       budget_date: selectedDate,
 //     };
 
+    axios
+      .put(`http://localhost:8080/users/`, budgetData)
+      .then((response) => {
+        console.log("Budget added");
+      })
+      .catch((error) => {
+        console.error("Error adding budget:", error);
+      });
+  };
 //     axios
 //       .post(" http://localhost:8080/users/:id/budget", budgetData)
 //       .then((response) => {
@@ -96,18 +105,18 @@
 //             <option value="euro">€</option>
 //           </select>
 
-//           <input
-//             className="budget_amountinput"
-//             placeholder="Please add your amount"
-//             type="number"
-//             value={amount}
-//             onChange={handleAmountChange}
-//           />
-//         </div>
-//         <button className="Add_budget" onClick={handleAddBudget}>
-//           Add Budget
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
+          <input
+            className="budget_amountinput"
+            placeholder="Please choose currency and add amount"
+            type="number"
+            value={amount}
+            onChange={handleAmountChange}
+          />
+        </div>
+        <button className="Add_budget" onClick={handleAddBudget}>
+          Add Budget
+        </button>
+      </div>
+    </div>
+  );
+}

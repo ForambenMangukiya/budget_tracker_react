@@ -186,9 +186,23 @@ export default function Transactions() {
 
   return (
     <Container maxWidth="sm" className="transactions-container">
-      <Tabs value={transaction} onChange={handleChange} centered>
-        <Tab label="expenses" value="expenses" />
-        <Tab label="income" value="income" />
+      <Tabs
+        value={transaction}
+        onChange={handleChange}
+        centered
+        className="tabs-div"
+        sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+      >
+        <Tab
+          label="expenses"
+          value="expenses"
+          className={transaction === "expenses" ? "active tab" : "tab"}
+        />
+        <Tab
+          label="income"
+          value="income"
+          className={transaction === "income" ? "active tab" : "tab"}
+        />
       </Tabs>
       {/* Filtering by Date */}
       <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
