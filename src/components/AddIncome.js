@@ -1,11 +1,26 @@
-import { Box, TextField, MenuItem, InputLabel } from "@mui/material";
+import {
+  Box,
+  TextField,
+  MenuItem,
+  InputLabel,
+  Alert,
+  OutlinedInput,
+} from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
 import "../components/styles/addIncome.css";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers";
+import CircularProgress from "@mui/material/CircularProgress";
+import { AuthContext } from "../context/AuthContext";
+import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
   const [tran_date, setDate] = useState(null);
@@ -13,10 +28,23 @@ export default function AddIncome() {
   const [tran_amount, setAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [alert, setAlert] = useState(false);
   const [user, setUser] = useState("");
+  const { token } = React.useContext(AuthContext);
+
   const handleAddIncomesChange = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+
+    if (
+      category_name === "" ||
+      tran_date === null ||
+      tran_description === "" ||
+      tran_amount === ""
+    ) {
+      setAlert(<Alert severity="warning">Please fill all the fields !</Alert>);
+    } else {
+      setIsLoading(true);
+    }
     try {
       const response = await fetch("http://localhost:8080/Transaction", {
         method: "POST",
@@ -41,11 +69,12 @@ export default function AddIncome() {
       if (!response.ok) {
         throw new Error("Failed to add income");
       }
-      setIsLoading(true);
+      setIsLoading(false);
       setCatgeroy("");
       setDate(null);
       setDescription("");
       setAmount("");
+      setAlert(<Alert severity="success">Your expense has been saved</Alert>);
     } catch (error) {
       console.log(error);
     }
@@ -67,56 +96,92 @@ export default function AddIncome() {
   };
 
   return (
-    <div>
-      <Box className="income_container">
-        {/* <InputLabel className="text-field-label">Choose category</InputLabel> */}
-
-        <TextField
-          className="addincome-textfield"
-          label="Choose category"
-          select
-          value={category_name}
-          onChange={handlecategoryChange}
+    <Container maxWidth="sm">
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <MenuItem value="Salary">salary </MenuItem>
-          <MenuItem value="Deposits"> Deposits</MenuItem>
-          <MenuItem value="Savings"> Savings</MenuItem>
-          <MenuItem value="Others"> Others</MenuItem>
-        </TextField>
-        {/* <InputLabel className="text-field-label">Date</InputLabel> */}
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box sx={{ borderRadius: "20px" }} className="income_container">
+          <FormControl fullWidth>
+            <InputLabel id="category-label">Category</InputLabel>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DateTimePicker"]}>
-            <DateTimePicker
-              label="Pick the date"
-              value={tran_date}
-              onChange={handleDateChange}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+            <Select
+              required
+              className="addincome-textfield"
+              label="Category"
+              value={category_name}
+              onChange={handlecategoryChange}
+              sx={{ textAlign: "left", borderRadius: "31px" }}
+            >
+              <MenuItem value="Salary">salary </MenuItem>
+              <MenuItem value="Deposits"> Deposits</MenuItem>
+              <MenuItem value="Savings"> Savings</MenuItem>
+              <MenuItem value="Others"> Others</MenuItem>
+            </Select>
+          </FormControl>
+          {/* <InputLabel className="text-field-label">Date</InputLabel> */}
+          <FormControl fullWidth>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DateTimePicker"]}>
+                <DatePicker
+                  label="Date"
+                  value={tran_date}
+                  onChange={handleDateChange}
+                  sx={{
+                    borderRadius: "31px",
+                    "& fieldset": {
+                      borderRadius: "30px",
+                    },
+                  }}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </FormControl>
+          {/* <InputLabel className="text-field-label">Description </InputLabel> */}
+          <FormControl fullWidth>
+            <TextField
+              className="addincome-textfield"
+              label="Description"
+              value={tran_description}
+              onChange={handleDescriptionChange}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+              }}
+            ></TextField>
+            {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
+          </FormControl>
 
-        {/* <InputLabel className="text-field-label">Description </InputLabel> */}
-
-        <TextField
-          className="addincome-textfield"
-          label=" add Description"
-          value={tran_description}
-          onChange={handleDescriptionChange}
-        ></TextField>
-        {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
-
-        <TextField
-          className="addincome-textfield"
-          label=" add your amount"
-          value={tran_amount}
-          onChange={handleAmountChange}
-        ></TextField>
-
-        <button className="addincome-btn " onClick={handleAddIncomesChange}>
-          {" "}
-          Add{" "}
-        </button>
-      </Box>
-    </div>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
+            <OutlinedInput
+              className="addincome-textfield"
+              label=" add your amount"
+              type="number"
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
+              value={tran_amount}
+              onChange={handleAmountChange}
+              sx={{ borderRadius: "31px" }}
+            ></OutlinedInput>
+          </FormControl>
+          <button className="addincome-btn " onClick={handleAddIncomesChange}>
+            {" "}
+            Add{" "}
+          </button>
+          <Box sx={{ mt: 1 }}>{alert}</Box>
+        </Box>
+      )}
+    </Container>
   );
 }

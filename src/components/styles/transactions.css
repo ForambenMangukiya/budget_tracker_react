@@ -21,6 +21,31 @@
   margin-right: 15px;
   padding: 6px 0px 6px 0px;
 }
+.transactions-container .tabs-div {
+  border: 1px solid var(--red);
+  border-radius: 31px;
+  padding: 0rem;
+  margin: 2rem 0rem 0rem 0rem;
+}
+
+.transactions-container .tab {
+  flex: 1;
+  padding: 0rem 4rem 0rem 2rem;
+  margin: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--red);
+  font-weight: 500;
+}
+.transactions-container .active {
+  background-color: var(--red);
+  border-radius: 31px;
+  color: white;
+}
+
+.transactions-container
+  .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: white;
+}
 
 .transactions-container .transaction-div {
   background-color: var(--gray-1);
