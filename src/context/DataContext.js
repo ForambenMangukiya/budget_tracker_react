@@ -78,6 +78,7 @@ export default function DataContextProvider(props) {
         setBudgetData,
         categories,
         setCategories,
+        decodedToken,
       }}
     >
       {props.children}

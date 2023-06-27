@@ -1,14 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles/budget.css";
 import axios from "axios"; //last
+import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
+// import { useJwt } from "react-jwt";
 
 export default function Budget() {
+  const { budgetData, setBudgetData, decodedToken } = useContext(DataContext);
+  const { token } = useContext(AuthContext);
+  console.log("budgetData:", budgetData);
+  console.log("user_id:", decodedToken._id);
+  // const { decodedToken } = useJwt();
+
+  const [description, setDescription] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedCurrency, setSelectedCurrency] = useState("$");
-  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(""); //last
+  const [category_name, setCategory] = useState("");
+
+  const handleAddBudget = () => {
+    console.log("add budget clicked");
+    updateUserBudgetData();
+  };
+
+  const updateUserBudgetData = () => {
+    console.log("inside the updatefunc");
+    console.log("with token");
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+
+    const requestBody = {
+      budgets: [
+        {
+          category_name: category_name,
+          budget_description: description,
+          budget_date: selectedDate,
+          limit_amount: amount,
+        },
+      ],
+    };
+
+    console.log("requestBody", requestBody);
+    // Fetch budget data if decodedToken is available
+    axios
+      // .get(`http://localhost:8080/users/${decodedToken.id}`)
+      .put(`http://localhost:8080/users/${decodedToken._id}`, requestBody, {
+        headers,
+      })
+      .then((response) => {
+        console.log("response:", response);
+        setBudgetData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching budget data:", error);
+      });
+  };
+
+  const handlecategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
 
   const handleCurrencyChange = (e) => {
     setSelectedCurrency(e.target.value);
@@ -23,23 +77,35 @@ export default function Budget() {
   // };
 
   //last
-  const handleAddBudget = () => {
-    const budgetData = {
-      category_name: document.getElementById("budget_select_category").value,
-      budget_description: description,
-      limit_amount: selectedCurrency + amount,
-      budget_date: selectedDate,
-    };
+  // const handleAddBudget = () => {
+  //   updateUserBudgetData();
+  // const formattedDate = selectedDate
+  //   ? selectedDate.toLocaleDateString()
+  //   : null;
 
-    axios
-      .put(`http://localhost:8080/users/${id}`, budgetData)
-      .then((response) => {
-        console.log("Budget added");
-      })
-      .catch((error) => {
-        console.error("Error adding budget:", error);
-      });
-  };
+  // const newBudgetData = {
+  //   category_name: document.getElementById("budget_select_category").value,
+  //   budget_description: description,
+  //   limit_amount: selectedCurrency + amount,
+  //   budget_date: selectedDate,
+  // };
+
+  // setBudgetData(newBudgetData);
+
+  // if (decodedToken && decodedToken.id) {
+  //   axios
+  //     .put(`http://localhost:8080/users/${decodedToken._id}`, newBudgetData)
+  //     .then((response) => {
+  //       console.log("Budget added");
+
+  //       // Call a function to send email
+  //       sendEmail(budgetData);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding budget:", error);
+  //     });
+  // }
+  // };
 
   return (
     <div>
@@ -56,14 +122,18 @@ export default function Budget() {
         </select> */}
 
         <label className="budget_category">Category Name:</label>
-        <select id="budget_select_category">
+        <select
+          id="budget_select_category"
+          value={category_name}
+          onChange={handlecategoryChange}
+        >
           <option>Please choose the category</option>
-          <option value="budget_transport">Transport</option>
-          <option value="budget_groceries">Groceries</option>
-          <option value="budget_bills">Bills</option>
-          <option value="budget_food">Food</option>
-          <option value="budget_energy">Energy</option>
-          <option value="budget_entertainment">Entertainment</option>
+          <option value="transport">Transport</option>
+          <option value="groceries">Groceries</option>
+          <option value="bills">Bills</option>
+          <option value="food">Food</option>
+          <option value="energy">Energy</option>
+          <option value="entertainment">Entertainment</option>
         </select>
 
         <label className="budget_description">Description:</label>
@@ -107,6 +177,22 @@ export default function Budget() {
         <button className="Add_budget" onClick={handleAddBudget}>
           Add Budget
         </button>
+      </div>
+      <div>
+        Budget Data:
+        {budgetData && (
+          <div>
+            Category: {budgetData.category_name}
+            <br />
+            Description: {budgetData.budget_description}
+            <br />
+            Amount: {budgetData.limit_amount}
+            <br />
+            Date:{" "}
+            {budgetData.budget_date ? budgetData.budget_date.toString() : ""}
+            <br />
+          </div>
+        )}
       </div>
     </div>
   );
