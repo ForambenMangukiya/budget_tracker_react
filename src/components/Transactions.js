@@ -243,6 +243,7 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
+
           {tranData
             .filter((element) => {
               const tran_date_timestamp = new Date(element.tran_date).getTime();
@@ -304,23 +305,72 @@ export default function Transactions() {
       {/* Income */}
       {transaction === "income" && (
         <Box>
-          <FormControl fullWidth>
-            <InputLabel id="category-label">Filter by Category</InputLabel>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              ml: 0.5,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", mb: 1 }}> Earned </Typography>
+          </Box>
 
-            <Select
-              required
-              className="addincome-textfield"
-              label="Filter by Category "
-              value={category_name}
-              onChange={handleCategoryChange}
-              sx={{ textAlign: "left", borderRadius: "31px" }}
-            >
-              <MenuItem value="Salary">salary </MenuItem>
-              <MenuItem value="Deposits"> Deposits</MenuItem>
-              <MenuItem value="Savings"> Savings</MenuItem>
-              <MenuItem value="Others"> Others</MenuItem>
-            </Select>
-          </FormControl>
+          {tranData
+            .filter((element) => {
+              const tran_date_timestamp = new Date(element.tran_date).getTime();
+              return (
+                tran_date_timestamp < endDate && tran_date_timestamp > startDate
+              );
+            })
+            .filter((element) => element.tran_sign === "CR")
+            .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
+            .map((element) => {
+              const origDate = element.tran_date;
+              const newDate = new Date(origDate);
+              const newLocalDate = newDate
+                .toLocaleDateString("en-GB") //ADD different Country code here to format it
+                .replace(/[/]/g, ".");
+
+              const capitalizedDesc = element.tran_description.replace(
+                /./,
+                (c) => c.toUpperCase()
+              );
+              return (
+                <Box
+                  component="div"
+                  className="transaction-div"
+                  key={element._id}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {USDollar.format(element.tran_amount)}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                  >
+                    {capitalizedDesc}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    component="p"
+                    className="transaction-item"
+                  >
+                    {newLocalDate}
+                  </Typography>
+                </Box>
+              );
+            })}
         </Box>
       )}
 
