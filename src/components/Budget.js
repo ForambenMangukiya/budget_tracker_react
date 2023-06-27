@@ -32,7 +32,7 @@ export default function Budget() {
     };
 
     axios
-      .put(`http://localhost:8080/users/${id}`, budgetData)
+      .put(`http://localhost:8080/users/`, budgetData)
       .then((response) => {
         console.log("Budget added");
       })

@@ -22,7 +22,7 @@
   padding: 6px 0px 6px 0px;
 }
 .transactions-container .tabs-div {
-  border: 3px solid var(--red);
+  border: 1px solid var(--red);
   border-radius: 31px;
   padding: 0rem;
   margin: 2rem 0rem 0rem 0rem;
@@ -34,7 +34,7 @@
   margin: 0.2rem;
   font-size: 0.8rem;
   color: var(--red);
-  font-weight: bold;
+  font-weight: 500;
 }
 .transactions-container .active {
   background-color: var(--red);
