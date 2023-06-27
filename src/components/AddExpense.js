@@ -102,6 +102,7 @@ export default function AddExpense() {
                   id="category"
                   value={category}
                   label="Category"
+                  className="background_grey"
                   onChange={(e) => setCategory(e.target.value)}
                   sx={{ textAlign: "left", borderRadius: "31px" }}
                 >
@@ -129,6 +130,7 @@ export default function AddExpense() {
                   id="recurrence"
                   value={recurrence}
                   label="Recurrence"
+                  className="background_grey"
                   onChange={(e) => setRecurrence(e.target.value)}
                   sx={{ textAlign: "left", borderRadius: "31px" }}
                 >
@@ -142,6 +144,7 @@ export default function AddExpense() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Date"
+                    className="background_grey"
                     // inputFormat="DD/MM/YYYY"
                     value={date}
                     onChange={(selectedDate) => setDate(selectedDate)}
@@ -160,6 +163,7 @@ export default function AddExpense() {
                 <TextField
                   id="outlined-basic"
                   label="Description"
+                  className="background_grey"
                   variant="outlined"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -184,14 +188,19 @@ export default function AddExpense() {
                     <InputAdornment position="start">$</InputAdornment>
                   }
                   label="Amount"
+                  className="background_grey"
                   onChange={(e) => setAmount(e.target.value)}
                   value={amount}
                   sx={{ borderRadius: "31px" }}
                 />
               </FormControl>
               {/* Submit Button */}
-              <Button variant="outlined" onClick={handleSubmit}>
-                Add Expense
+              <Button
+                variant="outlined"
+                onClick={handleSubmit}
+                className="btn_add"
+              >
+                Add
               </Button>
               {/* Alert Message */}
               <Box sx={{ mt: 1 }}>{alert}</Box>
