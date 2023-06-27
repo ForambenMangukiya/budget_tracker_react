@@ -1,5 +1,9 @@
+import { AuthContext } from "../context/AuthContext";
+
 export default function Landingpage() {
-    return (
-        <div>I'm in the Landingpage</div>
-    )
+  return (
+    <div>
+      <h1>piggy bank </h1>
+    </div>
+  );
 }
