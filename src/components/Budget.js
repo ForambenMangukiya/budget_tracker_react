@@ -1,6 +1,11 @@
 import React from "react";
+import Container from '@mui/material/Container';
 
 // Rest of your code
 export default function Budget() {
-  return <div>I'm in the Budget</div>;
+  return (
+  <Container maxWidth="sm">
+    I'm in the Budget
+  </Container>
+  )
 }

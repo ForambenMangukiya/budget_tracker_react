@@ -64,9 +64,20 @@ export default function Transactions() {
     setCatgeroy(event.target.value);
   };
 
+  const paperStyles = {
+    // Customize the background color here
+    background: "linear-gradient(#c80048, #961c48)",
+  };
+
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     setIsLoading(true);
+  //     setError(null);
+
   useEffect(() => {
     //logic for creating two state variables once the transaction data is fetched, one for income and one for expense
   }, []);
+  console.log(typeof tranData);
   return (
     <Container maxWidth="sm">
       <Tabs value={transaction} onChange={handleChange} centered>
@@ -85,7 +96,7 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
-          {tranData.map((element) => (
+          {tranData?.map((element) => (
             <Box
               component="div"
               className="transaction-div"
@@ -151,7 +162,7 @@ export default function Transactions() {
           >
             <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
           </Box>
-          {tranData.map((element) => (
+          {tranData?.map((element) => (
             <Box
               component="div"
               className="transaction-div"
@@ -195,10 +206,13 @@ export default function Transactions() {
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
           sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon />}
+          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
+          FabProps={{
+            style: paperStyles,
+          }}
         >
           {actions.map((action) => (
             <SpeedDialAction

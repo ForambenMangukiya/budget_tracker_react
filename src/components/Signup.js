@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import countryList from "./Countrylist";
 import React from "react";
 import "./styles/signup.css";
+import Container from '@mui/material/Container';
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -59,15 +60,14 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      I'm in the Signup Form
+    <Container maxWidth="sm">
+
       {isLoading ? (
-        <Box sx={{ display: "flex" }}>
-          <CircularProgress />
+        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+          <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
         <form className="signup-container" onSubmit={handleSubmit}>
-          <h3>Sign up</h3>
 
           <label className="firstname">First name:</label>
           <input
@@ -132,6 +132,6 @@ export default function Signup() {
           {error && <div className="error">{error}</div>}
         </form>
       )}
-    </div>
+    </Container>
   );
 }

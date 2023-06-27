@@ -22,9 +22,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      
       {token ? (
         <div>
+          <Navbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
