@@ -32,7 +32,7 @@ export default function Budget() {
     };
 
     axios
-      .post(" http://localhost:8080/users/:id/budget", budgetData)
+      .put(`http://localhost:8080/users/`, budgetData)
       .then((response) => {
         console.log("Budget added");
       })
@@ -98,7 +98,7 @@ export default function Budget() {
 
           <input
             className="budget_amountinput"
-            placeholder="Please add your amount"
+            placeholder="Please choose currency and add amount"
             type="number"
             value={amount}
             onChange={handleAmountChange}
