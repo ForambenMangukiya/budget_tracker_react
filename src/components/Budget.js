@@ -72,41 +72,6 @@ export default function Budget() {
     setAmount(e.target.value);
   };
 
-  // const handleAddBudget = () => {
-  //   console.log("Budget added");
-  // };
-
-  //last
-  // const handleAddBudget = () => {
-  //   updateUserBudgetData();
-  // const formattedDate = selectedDate
-  //   ? selectedDate.toLocaleDateString()
-  //   : null;
-
-  // const newBudgetData = {
-  //   category_name: document.getElementById("budget_select_category").value,
-  //   budget_description: description,
-  //   limit_amount: selectedCurrency + amount,
-  //   budget_date: selectedDate,
-  // };
-
-  // setBudgetData(newBudgetData);
-
-  // if (decodedToken && decodedToken.id) {
-  //   axios
-  //     .put(`http://localhost:8080/users/${decodedToken._id}`, newBudgetData)
-  //     .then((response) => {
-  //       console.log("Budget added");
-
-  //       // Call a function to send email
-  //       sendEmail(budgetData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error adding budget:", error);
-  //     });
-  // }
-  // };
-
   return (
     <div>
       I'm in the Budget
