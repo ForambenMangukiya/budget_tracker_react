@@ -16,6 +16,8 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../context/AuthContext";
 import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
@@ -164,6 +166,10 @@ export default function AddIncome() {
             <OutlinedInput
               className="addincome-textfield"
               label=" add your amount"
+              type="number"
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
               value={tran_amount}
               onChange={handleAmountChange}
               sx={{ borderRadius: "31px" }}

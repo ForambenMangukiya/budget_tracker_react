@@ -44,3 +44,6 @@
   float: left;
   text-align: left;
 }
+.css-utcgeo-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: var(--gray-1);
+}
