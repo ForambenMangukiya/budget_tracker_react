@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { useJwt } from "react-jwt";
 import { AuthContext } from "../context/AuthContext";
+import { all } from "axios";
 
 export const DataContext = createContext();
 
@@ -116,6 +117,7 @@ export default function DataContextProvider(props) {
         categories,
         setCategories,
         categoriesObj,
+        decodedToken,
       }}
     >
       {props.children}

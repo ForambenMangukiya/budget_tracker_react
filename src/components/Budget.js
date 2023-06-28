@@ -1,113 +1,94 @@
+// export default function Budget() {
+//   return <div>I'm in the Budget</div>;
+// }
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./styles/budget.css";
-import axios from "axios"; //last
+import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  speedDialButton: {
+    width: 40,
+    height: 40,
+    position: "absolute",
+    left: 500,
+    top: 150,
+    backgroundColor: "#C80048",
+  },
+  customSpeedDialAction: {
+    width: 30,
+    height: 10,
+    position: "absolute",
+    left: 492,
+    top: 140,
+    backgroundColor: "#e6e6e6",
+  },
+  addBudgetText: {
+    fontSize: 12,
+    color: "black",
+  },
+}));
 
 export default function Budget() {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("$");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState(""); //last
+  const classes = useStyles();
 
-  const handleCurrencyChange = (e) => {
-    setSelectedCurrency(e.target.value);
+  const [open, setOpen] = useState(false);
+
+  const handleAddBudget = () => {
+    window.location.href = "/addbudget";
   };
-
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
-
-  // const handleAddBudget = () => {
-  //   console.log("Budget added");
+  // for on open on close
+  // const handleSpeedDialOpen = () => {
+  //   setOpen(true);
   // };
 
-  //last
-  const handleAddBudget = () => {
-    const budgetData = {
-      category_name: document.getElementById("budget_select_category").value,
-      budget_description: description,
-      limit_amount: selectedCurrency + amount,
-      budget_date: selectedDate,
-    };
+  // const handleSpeedDialClose = () => {
+  //   setOpen(false);
+  // };
 
-    axios
-      .put(`http://localhost:8080/users/`, budgetData)
-      .then((response) => {
-        console.log("Budget added");
-      })
-      .catch((error) => {
-        console.error("Error adding budget:", error);
-      });
+  //for clicking event it will appear and disappear also we have to change onlick
+  const handleSpeedDialToggle = () => {
+    setOpen(!open);
   };
 
   return (
     <div>
-      I'm in the Budget
-      <div className="budget_container">
-        {/* <label className="budget_category">Category:</label>
-        <select id="budget_category_option">
-          <option value="budget_transport">Transport</option>
-          <option value="budget_groceries">Groceries</option>
-          <option value="budget_bills">Bills</option>
-          <option value="budget_food">Food</option>
-          <option value="budget_energy">Energy</option>
-          <option value="budget_entertainment">Entertainment</option>
-        </select> */}
-
-        <label className="budget_category">Category Name:</label>
-        <select id="budget_select_category">
-          <option>Please choose the category</option>
-          <option value="budget_transport">Transport</option>
-          <option value="budget_groceries">Groceries</option>
-          <option value="budget_bills">Bills</option>
-          <option value="budget_food">Food</option>
-          <option value="budget_energy">Energy</option>
-          <option value="budget_entertainment">Entertainment</option>
-        </select>
-
-        <label className="budget_description">Description:</label>
-        <input
-          id="budget_description_input"
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Please fill in this field"
+      <SpeedDial
+        ariaLabel="SpeedDial example"
+        icon={<SpeedDialIcon />}
+        onClick={handleSpeedDialToggle}
+        open={open}
+        // onOpen={handleSpeedDialOpen}
+        // onClose={handleSpeedDialClose}
+        className={classes.speedDial}
+        FabProps={{
+          className: classes.speedDialButton,
+        }}
+      >
+        <SpeedDialAction
+          key="Add Budget"
+          icon={<AddIcon />}
+          onClick={handleAddBudget}
+          className={classes.customSpeedDialAction}
         />
+      </SpeedDial>
 
-        <label className="budget_date">Date:</label>
-        <DatePicker
-          id="budget_datepick"
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          dateFormat="yyyy-MM-dd"
-          placeholderText="YYYY-MM-DD"
-        />
-
-        <lable className="budget_amount">Amount:</lable>
-        <div id="budget_amount_option">
-          <select
-            className="budget_currency"
-            value={selectedCurrency}
-            onChange={handleCurrencyChange}
-          >
-            <option value="dollar">$</option>
-            <option value="pound">£</option>
-            <option value="euro">€</option>
-          </select>
-
-          <input
-            className="budget_amountinput"
-            placeholder="Please choose currency and add amount"
-            type="number"
-            value={amount}
-            onChange={handleAmountChange}
-          />
+      {open && (
+        <div className={classes.addBudgetContainer}>
+          <p className={classes.addBudgetText}>Add Budget</p>
         </div>
-        <button className="Add_budget" onClick={handleAddBudget}>
-          Add Budget
-        </button>
-      </div>
+      )}
+
+      {/* {open && (
+        <div>
+          <p>Add Budget</p>
+          <AddIcon />
+        </div>
+      )} */}
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
