@@ -12,6 +12,11 @@
     for example color : var(--red) */
 }
 
+/* Not necessary because navbar will be fixed
+#transactions-container-id {
+  min-height: 100%; 
+} */
+
 .container {
   /* Add container styles if needed */
 }

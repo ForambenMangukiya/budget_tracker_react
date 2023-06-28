@@ -153,81 +153,86 @@ export default function Dashboard() {
   // };
 
   return (
-    <></>
-    // <div>
-    //   <div className="dash-container">
-    //     <div className="dash-progress">
-    //       <p className="dash-expected">Expected savings</p>
-    //       <h2 className="dash-h2">{savings} $</h2>
 
-    //       <div className="linear-progress-container1">
-    //         <h6 className="progress-left">Budget</h6>
-    //         <span className="progress-right">{incomeSum} $</span>
-    //         <LinearProgress
-    //           variant="determinate"
-    //           value={budgetBar > 100 ? 100 : budgetBar}
-    //         />
-    //       </div>
 
-    //       <div className="linear-progress-container2">
-    //         <h6 className="progress-left">spent</h6>
-    //         <span className="progress-right">{budgetSum} $</span>
-    //         <LinearProgress
-    //           variant="determinate"
-    //           value={spentBar > 100 ? 100 : spentBar}
-    //         />
-    //       </div>
-    //     </div>
-    //     <Charts />
-    //     {/* <h3 className="dash-title">Top spending</h3>
-    //     <div className="dash-topSpending">
-    //       {categories.map((category) => {
-    //         const IconComponent = categoryIcons[category.name];
-    //         return (
-    //           <div>
-    //             <IconComponent />
-    //             <p className="dash-icon-title">{category.name}</p>
-    //           </div>
-    //         );
-    //       })}
-    //     </div> */}
+    <div>
+      <div className="dash-container">
+        <div className="dash-progress">
+          <p className="dash-expected">Expected savings</p>
+          <h2 className="dash-h2">{savings} $</h2>
 
-    //     <h3 className="dash-title">Monthly Budgets</h3>
-    //     <div class="swiper">
-    //       <div class="swiper-wrapper">
-    //         {budgetData?.map((each) => (
-    //           <div className="swiper-slide">
-    //             <div className="dash-budget">
-    //               {(() => {
-    //                 const Icon = categoryIcons[each.category_name];
-    //                 return <Icon />;
-    //               })()}
-    //               <div className="dash-budget-title">
-    //                 <h2 className="dash-budget-title">{each.category_name}</h2>
-    //                 <p className="dash-budget-info">
-    //                   {each.limit_amount} $ / Month
-    //                 </p>
-    //               </div>
-    //             </div>
+          <div className="linear-progress-container1">
+            <h6 className="progress-left">Budget</h6>
+            <span className="progress-right">{incomeSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={budgetBar > 100 ? 100 : budgetBar}
+            />
+          </div>
 
-    //             <div className="linear-progress-container2">
-    //               <h6 className="progress-left">
-    //                 {categoriesObj?.hasOwnProperty(each.category_name)
-    //                   ? `${categoriesObj[each.category_name].spent} $`
-    //                   : "0 $"}
-    //               </h6>
-    //               <span className="progress-right">{each.limit_amount} $</span>
-    //               <LinearProgress variant="determinate" value={60} />
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
+          <div className="linear-progress-container2">
+            <h6 className="progress-left">spent</h6>
+            <span className="progress-right">{budgetSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={spentBar > 100 ? 100 : spentBar}
+            />
+          </div>
+        </div>
+        <Charts />
+        {/* <h3 className="dash-title">Top spending</h3>
+        <div className="dash-topSpending">
+          {categories.map((category) => {
+            const IconComponent = categoryIcons[category.name];
+            return (
+              <div>
+                <IconComponent />
+                <p className="dash-icon-title">{category.name}</p>
+              </div>
+            );
+          })}
+        </div> */}
 
-    //       <div class="swiper-pagination"></div>
+        <h3 className="dash-title">Monthly Budgets</h3>
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            {budgetData?.map((each) => (
+              <div className="swiper-slide">
+                <div className="dash-budget">
 
-    //       <div class="swiper-scrollbar"></div>
-    //     </div>
-    //   </div>
-    // </div>
+                  {/* {(() => {
+                    const Icon = categoryIcons[each.category_name];
+                    return <Icon />;
+                  })()} */}
+
+                  <div className="dash-budget-title">
+                    <h2 className="dash-budget-title">{each.category_name}</h2>
+                    <p className="dash-budget-info">
+                      {Number(each.limit_amount) - Number(each.spent)} $
+                      remaining
+                    </p>
+                  </div>
+                </div>
+
+                <div className="linear-progress-container2">
+                  <h6 className="progress-left">
+                    {categoriesObj?.hasOwnProperty(each.category_name)
+                      ? `${categoriesObj[each.category_name].spent} $`
+                      : "0 $"}
+                  </h6>
+                  <span className="progress-right">{each.limit_amount} $</span>
+                  <LinearProgress variant="determinate" value={60} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="swiper-pagination"></div>
+
+          <div class="swiper-scrollbar"></div>
+        </div>
+      </div>
+    </div>
+
   );
 }
