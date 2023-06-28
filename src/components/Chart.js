@@ -152,7 +152,7 @@ export default function Charts() {
             fill="#8884d8"
             dataKey="spent"
             innerRadius={30}
-            paddingAngle={2}
+            paddingAngle={1}
             legendType="circle"
           >
             {categories?.map((entry, index) => (
