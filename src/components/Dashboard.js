@@ -197,17 +197,17 @@ export default function Dashboard() {
             {budgetData?.map((each) => (
               <div className="swiper-slide">
                 <div className="dash-budget">
-                  {(() => {
-                    const nameCat = each;
-                    console.log("nameCat:", nameCat);
-                    const Icon = categoryIcons[each.category_name];
 
-                    // return <Icon />;
-                  })()}
+                  {/* {(() => {
+                    const Icon = categoryIcons[each.category_name];
+                    return <Icon />;
+                  })()} */}
+
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
-                      {each.limit_amount} $ / Month
+                      {Number(each.limit_amount) - Number(each.spent)} $
+                      remaining
                     </p>
                   </div>
                 </div>
