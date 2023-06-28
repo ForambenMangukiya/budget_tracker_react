@@ -12,9 +12,11 @@
   /* use these predefined colors by adding .. var()
     for example color : var(--red) */
 }
+
+/* Not necessary because navbar will be fixed
 #transactions-container-id {
-  min-height: 100%;
-}
+  min-height: 100%; 
+} */
 
 .css-cuefkz-MuiContainer-root {
   background-color: white;
