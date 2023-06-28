@@ -82,8 +82,6 @@ export default function Dashboard() {
   // setCreditTrans(creditTrans);
   const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
   // setDebitTrans(debitTrans);
-  console.log("credit transactions", creditTrans);
-  console.log("debit transactions", debitTrans);
 
   const incomeSum = creditTrans.reduce(
     (accumulator, currentValue) =>
@@ -129,10 +127,11 @@ export default function Dashboard() {
   // setCategories(sortedArray);
 
   //console.logs
-  console.log("tranData", tranData);
-  console.log("categories", categories);
-  console.log("savings", savings);
-  console.log("budgetData", budgetData);
+  // console.log("tranData", tranData);
+  // console.log("categories", categories);
+  // console.log("categoriesObj", categoriesObj);
+  // console.log("savings", savings);
+  // console.log("budgetData", budgetData);
 
   const categoryIcons = {
     bills: IconBills,
@@ -150,6 +149,7 @@ export default function Dashboard() {
     transport: IconTransportation,
     work: IconWork,
     food: IconEatingOut,
+    others: IconOthers,
   };
 
   return (
@@ -192,15 +192,19 @@ export default function Dashboard() {
         </div> */}
 
         <h3 className="dash-title">Monthly Budgets</h3>
-        <div class="swiper">
-          <div class="swiper-wrapper">
+        <div className="swiper">
+          <div className="swiper-wrapper">
             {budgetData?.map((each) => (
               <div className="swiper-slide">
                 <div className="dash-budget">
-                  {/* {(() => {
-                    const Icon = categoryIcons[each.category_name];
+                  {(() => {
+                    const Icon =
+                      categoryIcons[
+                        each.category_name ? each.category_name : "others"
+                      ];
+
                     return <Icon />;
-                  })()} */}
+                  })()}
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
@@ -217,7 +221,16 @@ export default function Dashboard() {
                       : "0 $"}
                   </h6>
                   <span className="progress-right">{each.limit_amount} $</span>
-                  <LinearProgress variant="determinate" value={60} />
+                  <LinearProgress
+                    variant="determinate"
+                    value={40}
+                    // value={
+                    //   categoriesObj.name === each.category_name
+                    //     ? ((categoriesObj.limit - categoriesObj.spent) * 100) /
+                    //       categoriesObj.spent
+                    //     : 100
+                    // }
+                  />
                 </div>
               </div>
             ))}
