@@ -1,164 +1,94 @@
-import React, { useState, useContext, useEffect } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./styles/budget.css";
-import axios from "axios"; //last
-import { DataContext } from "../context/DataContext";
-import { AuthContext } from "../context/AuthContext";
-// import { useJwt } from "react-jwt";
+// export default function Budget() {
+//   return <div>I'm in the Budget</div>;
+// }
+import React, { useState } from "react";
+import { SpeedDial, SpeedDialIcon, SpeedDialAction } from "@material-ui/lab";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  speedDialButton: {
+    width: 40,
+    height: 40,
+    position: "absolute",
+    left: 500,
+    top: 150,
+    backgroundColor: "#C80048",
+  },
+  customSpeedDialAction: {
+    width: 30,
+    height: 10,
+    position: "absolute",
+    left: 492,
+    top: 140,
+    backgroundColor: "#e6e6e6",
+  },
+  addBudgetText: {
+    fontSize: 12,
+    color: "black",
+  },
+}));
 
 export default function Budget() {
-  const { budgetData, setBudgetData, decodedToken } = useContext(DataContext);
-  const { token } = useContext(AuthContext);
-  console.log("budgetData:", budgetData);
-  console.log("user_id:", decodedToken._id);
-  // const { decodedToken } = useJwt();
+  const classes = useStyles();
 
-  const [description, setDescription] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedCurrency, setSelectedCurrency] = useState("$");
-  const [amount, setAmount] = useState(""); //last
-  const [category_name, setCategory] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleAddBudget = () => {
-    console.log("add budget clicked");
-    updateUserBudgetData();
+    window.location.href = "/addbudget";
   };
+  // for on open on close
+  // const handleSpeedDialOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const updateUserBudgetData = () => {
-    console.log("inside the updatefunc");
-    console.log("with token");
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+  // const handleSpeedDialClose = () => {
+  //   setOpen(false);
+  // };
 
-    const requestBody = {
-      budgets: [
-        {
-          category_name: category_name,
-          budget_description: description,
-          budget_date: selectedDate,
-          limit_amount: amount,
-        },
-      ],
-    };
-
-    console.log("requestBody", requestBody);
-    // Fetch budget data if decodedToken is available
-    axios
-      // .get(`http://localhost:8080/users/${decodedToken.id}`)
-      .put(`http://localhost:8080/users/${decodedToken._id}`, requestBody, {
-        headers,
-      })
-      .then((response) => {
-        console.log("response:", response);
-        setBudgetData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching budget data:", error);
-      });
-  };
-
-  const handlecategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleCurrencyChange = (e) => {
-    setSelectedCurrency(e.target.value);
-  };
-
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
+  //for clicking event it will appear and disappear also we have to change onlick
+  const handleSpeedDialToggle = () => {
+    setOpen(!open);
   };
 
   return (
     <div>
-      I'm in the Budget
-      <div className="budget_container">
-        {/* <label className="budget_category">Category:</label>
-        <select id="budget_category_option">
-          <option value="budget_transport">Transport</option>
-          <option value="budget_groceries">Groceries</option>
-          <option value="budget_bills">Bills</option>
-          <option value="budget_food">Food</option>
-          <option value="budget_energy">Energy</option>
-          <option value="budget_entertainment">Entertainment</option>
-        </select> */}
-
-        <label className="budget_category">Category Name:</label>
-        <select
-          id="budget_select_category"
-          value={category_name}
-          onChange={handlecategoryChange}
-        >
-          <option>Please choose the category</option>
-          <option value="transport">Transport</option>
-          <option value="groceries">Groceries</option>
-          <option value="bills">Bills</option>
-          <option value="food">Food</option>
-          <option value="energy">Energy</option>
-          <option value="entertainment">Entertainment</option>
-        </select>
-
-        <label className="budget_description">Description:</label>
-        <input
-          id="budget_description_input"
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Please fill in this field"
+      <SpeedDial
+        ariaLabel="SpeedDial example"
+        icon={<SpeedDialIcon />}
+        onClick={handleSpeedDialToggle}
+        open={open}
+        // onOpen={handleSpeedDialOpen}
+        // onClose={handleSpeedDialClose}
+        className={classes.speedDial}
+        FabProps={{
+          className: classes.speedDialButton,
+        }}
+      >
+        <SpeedDialAction
+          key="Add Budget"
+          icon={<AddIcon />}
+          onClick={handleAddBudget}
+          className={classes.customSpeedDialAction}
         />
+      </SpeedDial>
 
-        <label className="budget_date">Date:</label>
-        <DatePicker
-          id="budget_datepick"
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          dateFormat="yyyy-MM-dd"
-          placeholderText="YYYY-MM-DD"
-        />
-
-        <lable className="budget_amount">Amount:</lable>
-        <div id="budget_amount_option">
-          <select
-            className="budget_currency"
-            value={selectedCurrency}
-            onChange={handleCurrencyChange}
-          >
-            <option value="dollar">$</option>
-            <option value="pound">£</option>
-            <option value="euro">€</option>
-          </select>
-
-          <input
-            className="budget_amountinput"
-            placeholder="Please choose currency and add amount"
-            type="number"
-            value={amount}
-            onChange={handleAmountChange}
-          />
+      {open && (
+        <div className={classes.addBudgetContainer}>
+          <p className={classes.addBudgetText}>Add Budget</p>
         </div>
-        <button className="Add_budget" onClick={handleAddBudget}>
-          Add Budget
-        </button>
-      </div>
-      <div>
-        Budget Data:
-        {budgetData && (
-          <div>
-            Category: {budgetData.category_name}
-            <br />
-            Description: {budgetData.budget_description}
-            <br />
-            Amount: {budgetData.limit_amount}
-            <br />
-            Date:{" "}
-            {budgetData.budget_date ? budgetData.budget_date.toString() : ""}
-            <br />
-          </div>
-        )}
-      </div>
+      )}
+
+      {/* {open && (
+        <div>
+          <p>Add Budget</p>
+          <AddIcon />
+        </div>
+      )} */}
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
