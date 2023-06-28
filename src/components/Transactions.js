@@ -190,7 +190,7 @@ export default function Transactions() {
       id="transactions-container-id"
       className="transactions-container"
     >
-      <Box sx={{ height: 1300, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Tabs
           value={transaction}
           onChange={handleChange}
