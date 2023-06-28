@@ -12,6 +12,9 @@
   /* use these predefined colors by adding .. var()
     for example color : var(--red) */
 }
+#transactions-container-id {
+  min-height: 100%;
+}
 
 .css-cuefkz-MuiContainer-root {
   background-color: white;

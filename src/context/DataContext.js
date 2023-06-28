@@ -8,7 +8,7 @@ export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
   const [budgetData, setBudgetData] = useState();
   const [categories, setCategories] = useState([]);
-  const [timeperiod, setTimePeriod] = useState("year");
+  const [timeperiod, setTimePeriod] = useState("all");
   const [categoriesObj, setCategoriesObj] = useState();
 
   const { token } = useContext(AuthContext);

@@ -198,8 +198,11 @@ export default function Dashboard() {
               <div className="swiper-slide">
                 <div className="dash-budget">
                   {(() => {
+                    const nameCat = each;
+                    console.log("nameCat:", nameCat);
                     const Icon = categoryIcons[each.category_name];
-                    return <Icon />;
+
+                    // return <Icon />;
                   })()}
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>

@@ -11,6 +11,9 @@
   /* use these predefined colors by adding .. var()
     for example color : var(--red) */
 }
+#transactions-container-id {
+  min-height: 100%;
+}
 
 .container {
   /* Add container styles if needed */

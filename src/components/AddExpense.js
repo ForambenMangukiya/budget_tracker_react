@@ -79,7 +79,7 @@ export default function AddExpense() {
 
   return (
     <>
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" id="transactions-container-id">
         {isLoading ? (
           <Box
             sx={{
@@ -199,6 +199,7 @@ export default function AddExpense() {
                 variant="outlined"
                 onClick={handleSubmit}
                 className="btn_add"
+                sx={{ mt: 1, pt: 2, pb: 2, pl: 5, pr: 5 }}
               >
                 Add
               </Button>
