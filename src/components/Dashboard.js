@@ -208,6 +208,7 @@ export default function Dashboard() {
             {budgetData?.map((each) => (
               <div className="swiper-slide">
                 <div className="dash-budget">
+                 
                   {(() => {
                     const Icon =
                       categoryIcons[

@@ -5,7 +5,9 @@ import "./styles/login.css";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
+import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
+import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -33,9 +35,9 @@ export default function Login() {
     }
     if (response.ok) {
       setTimeout(() => {
-      localStorage.setItem("token", data.token);
-      setIsLoading(false);
-      login(data.token);
+        localStorage.setItem("token", data.token);
+        setIsLoading(false);
+        login(data.token);
       }, 5000);
     }
     console.log("token:", data.token);
@@ -45,14 +47,16 @@ export default function Login() {
     }
   };
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" sx={{ borderRadius: "20px" }}>
+      <Cornerright className="cornerright" />
       {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px"  }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", padding: "20px" }}
+        >
           <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
         <form className="login-container" onSubmit={handleSubmit}>
-    
           <label className="login-email">Email: </label>
           <input
             id="login-emailinput"
@@ -78,6 +82,7 @@ export default function Login() {
           {error && <div className="error">{error}</div>}
         </form>
       )}
+      <Cornerleft className="cornerleft" />
     </Container>
   );
 }
