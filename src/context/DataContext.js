@@ -62,7 +62,6 @@ export default function DataContextProvider(props) {
         console.log("###budget data", data);
 
         setBudgetData(data);
-        console.log("budget function is working");
         // setLoading(false)
       } catch (error) {
         console.log(error);
@@ -114,8 +113,6 @@ export default function DataContextProvider(props) {
 
   console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
-  console.log("categories:", categories);
-
   //   console.log("decoded token id:", decodedToken);
 
   return (

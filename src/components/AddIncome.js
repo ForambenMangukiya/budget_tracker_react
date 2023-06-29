@@ -48,23 +48,26 @@ export default function AddIncome() {
       setIsLoading(true);
     }
     try {
-      const response = await fetch("https://piggybank-api.onrender.com/Transaction", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+      const response = await fetch(
+        "https://piggybank-api.onrender.com/Transaction",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
 
-        body: JSON.stringify({
-          category_name, // HOUSE, TRANSPORTATION
-          tran_description,
-          tran_amount,
-          tran_sign: "CR", //DR (income) or CR(expense)
-          tran_currency: "US",
-          tran_date,
-          user,
-        }),
-      });
+          body: JSON.stringify({
+            category_name, // HOUSE, TRANSPORTATION
+            tran_description,
+            tran_amount,
+            tran_sign: "CR", //DR (income) or CR(expense)
+            tran_currency: "US",
+            tran_date,
+            user,
+          }),
+        }
+      );
 
       const data = await response.json();
 
