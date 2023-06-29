@@ -20,7 +20,9 @@
   max-width: 600px;
   min-height: 100vh;
   border: solid 2px green;
+  border-radius: 20px;
   margin: 0 auto;
+  background: linear-gradient(#1c060e, #7f173c);
   /* padding: 1em; */
   font-family: "Inter", sans-serif;
   position: relative;

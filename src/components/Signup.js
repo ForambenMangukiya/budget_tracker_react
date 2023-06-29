@@ -5,7 +5,9 @@ import { NavLink } from "react-router-dom";
 import countryList from "./Countrylist";
 import React from "react";
 import "./styles/signup.css";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
+import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
+import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
@@ -60,15 +62,20 @@ export default function Signup() {
   };
 
   return (
-    <Container maxWidth="sm">
-
+    <Container maxWidth="sm" sx={{ borderRadius: "20px" }}>
+      <Cornerright className="cornerright" />
       {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
           <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
         <form className="signup-container" onSubmit={handleSubmit}>
-
           <label className="firstname">First name:</label>
           <input
             id="firstnameinput"
@@ -132,6 +139,7 @@ export default function Signup() {
           {error && <div className="error">{error}</div>}
         </form>
       )}
+      <Cornerleft className="cornerleft" />
     </Container>
   );
 }

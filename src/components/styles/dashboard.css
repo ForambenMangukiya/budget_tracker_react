@@ -1,11 +1,34 @@
-.dash-progress {
+.dash-container {
+  padding: 2em;
+}
+.dash-progress{
+  border: solid 1px rgb(199, 199, 199);
+  padding: 1em;
+  border-radius: 1em;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 1em;
+}
+.swiper {
+  width: 88%;
+}
+.swiper-wrapper {
+  /* border: 2px solid red; */
+  padding: 10px 0px 10px 0;
+  width: 90%;
+  padding-bottom: 1em;
+}
+.swiper-slide {
   box-sizing: border-box;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #ececec;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid #b0b0b0;
+  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); */
   border-radius: 15px;
   padding: 1em;
+  margin-bottom: 1em;
+}
+.swiper-scrollbar {
+  width: 50px;
 }
 
 /* 
@@ -71,13 +94,17 @@ MUI styles
   color: var(--gray-3);
 }
 
+.recharts-surface{
+  display: flex;
+}
+
 /* 
 ================0===========
 Top spending
 =========================== */
 .dash-topSpending {
   display: flex;
-  justify-content: space-between;
+  gap: 2em;
 }
 .dash-title {
   text-align: left;

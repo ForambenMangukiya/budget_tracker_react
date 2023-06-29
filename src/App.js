@@ -12,6 +12,7 @@ import Reports from "./components/Reports";
 import Transactions from "./components/Transactions";
 import Navbar from "./components/Navbar";
 import { AuthContext } from "./context/AuthContext";
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import Menu from "./components/Menu";
 import Client from "./plaid/Client";
@@ -71,9 +72,9 @@ function App() {
         <Menu />
       </div> */}
 
-      <Routes>
-        <Route path="/" element={<Landingpage />} />
-      </Routes>
+      {/* <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes> */}
       {token ? (
         <div>
           <Navbar />
@@ -91,7 +92,8 @@ function App() {
         </div>
       ) : (
         <Routes>
-          <Route path="/landingpage" element={<LandingPage2 />} />
+          <Route path="/" element={<Landingpage />} />
+          <Route path="/entrypage" element={<LandingPage2 />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Navigate to="/" />} />

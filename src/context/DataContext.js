@@ -16,7 +16,7 @@ export default function DataContextProvider(props) {
   // =============================
   // Fetching Data
   // ============================
-  const timeperiod = undefined;
+  const timeperiod = "all";
   useEffect(() => {
     // getting all transactions for one user within specific period
     const getData = async function () {
