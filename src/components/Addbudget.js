@@ -25,7 +25,8 @@ import { AuthContext } from "../context/AuthContext";
 // import { useJwt } from "react-jwt";
 
 export default function Addbudget() {
-  const { budgetData, setBudgetData } = useContext(DataContext);
+  const { budgetData, setBudgetData, refresh, setRefresh } =
+    useContext(DataContext);
   const { token } = useContext(AuthContext);
   const [alert, setAlert] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(null);
@@ -51,7 +52,7 @@ export default function Addbudget() {
       try {
         //Get existing budgets
         const res = await fetch(
-          `http://localhost:8080/users/${decodedToken._id}`,
+          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
           {
             method: "GET", // Fetch the current data first
             headers: {
@@ -75,7 +76,7 @@ export default function Addbudget() {
         // Append the new object to the existing array
 
         const resPut = await fetch(
-          `http://localhost:8080/users/${decodedToken._id}`,
+          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
           {
             method: "PUT",
             headers: {
@@ -92,12 +93,15 @@ export default function Addbudget() {
         setDate(null);
         setDescription("");
         setAmount("");
-        setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+        setAlert(
+          <Alert severity="success">Your Budget Limit has been saved</Alert>
+        );
+        setRefresh(!refresh);
       } catch (error) {
         setIsLoading(false);
         setAlert(
           <Alert severity="error">
-            Couldn't post the transaction, take a look at the console for more
+            Couldn't post the Budget Limit, take a look at the console for more
             information about the error!
           </Alert>
         );
@@ -219,6 +223,5 @@ export default function Addbudget() {
         </Box>
       )}
     </Container>
-
   );
 }
