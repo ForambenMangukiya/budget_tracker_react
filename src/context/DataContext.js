@@ -9,12 +9,14 @@ export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
   const [budgetData, setBudgetData] = useState();
   const [categories, setCategories] = useState([]);
-  const [timeperiod, setTimePeriod] = useState("all");
+
   const [categoriesObj, setCategoriesObj] = useState();
 
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
-  console.log(token);
+  console.log("token", token);
+  console.log("decodedToken:", decodedToken);
+  console.log("_id:", decodedToken?._id);
 
   // =============================
   // Fetching Data
@@ -42,19 +44,20 @@ export default function DataContextProvider(props) {
       }
     };
 
+    if (token) {
+      getData();
+    }
+  }, [token, timeperiod]);
+
+  useEffect(() => {
     // getting all budgets for one user
-    const getBudget = async function () {
+    const getBudget = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/users/${decodedToken._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `http://localhost:8080/users/${decodedToken._id}`
         );
-
         const data = await res.json();
+
         setBudgetData(data);
         // setLoading(false)
       } catch (error) {
@@ -62,13 +65,50 @@ export default function DataContextProvider(props) {
         // setLoading(false);
       }
     };
-    if (token) {
-      getData();
-      getBudget();
-    }
-  }, [token, timeperiod]);
+    if (decodedToken) getBudget();
+  }, [decodedToken]);
 
-  //   console.log("transaction data:", tranData);
+  // console.log("transaction data in data Context :", tranData);
+
+  useEffect(() => {
+    // ==================================
+    // Refactoring Data into categories
+    // ==================================
+    if (tranData.length > 0) {
+      const refactorData = function () {
+        const debitTrans = tranData.filter((trans) => trans.tran_sign === "DR");
+        console.log("refactoring data / trandebit", debitTrans);
+        const groupedObjects = debitTrans.reduce((result, obj) => {
+          const { category_name, tran_amount } = obj;
+          if (!result[category_name]) {
+            result[category_name] = { name: category_name, spent: 0, limit: 0 };
+          }
+          result[category_name].spent += Number(tran_amount);
+          return result;
+        }, {});
+
+        budgetData?.map((budget) => {
+          if (groupedObjects[budget.category_name]) {
+            groupedObjects[budget.category_name].limit = Number(
+              budget.limit_amount
+            );
+            console.log(groupedObjects[budget.category_name]);
+          }
+        });
+
+        const filteredArray = Object.values(groupedObjects);
+
+        setCategoriesObj(groupedObjects);
+        setCategories(filteredArray.sort((a, b) => b.spent - a.spent));
+      };
+
+      if (token) {
+        refactorData();
+      }
+    }
+  }, [tranData, budgetData]);
+
+  console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
   //   console.log("decoded token id:", decodedToken);
 
