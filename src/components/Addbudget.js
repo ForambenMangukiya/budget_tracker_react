@@ -58,8 +58,8 @@ export default function Addbudget() {
     console.log("requestBody", requestBody);
     // Fetch budget data if decodedToken is available
     axios
-      // .get(`http://localhost:8080/users/${decodedToken.id}`)
-      .put(`http://localhost:8080/users/${decodedToken._id}`, requestBody, {
+      // .get(`https://piggybank-api.onrender.com/users/${decodedToken.id}`)
+      .put(`https://piggybank-api.onrender.com/users/${decodedToken._id}`, requestBody, {
         headers,
       })
       .then((response) => {

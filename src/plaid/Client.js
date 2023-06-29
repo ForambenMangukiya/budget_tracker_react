@@ -9,7 +9,7 @@ const { decodedToken } = useContext(DataContext);
 
 useEffect(() => {
 const generateLinkToken = async () => {
-const response = await fetch(`http://localhost:8080/api/create_link_token/${decodedToken._id}`, {
+const response = await fetch(`https://piggybank-api.onrender.com/api/create_link_token/${decodedToken._id}`, {
     method: "POST",
     headers: { "Content-type": "application/json" },
     });

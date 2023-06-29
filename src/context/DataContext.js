@@ -7,7 +7,7 @@ export const DataContext = createContext();
 
 export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
-  const [budgetData, setBudgetData] = useState();
+  const [budgetData, setBudgetData] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const [categoriesObj, setCategoriesObj] = useState();
@@ -27,7 +27,7 @@ export default function DataContextProvider(props) {
     const getData = async function () {
       try {
         const res = await fetch(
-          `http://localhost:8080/transaction?timeperiod=${timeperiod}`,
+          `https://piggybank-api.onrender.com/transaction?timeperiod=${timeperiod}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -54,9 +54,11 @@ export default function DataContextProvider(props) {
     const getBudget = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/users/${decodedToken._id}`
+          // `http://localhost:8080/users/${decodedToken._id}`
+          `https://piggybank-api.onrender.com/users/${decodedToken._id}`
         );
         const data = await res.json();
+        console.log("###budget data", data);
 
         setBudgetData(data);
         console.log("budget function is working");
