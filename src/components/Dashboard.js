@@ -5,7 +5,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
-import { FunctionsOutlined } from "@mui/icons-material";
+import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -81,10 +81,8 @@ export default function Dashboard() {
   const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
   // setCreditTrans(creditTrans);
   const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
-  // setDebitTrans(debitTrans);
-  console.log("credit transactions", creditTrans);
-  console.log("debit transactions", debitTrans);
 
+  // setDebitTrans(debitTrans);
   const incomeSum = creditTrans.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.tran_amount),
@@ -97,6 +95,13 @@ export default function Dashboard() {
     0
   );
 
+
+  const expensesSumBudgets = categories.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.spent,
+    0
+  );
+  // console.log("expensesSumBudgets", expensesSumBudgets);
+
   //calculate budgets
 
   const budgetSum = budgetData?.reduce(
@@ -108,7 +113,7 @@ export default function Dashboard() {
   // setIncomeSum(incomeSum);
 
   //expected to save
-  const savings = incomeSum - budgetSum;
+  const savings = incomeSum - budgetSum + expensesSum;
   // setSavings(incomeSum - budgetSum);
 
   // console.log("income:", incomeSum);
@@ -116,8 +121,8 @@ export default function Dashboard() {
   // console.log("budget:", budgetSum);
 
   //graphic bars
-  const budgetBar = (budgetSum * 100) / incomeSum;
-  const spentBar = (expensesSum * 100) / budgetSum;
+  const spentBar = (expensesSum * 100) / incomeSum;
+  const budgetBar = (expensesSumBudgets * 100) / budgetSum;
 
   // setBudgetBar((budgetSum * 100) / incomeSum);
   // setSpentBar((expensesSum * 100) / budgetSum);
@@ -129,10 +134,15 @@ export default function Dashboard() {
   // setCategories(sortedArray);
 
   //console.logs
-  console.log("tranData", tranData);
-  console.log("categories", categories);
-  console.log("savings", savings);
-  console.log("budgetData", budgetData);
+
+  // console.log("tranData", tranData);
+  // console.log("categories", categories);
+  console.log("categoriesObj", categoriesObj);
+  // console.log("savings", savings);
+  // console.log("budgetData", budgetData);
+  // console.log("incomeSum:", incomeSum);
+  // console.log("expensesSum:", expensesSum);
+  // console.log("spentbar:", spentBar);
 
   const categoryIcons = {
     bills: IconBills,
@@ -150,6 +160,7 @@ export default function Dashboard() {
     transport: IconTransportation,
     work: IconWork,
     food: IconEatingOut,
+    others: IconOthers,
   };
 
   return (
@@ -160,20 +171,20 @@ export default function Dashboard() {
           <h2 className="dash-h2">{savings} $</h2>
 
           <div className="linear-progress-container1">
-            <h6 className="progress-left">Budget</h6>
+            <h6 className="progress-left">spent</h6>
             <span className="progress-right">{incomeSum} $</span>
             <LinearProgress
               variant="determinate"
-              value={budgetBar > 100 ? 100 : budgetBar}
+              value={spentBar > 100 ? 100 : spentBar}
             />
           </div>
 
           <div className="linear-progress-container2">
-            <h6 className="progress-left">spent</h6>
+            <h6 className="progress-left">budget</h6>
             <span className="progress-right">{budgetSum} $</span>
             <LinearProgress
               variant="determinate"
-              value={spentBar > 100 ? 100 : spentBar}
+              value={budgetBar > 100 ? 100 : budgetBar}
             />
           </div>
         </div>
@@ -192,16 +203,19 @@ export default function Dashboard() {
         </div> */}
 
         <h3 className="dash-title">Monthly Budgets</h3>
-        <div class="swiper">
-          <div class="swiper-wrapper">
+        <div className="swiper">
+          <div className="swiper-wrapper">
             {budgetData?.map((each) => (
               <div className="swiper-slide">
                 <div className="dash-budget">
-                  {/* {(() => {
-                    const Icon = categoryIcons[each.category_name];
-                    return <Icon />;
-                  })()} */}
+                  {(() => {
+                    const Icon =
+                      categoryIcons[
+                        each.category_name ? each.category_name : "others"
+                      ];
 
+                    return <Icon />;
+                  })()}
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
@@ -218,7 +232,16 @@ export default function Dashboard() {
                       : "0 $"}
                   </h6>
                   <span className="progress-right">{each.limit_amount} $</span>
-                  <LinearProgress variant="determinate" value={60} />
+                  <LinearProgress
+                    variant="determinate"
+                    // value={categoriesObj[each.category_name] ? 90 : 20}
+                    value={
+                      categoriesObj[each.category_name]
+                        ? (categoriesObj[each.category_name].spent * 100) /
+                          categoriesObj[each.category_name].limit
+                        : 0
+                    }
+                  />
                 </div>
               </div>
             ))}
