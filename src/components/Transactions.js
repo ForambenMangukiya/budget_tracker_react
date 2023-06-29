@@ -185,196 +185,209 @@ export default function Transactions() {
   // }, [filter]);
 
   return (
-    <Container maxWidth="sm" className="transactions-container">
-      <Tabs
-        value={transaction}
-        onChange={handleChange}
-        centered
-        className="tabs-div"
-        sx={{ "& .MuiTabs-indicator": { display: "none" } }}
-      >
-        <Tab
-          label="expenses"
-          value="expenses"
-          className={transaction === "expenses" ? "active tab" : "tab"}
-        />
-        <Tab
-          label="income"
-          value="income"
-          className={transaction === "income" ? "active tab" : "tab"}
-        />
-      </Tabs>
-      {/* Filtering by Date */}
-      <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={filter}
-            label="Filter"
-            onChange={(e) => setFilter(e.target.value)}
-            sx={{
-              textAlign: "left",
-              "& fieldset": {
-                borderRadius: "31px",
-              },
-            }}
-          >
-            <MenuItem value={"all"}>All</MenuItem>
-            <MenuItem value={"week"}>Last Week</MenuItem>
-            <MenuItem value={"month"}>Last Month</MenuItem>
-            <MenuItem value={"3months"}>Last 3 Months</MenuItem>
-            <MenuItem value={"6months"}>Last 6 Months</MenuItem>
-            <MenuItem value={"year"}>Last Year</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
-      {/* Expenses */}
-      {transaction === "expenses" && (
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              ml: 0.5,
-            }}
-          >
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
-          </Box>
-
-          {tranData
-            .filter((element) => {
-              const tran_date_timestamp = new Date(element.tran_date).getTime();
-              return (
-                tran_date_timestamp < endDate && tran_date_timestamp > startDate
-              );
-            })
-            .filter((element) => element.tran_sign === "DR")
-            .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
-            .map((element) => {
-              const origDate = element.tran_date;
-              const newDate = new Date(origDate);
-              const newLocalDate = newDate
-                .toLocaleDateString("en-GB") //ADD different Country code here to format it
-                .replace(/[/]/g, ".");
-
-              const capitalizedDesc = element.tran_description.replace(
-                /./,
-                (c) => c.toUpperCase()
-              );
-              return (
-                <Box
-                  component="div"
-                  className="transaction-div"
-                  key={element._id}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                    sx={{ fontWeight: "bold" }}
-                  >
-                    {USDollar.format(element.tran_amount)}
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                  >
-                    {capitalizedDesc}
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                  >
-                    {newLocalDate}
-                  </Typography>
-                </Box>
-              );
-            })}
+    <Container
+      maxWidth="sm"
+      id="transactions-container-id"
+      className="transactions-container"
+    >
+      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
+        <Tabs
+          value={transaction}
+          onChange={handleChange}
+          centered
+          className="tabs-div"
+          sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+        >
+          <Tab
+            label="expenses"
+            value="expenses"
+            className={transaction === "expenses" ? "active tab" : "tab"}
+          />
+          <Tab
+            label="income"
+            value="income"
+            className={transaction === "income" ? "active tab" : "tab"}
+          />
+        </Tabs>
+        {/* Filtering by Date */}
+        <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={filter}
+              label="Filter"
+              onChange={(e) => setFilter(e.target.value)}
+              sx={{
+                textAlign: "left",
+                "& fieldset": {
+                  borderRadius: "31px",
+                },
+              }}
+            >
+              <MenuItem value={"all"}>All</MenuItem>
+              <MenuItem value={"week"}>Last Week</MenuItem>
+              <MenuItem value={"month"}>Last Month</MenuItem>
+              <MenuItem value={"3months"}>Last 3 Months</MenuItem>
+              <MenuItem value={"6months"}>Last 6 Months</MenuItem>
+              <MenuItem value={"year"}>Last Year</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
-      )}
-      {/* Income */}
-      {transaction === "income" && (
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              ml: 0.5,
-            }}
-          >
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}> Earned </Typography>
+
+        {/* Expenses */}
+        {transaction === "expenses" && (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                ml: 0.5,
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
+            </Box>
+
+            {tranData
+              .filter((element) => {
+                const tran_date_timestamp = new Date(
+                  element.tran_date
+                ).getTime();
+                return (
+                  tran_date_timestamp < endDate &&
+                  tran_date_timestamp > startDate
+                );
+              })
+              .filter((element) => element.tran_sign === "DR")
+              .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
+              .map((element) => {
+                const origDate = element.tran_date;
+                const newDate = new Date(origDate);
+                const newLocalDate = newDate
+                  .toLocaleDateString("en-GB") //ADD different Country code here to format it
+                  .replace(/[/]/g, ".");
+
+                const capitalizedDesc = element.tran_description.replace(
+                  /./,
+                  (c) => c.toUpperCase()
+                );
+                return (
+                  <Box
+                    component="div"
+                    className="transaction-div"
+                    key={element._id}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {USDollar.format(element.tran_amount)}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                    >
+                      {capitalizedDesc}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                    >
+                      {newLocalDate}
+                    </Typography>
+                  </Box>
+                );
+              })}
           </Box>
+        )}
+        {/* Income */}
+        {transaction === "income" && (
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                ml: 0.5,
+              }}
+            >
+              <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+                {" "}
+                Earned{" "}
+              </Typography>
+            </Box>
 
-          {tranData
-            .filter((element) => {
-              const tran_date_timestamp = new Date(element.tran_date).getTime();
-              return (
-                tran_date_timestamp < endDate && tran_date_timestamp > startDate
-              );
-            })
-            .filter((element) => element.tran_sign === "CR")
-            .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
-            .map((element) => {
-              const origDate = element.tran_date;
-              const newDate = new Date(origDate);
-              const newLocalDate = newDate
-                .toLocaleDateString("en-GB") //ADD different Country code here to format it
-                .replace(/[/]/g, ".");
+            {tranData
+              .filter((element) => {
+                const tran_date_timestamp = new Date(
+                  element.tran_date
+                ).getTime();
+                return (
+                  tran_date_timestamp < endDate &&
+                  tran_date_timestamp > startDate
+                );
+              })
+              .filter((element) => element.tran_sign === "CR")
+              .sort((a, b) => new Date(b.tran_date) - new Date(a.tran_date))
+              .map((element) => {
+                const origDate = element.tran_date;
+                const newDate = new Date(origDate);
+                const newLocalDate = newDate
+                  .toLocaleDateString("en-GB") //ADD different Country code here to format it
+                  .replace(/[/]/g, ".");
 
-              const capitalizedDesc = element.tran_description.replace(
-                /./,
-                (c) => c.toUpperCase()
-              );
-              return (
-                <Box
-                  component="div"
-                  className="transaction-div"
-                  key={element._id}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                    sx={{ fontWeight: "bold" }}
+                const capitalizedDesc = element.tran_description.replace(
+                  /./,
+                  (c) => c.toUpperCase()
+                );
+                return (
+                  <Box
+                    component="div"
+                    className="transaction-div"
+                    key={element._id}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
                   >
-                    {USDollar.format(element.tran_amount)}
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                  >
-                    {capitalizedDesc}
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    component="p"
-                    className="transaction-item"
-                  >
-                    {newLocalDate}
-                  </Typography>
-                </Box>
-              );
-            })}
-        </Box>
-      )}
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {USDollar.format(element.tran_amount)}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                    >
+                      {capitalizedDesc}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      component="p"
+                      className="transaction-item"
+                    >
+                      {newLocalDate}
+                    </Typography>
+                  </Box>
+                );
+              })}
+          </Box>
+        )}
 
-      <Box sx={{ height: 330, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"

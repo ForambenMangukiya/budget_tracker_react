@@ -17,6 +17,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Menu from "./components/Menu";
 import Client from "./plaid/Client";
 import LandingPage2 from "./components/LandingPage2";
+import Addbudget from "./components/Addbudget";
 
 function App() {
   const { token } = useContext(AuthContext);
@@ -83,6 +84,7 @@ function App() {
             <Route path="/addexpense" element={<AddExpense />} />
             <Route path="/addincome" element={<AddIncome />} />
             <Route path="/budget" element={<Budget />} />
+            <Route path="/addbudget" element={<Addbudget />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/link" element={<Client />} />

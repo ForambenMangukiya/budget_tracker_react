@@ -48,86 +48,90 @@ export default function Navbar() {
   // };
 
   const page = () => {
-    if (location.pathname == '/login') {
-      return 'Login'
+    if (location.pathname == "/login") {
+      return "Login";
     }
 
-    if (location.pathname == '/signup') {
-      return 'Signup'
+    if (location.pathname == "/signup") {
+      return "Signup";
     }
 
-    if (location.pathname == '/addexpense') {
-      return 'Add Expense'
+    if (location.pathname == "/addexpense") {
+      return "Add Expense";
     }
 
-    if (location.pathname == '/addincome') {
-      return 'Add Income'
+    if (location.pathname == "/addincome") {
+      return "Add Income";
     }
 
-    if (location.pathname == '/budget') {
-      return 'Planner'
+    if (location.pathname == "/budget") {
+      return "Planner";
     }
 
-    if (location.pathname == '/reports') {
-      return 'Graph'
+    if (location.pathname == "/reports") {
+      return "Graph";
     }
 
-    if (location.pathname == '/transactions') {
-      return 'Transactions'
+    if (location.pathname == "/transactions") {
+      return "Transactions";
     }
 
-    if ( token && location.pathname == '/') {
-      return 'Dashboard'
+    if (token && location.pathname == "/") {
+      return "Dashboard";
     }
 
-    if ( token && location.pathname == '/link') {
-      return 'Link Account'
+    if (token && location.pathname == "/link") {
+      return "Link Account";
     }
 
+    if (token && location.pathname == "/addbudget") {
+      return "Add Budget";
+    }
 
     return "";
-  }
+  };
   const currentPage = page();
   console.log("Current page:", currentPage);
 
   const paperStyles = {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
-};
-
+  };
 
   return (
-    <Container  
+    <Container
       sx={{
-      maxWidth: "600px",
-      background: "linear-gradient(#c80048, #961c48)",
-      height: "100%",
-      padding: "35px",
-      paddingTop: "70px",
-      display: "flex",
-      justifyContent: "space-evenly",
-      boxSizing: "border-box",
-    }}
+        maxWidth: "600px",
+        background: "linear-gradient(#c80048, #961c48)",
+        height: "100%",
+        padding: "35px",
+        paddingTop: "70px",
+        display: "flex",
+        justifyContent: "space-evenly",
+        boxSizing: "border-box",
+      }}
     >
       <Box>
-        <Typography variant="h4" gutterBottom
+        <Typography
+          variant="h4"
+          gutterBottom
           component="a"
           sx={{
-          ml: 10,
-          fontFamily: 'Inter',
-          fontWeight: 700,
-          color: '#FFFF',
-          textDecoration: 'none'
-          }}>
+            ml: 10,
+            fontFamily: "Inter",
+            fontWeight: 700,
+            color: "#FFFF",
+            textDecoration: "none",
+          }}
+        >
           {currentPage}
         </Typography>
       </Box>
-  
+
       <Fragment>
         <Box
           sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
-
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClickAvatar}
@@ -174,9 +178,8 @@ export default function Navbar() {
               },
             },
           }}
-    
-          transformOrigin={{ horizontal: "right", vertical: "top", }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom",}}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           {/* <MenuItem onClick={handleClose}>
             <Box onClick={handleLogin} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -212,45 +215,59 @@ export default function Navbar() {
             </Box>
           </MenuItem> */}
           <MenuItem onClick={handleClose}>
-            <Box onClick={handleClick} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-              <ListItemIcon  sx={{ color: '#FFFF'}}>
+            <Box
+              onClick={handleClick}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <ListItemIcon sx={{ color: "#FFFF" }}>
                 <Logout fontSize="small" />
               </ListItemIcon>
               <Typography
-              sx={{
-                fontFamily: 'Inter',
-                fontWeight: 700,
-                color: '#FFFF',
-                textDecoration: 'none'
-                }}>
-                  Logout
+                sx={{
+                  fontFamily: "Inter",
+                  fontWeight: 700,
+                  color: "#FFFF",
+                  textDecoration: "none",
+                }}
+              >
+                Logout
               </Typography>
             </Box>
           </MenuItem>
 
-        <Divider />
+          <Divider />
 
-        {token !== null && (
+          {token !== null && (
             <MenuItem onClick={handleClose}>
-            <Box onClick={handleClose} sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-                
-                <ListItemIcon  sx={{ color: '#FFFF'}}>
+              <Box
+                onClick={handleClose}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <ListItemIcon sx={{ color: "#FFFF" }}>
                   <Settings fontSize="small" />
                 </ListItemIcon>
 
                 <Typography
                   sx={{
-                    fontFamily: 'Inter',
+                    fontFamily: "Inter",
                     fontWeight: 700,
-                    color: '#FFFF',
-                    textDecoration: 'none'
-                    }}>
-                      Settings
-                  </Typography>
+                    color: "#FFFF",
+                    textDecoration: "none",
+                  }}
+                >
+                  Settings
+                </Typography>
               </Box>
-          </MenuItem>
+            </MenuItem>
           )}
-
         </Menu>
       </Fragment>
 
@@ -272,6 +289,5 @@ export default function Navbar() {
         )}
       </nav> */}
     </Container>
-  
   );
 }

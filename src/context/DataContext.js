@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { useJwt } from "react-jwt";
 import { AuthContext } from "../context/AuthContext";
+import { all } from "axios";
 
 export const DataContext = createContext();
 
@@ -8,6 +9,8 @@ export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
   const [budgetData, setBudgetData] = useState();
   const [categories, setCategories] = useState([]);
+  const [timeperiod, setTimePeriod] = useState("all");
+  const [categoriesObj, setCategoriesObj] = useState();
 
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
@@ -78,6 +81,8 @@ export default function DataContextProvider(props) {
         setBudgetData,
         categories,
         setCategories,
+        categoriesObj,
+        decodedToken,
       }}
     >
       {props.children}

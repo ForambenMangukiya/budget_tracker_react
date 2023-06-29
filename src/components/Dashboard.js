@@ -65,9 +65,9 @@ export default function Dashboard() {
     },
   });
 
-  //===========================
-  //useStates
-  //===========================
+  // ===========================
+  // useStates
+  // ===========================
 
   // const [initialSpend, initialSpend] = useState();
   // const [budgetBar, setBudgetBar] = useState();
@@ -97,7 +97,7 @@ export default function Dashboard() {
     0
   );
 
-  //calculate budgets
+  // //calculate budgets
 
   const budgetSum = budgetData?.reduce(
     (accumulator, currentValue) =>
@@ -122,17 +122,17 @@ export default function Dashboard() {
   // setBudgetBar((budgetSum * 100) / incomeSum);
   // setSpentBar((expensesSum * 100) / budgetSum);
 
-  //================
-  //Top Spendings
-  //================
+  // //================
+  // //Top Spendings
+  // //================
 
-  // setCategories(sortedArray);
+  // // setCategories(sortedArray);
 
-  //console.logs
-  console.log("tranData", tranData);
-  console.log("categories", categories);
-  console.log("savings", savings);
-  console.log("budgetData", budgetData);
+  // //console.logs
+  // console.log("tranData", tranData);
+  // console.log("categories", categories);
+  // console.log("savings", savings);
+  // console.log("budgetData", budgetData);
 
   const categoryIcons = {
     bills: IconBills,
@@ -204,7 +204,8 @@ export default function Dashboard() {
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
-                      {each.limit_amount} $ / Month
+                      {Number(each.limit_amount) - Number(each.spent)} $
+                      remaining
                     </p>
                   </div>
                 </div>
