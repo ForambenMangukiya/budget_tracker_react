@@ -65,9 +65,9 @@ export default function Dashboard() {
     },
   });
 
-  //===========================
-  //useStates
-  //===========================
+  // ===========================
+  // useStates
+  // ===========================
 
   // const [initialSpend, initialSpend] = useState();
   // const [budgetBar, setBudgetBar] = useState();
