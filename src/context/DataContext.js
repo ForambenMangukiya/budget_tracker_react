@@ -9,6 +9,7 @@ export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
   const [budgetData, setBudgetData] = useState();
   const [categories, setCategories] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const [categoriesObj, setCategoriesObj] = useState();
 
@@ -47,7 +48,7 @@ export default function DataContextProvider(props) {
     if (token) {
       getData();
     }
-  }, [token, timeperiod]);
+  }, [token, timeperiod, refresh]);
 
   useEffect(() => {
     // getting all budgets for one user
@@ -126,6 +127,8 @@ export default function DataContextProvider(props) {
         setCategories,
         categoriesObj,
         decodedToken,
+        refresh,
+        setRefresh,
       }}
     >
       {props.children}

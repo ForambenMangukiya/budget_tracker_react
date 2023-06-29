@@ -18,6 +18,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./styles/addexpense.css";
 
 import { AuthContext } from "../context/AuthContext";
+import { DataContext } from "../context/DataContext";
 
 export default function AddExpense() {
   const [category, setCategory] = React.useState("");
@@ -29,6 +30,7 @@ export default function AddExpense() {
   const [isLoading, setIsLoading] = React.useState(null);
 
   const { token } = React.useContext(AuthContext);
+  const { refresh, setRefresh } = React.useContext(DataContext);
 
   const handleSubmit = async () => {
     if (
@@ -64,6 +66,7 @@ export default function AddExpense() {
         setDescription("");
         setAmount("");
         setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+        setRefresh(!refresh);
       } catch (error) {
         setIsLoading(false);
         setAlert(
@@ -106,7 +109,6 @@ export default function AddExpense() {
                   onChange={(e) => setCategory(e.target.value)}
                   sx={{ textAlign: "left", borderRadius: "31px" }}
                 >
-
                   <MenuItem value={"education"}>Eduaction</MenuItem>
                   <MenuItem value={"communication"}>Communication</MenuItem>
                   <MenuItem value={"bills"}>Bills</MenuItem>
