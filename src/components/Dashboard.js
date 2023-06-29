@@ -29,98 +29,98 @@ import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
 
 export default function Dashboard() {
-  // const { token } = useContext(AuthContext);
-  // const { decodedToken } = useJwt(token);
-  // const {
-  //   categories,
-  //   setCategories,
-  //   categoriesObj,
-  //   budgetData,
-  //   setBudgetData,
-  //   tranData,
-  //   setTranData,
-  // } = useContext(DataContext);
+  const { token } = useContext(AuthContext);
+  const { decodedToken } = useJwt(token);
+  const {
+    categories,
+    setCategories,
+    categoriesObj,
+    budgetData,
+    setBudgetData,
+    tranData,
+    setTranData,
+  } = useContext(DataContext);
 
-  // //===========================
-  // //Library Initialization
-  // //===========================
+  //===========================
+  //Library Initialization
+  //===========================
 
-  // // init Swiper:
-  // const swiper = new Swiper(".swiper", {
-  //   effect: "cards",
-  //   cardsEffect: {
-  //     // ...
-  //   },
+  // init Swiper:
+  const swiper = new Swiper(".swiper", {
+    effect: "cards",
+    cardsEffect: {
+      // ...
+    },
 
-  //   direction: "horizontal",
-  //   loop: true,
+    direction: "horizontal",
+    loop: true,
 
-  //   // pagination: {
-  //   //   el: ".swiper-pagination",
-  //   // },
+    // pagination: {
+    //   el: ".swiper-pagination",
+    // },
 
-  //   scrollbar: {
-  //     el: ".swiper-scrollbar",
-  //     draggable: true,
-  //   },
-  // });
+    scrollbar: {
+      el: ".swiper-scrollbar",
+      draggable: true,
+    },
+  });
 
-  // //===========================
-  // //useStates
-  // //===========================
+  // ===========================
+  // useStates
+  // ===========================
 
-  // // const [initialSpend, initialSpend] = useState();
-  // // const [budgetBar, setBudgetBar] = useState();
-  // // const [budgetSum, setBudgetSum] = useState();
-  // // const [spentBar, setSpentBar] = useState();
-  // // const [savings, setSavings] = useState();
-  // // const [debitTrans, setDebitTrans] = useState([]);
-  // // const [creditTrans, setCreditTrans] = useState([]);
-  // // const [incomeSum, setIncomeSum] = useState();
+  // const [initialSpend, initialSpend] = useState();
+  // const [budgetBar, setBudgetBar] = useState();
+  // const [budgetSum, setBudgetSum] = useState();
+  // const [spentBar, setSpentBar] = useState();
+  // const [savings, setSavings] = useState();
+  // const [debitTrans, setDebitTrans] = useState([]);
+  // const [creditTrans, setCreditTrans] = useState([]);
+  // const [incomeSum, setIncomeSum] = useState();
 
-  // const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
-  // // setCreditTrans(creditTrans);
-  // const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
-  // // setDebitTrans(debitTrans);
-  // console.log("credit transactions", creditTrans);
-  // console.log("debit transactions", debitTrans);
+  const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
+  // setCreditTrans(creditTrans);
+  const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
+  // setDebitTrans(debitTrans);
+  console.log("credit transactions", creditTrans);
+  console.log("debit transactions", debitTrans);
 
-  // const incomeSum = creditTrans.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.tran_amount),
-  //   0
-  // );
+  const incomeSum = creditTrans.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.tran_amount),
+    0
+  );
 
-  // const expensesSum = debitTrans.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.tran_amount),
-  //   0
-  // );
+  const expensesSum = debitTrans.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.tran_amount),
+    0
+  );
 
   // //calculate budgets
 
-  // const budgetSum = budgetData?.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.limit_amount),
-  //   0
-  // );
-  // // setBudgetSum(budgetSum);
-  // // setIncomeSum(incomeSum);
+  const budgetSum = budgetData?.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.limit_amount),
+    0
+  );
+  // setBudgetSum(budgetSum);
+  // setIncomeSum(incomeSum);
 
-  // //expected to save
-  // const savings = incomeSum - budgetSum;
-  // // setSavings(incomeSum - budgetSum);
+  //expected to save
+  const savings = incomeSum - budgetSum;
+  // setSavings(incomeSum - budgetSum);
 
-  // // console.log("income:", incomeSum);
-  // // console.log("expenses:", expensesSum);
-  // // console.log("budget:", budgetSum);
+  // console.log("income:", incomeSum);
+  // console.log("expenses:", expensesSum);
+  // console.log("budget:", budgetSum);
 
-  // //graphic bars
-  // const budgetBar = (budgetSum * 100) / incomeSum;
-  // const spentBar = (expensesSum * 100) / budgetSum;
+  //graphic bars
+  const budgetBar = (budgetSum * 100) / incomeSum;
+  const spentBar = (expensesSum * 100) / budgetSum;
 
-  // // setBudgetBar((budgetSum * 100) / incomeSum);
-  // // setSpentBar((expensesSum * 100) / budgetSum);
+  // setBudgetBar((budgetSum * 100) / incomeSum);
+  // setSpentBar((expensesSum * 100) / budgetSum);
 
   // //================
   // //Top Spendings
@@ -134,27 +134,25 @@ export default function Dashboard() {
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
 
-  // const categoryIcons = {
-  //   bills: IconBills,
-  //   communication: IconCommunication,
-  //   eatingOut: IconEatingOut,
-  //   education: IconEducation,
-  //   entertainment: IconEntertainment,
-  //   groceries: IconGroceries,
-  //   insurance: IconInsurance,
-  //   medicine: IconMedicine,
-  //   others: IconOthers,
-  //   pets: IconPets,
-  //   rent: IconRent,
-  //   repairs: IconRepairs,
-  //   transport: IconTransportation,
-  //   work: IconWork,
-  //   food: IconEatingOut,
-  // };
+  const categoryIcons = {
+    bills: IconBills,
+    communication: IconCommunication,
+    eatingOut: IconEatingOut,
+    education: IconEducation,
+    entertainment: IconEntertainment,
+    groceries: IconGroceries,
+    insurance: IconInsurance,
+    medicine: IconMedicine,
+    others: IconOthers,
+    pets: IconPets,
+    rent: IconRent,
+    repairs: IconRepairs,
+    transport: IconTransportation,
+    work: IconWork,
+    food: IconEatingOut,
+  };
 
   return (
-
-
     <div>
       <div className="dash-container">
         <div className="dash-progress">
@@ -199,7 +197,6 @@ export default function Dashboard() {
             {budgetData?.map((each) => (
               <div className="swiper-slide">
                 <div className="dash-budget">
-
                   {/* {(() => {
                     const Icon = categoryIcons[each.category_name];
                     return <Icon />;
@@ -233,6 +230,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-
   );
 }
