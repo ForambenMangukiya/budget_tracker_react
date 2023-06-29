@@ -65,9 +65,9 @@ export default function Dashboard() {
     },
   });
 
-  //===========================
-  //useStates
-  //===========================
+  // ===========================
+  // useStates
+  // ===========================
 
   // const [initialSpend, initialSpend] = useState();
   // const [budgetBar, setBudgetBar] = useState();
@@ -126,11 +126,11 @@ export default function Dashboard() {
   // setBudgetBar((budgetSum * 100) / incomeSum);
   // setSpentBar((expensesSum * 100) / budgetSum);
 
-  //================
-  //Top Spendings
-  //================
+  // //================
+  // //Top Spendings
+  // //================
 
-  // setCategories(sortedArray);
+  // // setCategories(sortedArray);
 
   //console.logs
   // console.log("tranData", tranData);
