@@ -56,7 +56,7 @@ export default function DataContextProvider(props) {
           `http://localhost:8080/users/${decodedToken._id}`
         );
         const data = await res.json();
-        console.log("HERE", data);
+
         setBudgetData(data);
         console.log("budget function is working");
         // setLoading(false)
@@ -92,6 +92,7 @@ export default function DataContextProvider(props) {
             groupedObjects[budget.category_name].limit = Number(
               budget.limit_amount
             );
+            console.log(groupedObjects[budget.category_name]);
           }
         });
 
@@ -105,7 +106,7 @@ export default function DataContextProvider(props) {
         refactorData();
       }
     }
-  }, [tranData]);
+  }, [tranData, budgetData]);
 
   console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
