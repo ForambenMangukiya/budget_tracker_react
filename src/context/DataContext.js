@@ -9,18 +9,19 @@ export default function DataContextProvider(props) {
   const [tranData, setTranData] = useState([]);
   const [budgetData, setBudgetData] = useState();
   const [categories, setCategories] = useState([]);
-  const [timeperiod, setTimePeriod] = useState("all");
+
   const [categoriesObj, setCategoriesObj] = useState();
 
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
-  console.log(token);
+  console.log("token", token);
   console.log("decodedToken:", decodedToken);
+  console.log("_id:", decodedToken?._id);
 
   // =============================
   // Fetching Data
   // ============================
-
+  const timeperiod = "all";
   useEffect(() => {
     // getting all transactions for one user within specific period
     const getData = async function () {
@@ -43,19 +44,20 @@ export default function DataContextProvider(props) {
       }
     };
 
+    if (token) {
+      getData();
+    }
+  }, [token, timeperiod]);
+
+  useEffect(() => {
     // getting all budgets for one user
-    const getBudget = async function () {
+    const getBudget = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/users/6493080e1fb7f24f9a843cf4`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `http://localhost:8080/users/${decodedToken._id}`
         );
-
         const data = await res.json();
+
         setBudgetData(data);
         console.log("budget function is working");
         // setLoading(false)
@@ -64,14 +66,10 @@ export default function DataContextProvider(props) {
         // setLoading(false);
       }
     };
+    if (decodedToken) getBudget();
+  }, [decodedToken]);
 
-    if (token) {
-      getData();
-      getBudget();
-    }
-  }, [token, timeperiod]);
-
-  console.log("transaction data in data Context :", tranData);
+  // console.log("transaction data in data Context :", tranData);
 
   useEffect(() => {
     // ==================================
@@ -90,16 +88,26 @@ export default function DataContextProvider(props) {
           return result;
         }, {});
 
+        budgetData?.map((budget) => {
+          if (groupedObjects[budget.category_name]) {
+            groupedObjects[budget.category_name].limit = Number(
+              budget.limit_amount
+            );
+            console.log(groupedObjects[budget.category_name]);
+          }
+        });
+
         const filteredArray = Object.values(groupedObjects);
 
         setCategoriesObj(groupedObjects);
         setCategories(filteredArray.sort((a, b) => b.spent - a.spent));
       };
+
       if (token) {
         refactorData();
       }
     }
-  }, [tranData]);
+  }, [tranData, budgetData]);
 
   console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
