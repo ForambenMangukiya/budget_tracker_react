@@ -100,19 +100,18 @@
 // }
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
+// import SpeedDial from "@mui/material/SpeedDial";
+// import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+// import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Backdrop from "@mui/material/Backdrop";
 import ManualEntry from "./svg/IconManuallyEnter";
 import AddIcon from "@mui/icons-material/Add";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-=======
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
-import AddIcon from "@mui/icons-material/Add";
+// import AddIcon from "@mui/icons-material/Add";
 
 export default function Budget() {
   const [open, setOpen] = useState(false);
@@ -162,6 +161,6 @@ export default function Budget() {
       </Box>
     </Container>
   );
-=======
+
   return <div></div>;
 }
