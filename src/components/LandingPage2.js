@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import "../components/styles/LandingPage2.css";
 import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
+// import { ReactComponent as Welcoming } from "./svgCategories/welcoming.svg";
+import welcoming from "./images/welcoming.jpg";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage2() {
@@ -25,7 +27,7 @@ export default function LandingPage2() {
       sx={{ borderRadius: "20px" }}
     >
       <Cornerright className="cornerright" />
-
+      {/* <Welcoming /> */}
       <Box
         display="flex"
         flexDirection="column"
@@ -34,6 +36,8 @@ export default function LandingPage2() {
         minHeight="100vh"
         gap="20px"
       >
+        <img className="welcomeimage" src={welcoming} width="500px" />
+
         <Button
           style={{
             borderRadius: 35,
@@ -60,6 +64,7 @@ export default function LandingPage2() {
           Login
         </Button>
       </Box>
+
       <Cornerleft className="cornerleft" />
     </Container>
   );

@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../components/styles/Landingpage.css";
 import Container from "@mui/material/Container";
-import logo from "../components/images/logo.png";
+import logo from "../components/images/piggylogo.gif";
 import Box from "@mui/material/Box";
 import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
@@ -39,7 +39,7 @@ export default function Landingpage() {
         gap="20px"
         className="name"
       >
-        <img className="logo" src={logo} width="150px" />
+        <img className="logo" src={logo} width="200px" />
 
         <Link className="app_name" to="/entrypage">
           <h1>piggy bank </h1>
