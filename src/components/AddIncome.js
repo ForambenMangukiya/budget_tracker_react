@@ -74,7 +74,7 @@ export default function AddIncome() {
       setDate(null);
       setDescription("");
       setAmount("");
-      setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+      setAlert(<Alert severity="success">Your income has been saved</Alert>);
     } catch (error) {
       console.log(error);
     }

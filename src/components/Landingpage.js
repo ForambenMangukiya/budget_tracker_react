@@ -7,21 +7,15 @@ import logo from "../components/images/piggylogo.gif";
 import Box from "@mui/material/Box";
 import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 export default function Landingpage() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate("/entrypage");
-    }, 4000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [navigate]);
+  const Navigate = useNavigate();
+  const { token } = useContext(AuthContext);
+  setTimeout(() => {
+    Navigate("/entrypage");
+  }, 4000);
 
   return (
     <Container
@@ -39,7 +33,7 @@ export default function Landingpage() {
         gap="20px"
         className="name"
       >
-        <img className="logo" src={logo} width="200px" />
+        <img className="logo" src={logo} width="300px" />
 
         <Link className="app_name" to="/entrypage">
           <h1>piggy bank </h1>
