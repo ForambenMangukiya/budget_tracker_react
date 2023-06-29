@@ -103,7 +103,7 @@ export default function Dashboard() {
   // console.log("expensesSumBudgets", expensesSumBudgets);
 
   //calculate budgets
-
+  console.log("%%Budget DAta", budgetData);
   const budgetSum = budgetData?.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.limit_amount),

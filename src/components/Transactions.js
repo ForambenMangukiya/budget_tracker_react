@@ -165,7 +165,7 @@ export default function Transactions() {
   //   const getData = async function () {
   //     try {
   //       const res = await fetch(
-  //         `http://localhost:8080/transaction?timeperiod=${filter}`,
+  //         `https://piggybank-api.onrender.com/transaction?timeperiod=${filter}`,
   //         {
   //           headers: {
   //             Authorization: `Bearer ${token}`,
@@ -190,7 +190,7 @@ export default function Transactions() {
       id="transactions-container-id"
       className="transactions-container"
     >
-      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Tabs
           value={transaction}
           onChange={handleChange}
