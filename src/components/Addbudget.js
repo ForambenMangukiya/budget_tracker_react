@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useJwt } from "react-jwt";
 // import DatePicker from "react-datepicker";
 
 import Box from "@mui/material/Box";
@@ -24,13 +25,12 @@ import { AuthContext } from "../context/AuthContext";
 // import { useJwt } from "react-jwt";
 
 export default function Addbudget() {
-  const { budgetData, setBudgetData, decodedToken } = useContext(DataContext);
+  const { budgetData, setBudgetData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
   const [alert, setAlert] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(null);
-  console.log("budgetData:", budgetData);
-  // // console.log("user_id:", decodedToken._id);
-  // const { decodedToken } = useJwt();
+  // console.log("user_id:", decodedToken._id);
+  const { decodedToken } = useJwt(token);
 
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
@@ -38,64 +38,75 @@ export default function Addbudget() {
   const [amount, setAmount] = useState(""); //last
   const [category, setCategory] = useState("");
 
-  // const handleAddBudget = () => {
-  //   console.log("add budget clicked");
-  //   updateUserBudgetData();
-  // };
+  const handleSubmit = async () => {
+    if (
+      category === "" ||
+      date === null ||
+      description === "" ||
+      amount === ""
+    ) {
+      setAlert(<Alert severity="warning">Please fill in all the fields</Alert>);
+    } else {
+      setIsLoading(true);
+      try {
+        //Get existing budgets
+        const res = await fetch(
+          `http://localhost:8080/users/${decodedToken._id}`,
+          {
+            method: "GET", // Fetch the current data first
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        const currentBudgets = data || []; // Get the current budgets array
 
-  // const updateUserBudgetData = () => {
-  //   console.log("inside the updatefunc");
-  //   console.log("with token");
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token}`,
-  //   };
+        const updatedBudgets = [
+          ...currentBudgets,
+          {
+            category_name: category,
+            budget_description: description,
+            budget_date: date,
+            limit_amount: amount,
+          },
+        ];
+        // Append the new object to the existing array
 
-  //   const requestBody = {
-  //     budgets: [
-  //       {
-  //         category_name: category_name,
-  //         budget_description: description,
-  //         budget_date: selectedDate,
-  //         limit_amount: amount,
-  //       },
-  //     ],
-  //   };
-
-  //   console.log("requestBody", requestBody);
-  //   // Fetch budget data if decodedToken is available
-  //   axios
-  //     // .get(`http://localhost:8080/users/${decodedToken.id}`)
-  //     .put(`http://localhost:8080/users/${decodedToken._id}`, requestBody, {
-  //       headers,
-  //     })
-  //     .then((response) => {
-  //       console.log("response:", response);
-  //       //TODO: handle error if user.budget is successfully updated or there is an error.
-
-  //       setBudgetData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching budget data:", error);
-  //     });
-  // };
-
-  // //TODO: once the button is clicked successfully updated, clear all fields.
-
-  // const handlecategoryChange = (event) => {
-  //   setCategory(event.target.value);
-  // };
-
-  // const handleCurrencyChange = (e) => {
-  //   setSelectedCurrency(e.target.value);
-  // };
-
-  // const handleAmountChange = (e) => {
-  //   setAmount(e.target.value);
-  // };
+        const resPut = await fetch(
+          `http://localhost:8080/users/${decodedToken._id}`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              budgets: updatedBudgets,
+            }),
+          }
+        );
+        setIsLoading(false);
+        setCategory("");
+        setDate(null);
+        setDescription("");
+        setAmount("");
+        setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+      } catch (error) {
+        setIsLoading(false);
+        setAlert(
+          <Alert severity="error">
+            Couldn't post the transaction, take a look at the console for more
+            information about the error!
+          </Alert>
+        );
+        console.log("Here is the Error with more Info:", error);
+      }
+    }
+  };
 
   return (
-    // <div>
     <Container>
       {isLoading ? (
         <Box
@@ -123,7 +134,7 @@ export default function Addbudget() {
                 onChange={(e) => setCategory(e.target.value)}
                 sx={{ textAlign: "left", borderRadius: "31px" }}
               >
-                <MenuItem value={"eduaction"}>Eduaction</MenuItem>
+                <MenuItem value={"education"}>Education</MenuItem>
                 <MenuItem value={"communication"}>Communication</MenuItem>
                 <MenuItem value={"bills"}>Bills</MenuItem>
                 <MenuItem value={"rent"}>Rent</MenuItem>
@@ -196,9 +207,7 @@ export default function Addbudget() {
             {/* Submit Button */}
             <Button
               variant="outlined"
-              onClick={() => {
-                setAlert("Submitted");
-              }}
+              onClick={handleSubmit}
               className="btn_add"
               sx={{ mt: 1, pt: 2, pb: 2, pl: 5, pr: 5 }}
             >

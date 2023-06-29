@@ -106,7 +106,7 @@ export default function AddExpense() {
                   onChange={(e) => setCategory(e.target.value)}
                   sx={{ textAlign: "left", borderRadius: "31px" }}
                 >
-                  <MenuItem value={"eduaction"}>Eduaction</MenuItem>
+                  <MenuItem value={"education"}>Education</MenuItem>
                   <MenuItem value={"communication"}>Communication</MenuItem>
                   <MenuItem value={"bills"}>Bills</MenuItem>
                   <MenuItem value={"rent"}>Rent</MenuItem>
