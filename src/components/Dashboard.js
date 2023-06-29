@@ -5,7 +5,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
-import { FunctionsOutlined } from "@mui/icons-material";
+import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -29,98 +29,102 @@ import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
 
 export default function Dashboard() {
-  // const { token } = useContext(AuthContext);
-  // const { decodedToken } = useJwt(token);
-  // const {
-  //   categories,
-  //   setCategories,
-  //   categoriesObj,
-  //   budgetData,
-  //   setBudgetData,
-  //   tranData,
-  //   setTranData,
-  // } = useContext(DataContext);
+  const { token } = useContext(AuthContext);
+  const { decodedToken } = useJwt(token);
+  const {
+    categories,
+    setCategories,
+    categoriesObj,
+    budgetData,
+    setBudgetData,
+    tranData,
+    setTranData,
+  } = useContext(DataContext);
 
-  // //===========================
-  // //Library Initialization
-  // //===========================
+  //===========================
+  //Library Initialization
+  //===========================
 
-  // // init Swiper:
-  // const swiper = new Swiper(".swiper", {
-  //   effect: "cards",
-  //   cardsEffect: {
-  //     // ...
-  //   },
+  // init Swiper:
+  const swiper = new Swiper(".swiper", {
+    effect: "cards",
+    cardsEffect: {
+      // ...
+    },
 
-  //   direction: "horizontal",
-  //   loop: true,
+    direction: "horizontal",
+    loop: true,
 
-  //   // pagination: {
-  //   //   el: ".swiper-pagination",
-  //   // },
+    // pagination: {
+    //   el: ".swiper-pagination",
+    // },
 
-  //   scrollbar: {
-  //     el: ".swiper-scrollbar",
-  //     draggable: true,
-  //   },
-  // });
+    scrollbar: {
+      el: ".swiper-scrollbar",
+      draggable: true,
+    },
+  });
 
-  // //===========================
-  // //useStates
-  // //===========================
+  // ===========================
+  // useStates
+  // ===========================
 
-  // // const [initialSpend, initialSpend] = useState();
-  // // const [budgetBar, setBudgetBar] = useState();
-  // // const [budgetSum, setBudgetSum] = useState();
-  // // const [spentBar, setSpentBar] = useState();
-  // // const [savings, setSavings] = useState();
-  // // const [debitTrans, setDebitTrans] = useState([]);
-  // // const [creditTrans, setCreditTrans] = useState([]);
-  // // const [incomeSum, setIncomeSum] = useState();
+  // const [initialSpend, initialSpend] = useState();
+  // const [budgetBar, setBudgetBar] = useState();
+  // const [budgetSum, setBudgetSum] = useState();
+  // const [spentBar, setSpentBar] = useState();
+  // const [savings, setSavings] = useState();
+  // const [debitTrans, setDebitTrans] = useState([]);
+  // const [creditTrans, setCreditTrans] = useState([]);
+  // const [incomeSum, setIncomeSum] = useState();
 
-  // const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
-  // // setCreditTrans(creditTrans);
-  // const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
-  // // setDebitTrans(debitTrans);
-  // console.log("credit transactions", creditTrans);
-  // console.log("debit transactions", debitTrans);
+  const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
+  // setCreditTrans(creditTrans);
+  const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
 
-  // const incomeSum = creditTrans.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.tran_amount),
-  //   0
-  // );
+  // setDebitTrans(debitTrans);
+  const incomeSum = creditTrans.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.tran_amount),
+    0
+  );
 
-  // const expensesSum = debitTrans.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.tran_amount),
-  //   0
-  // );
+  const expensesSum = debitTrans.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.tran_amount),
+    0
+  );
 
-  // //calculate budgets
+  const expensesSumBudgets = categories.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.spent,
+    0
+  );
+  // console.log("expensesSumBudgets", expensesSumBudgets);
 
-  // const budgetSum = budgetData?.reduce(
-  //   (accumulator, currentValue) =>
-  //     accumulator + Number(currentValue.limit_amount),
-  //   0
-  // );
-  // // setBudgetSum(budgetSum);
-  // // setIncomeSum(incomeSum);
+  //calculate budgets
 
-  // //expected to save
-  // const savings = incomeSum - budgetSum;
-  // // setSavings(incomeSum - budgetSum);
+  const budgetSum = budgetData?.reduce(
+    (accumulator, currentValue) =>
+      accumulator + Number(currentValue.limit_amount),
+    0
+  );
+  // setBudgetSum(budgetSum);
+  // setIncomeSum(incomeSum);
 
-  // // console.log("income:", incomeSum);
-  // // console.log("expenses:", expensesSum);
-  // // console.log("budget:", budgetSum);
+  //expected to save
+  const savings = incomeSum - budgetSum + expensesSum;
+  // setSavings(incomeSum - budgetSum);
 
-  // //graphic bars
-  // const budgetBar = (budgetSum * 100) / incomeSum;
-  // const spentBar = (expensesSum * 100) / budgetSum;
+  // console.log("income:", incomeSum);
+  // console.log("expenses:", expensesSum);
+  // console.log("budget:", budgetSum);
 
-  // // setBudgetBar((budgetSum * 100) / incomeSum);
-  // // setSpentBar((expensesSum * 100) / budgetSum);
+  //graphic bars
+  const spentBar = (expensesSum * 100) / incomeSum;
+  const budgetBar = (expensesSumBudgets * 100) / budgetSum;
+
+  // setBudgetBar((budgetSum * 100) / incomeSum);
+  // setSpentBar((expensesSum * 100) / budgetSum);
 
   // //================
   // //Top Spendings
@@ -128,106 +132,124 @@ export default function Dashboard() {
 
   // // setCategories(sortedArray);
 
-  // //console.logs
+  //console.logs
   // console.log("tranData", tranData);
   // console.log("categories", categories);
+  console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
+  // console.log("incomeSum:", incomeSum);
+  // console.log("expensesSum:", expensesSum);
+  // console.log("spentbar:", spentBar);
 
-  // const categoryIcons = {
-  //   bills: IconBills,
-  //   communication: IconCommunication,
-  //   eatingOut: IconEatingOut,
-  //   education: IconEducation,
-  //   entertainment: IconEntertainment,
-  //   groceries: IconGroceries,
-  //   insurance: IconInsurance,
-  //   medicine: IconMedicine,
-  //   others: IconOthers,
-  //   pets: IconPets,
-  //   rent: IconRent,
-  //   repairs: IconRepairs,
-  //   transport: IconTransportation,
-  //   work: IconWork,
-  //   food: IconEatingOut,
-  // };
+  const categoryIcons = {
+    bills: IconBills,
+    communication: IconCommunication,
+    eatingOut: IconEatingOut,
+    education: IconEducation,
+    entertainment: IconEntertainment,
+    groceries: IconGroceries,
+    insurance: IconInsurance,
+    medicine: IconMedicine,
+    others: IconOthers,
+    pets: IconPets,
+    rent: IconRent,
+    repairs: IconRepairs,
+    transport: IconTransportation,
+    work: IconWork,
+    food: IconEatingOut,
+    others: IconOthers,
+  };
 
   return (
-    <></>
-    // <div>
-    //   <div className="dash-container">
-    //     <div className="dash-progress">
-    //       <p className="dash-expected">Expected savings</p>
-    //       <h2 className="dash-h2">{savings} $</h2>
+    <div>
+      <div className="dash-container">
+        <div className="dash-progress">
+          <p className="dash-expected">Expected savings</p>
+          <h2 className="dash-h2">{savings} $</h2>
 
-    //       <div className="linear-progress-container1">
-    //         <h6 className="progress-left">Budget</h6>
-    //         <span className="progress-right">{incomeSum} $</span>
-    //         <LinearProgress
-    //           variant="determinate"
-    //           value={budgetBar > 100 ? 100 : budgetBar}
-    //         />
-    //       </div>
+          <div className="linear-progress-container1">
+            <h6 className="progress-left">spent</h6>
+            <span className="progress-right">{incomeSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={spentBar > 100 ? 100 : spentBar}
+            />
+          </div>
 
-    //       <div className="linear-progress-container2">
-    //         <h6 className="progress-left">spent</h6>
-    //         <span className="progress-right">{budgetSum} $</span>
-    //         <LinearProgress
-    //           variant="determinate"
-    //           value={spentBar > 100 ? 100 : spentBar}
-    //         />
-    //       </div>
-    //     </div>
-    //     <Charts />
-    //     {/* <h3 className="dash-title">Top spending</h3>
-    //     <div className="dash-topSpending">
-    //       {categories.map((category) => {
-    //         const IconComponent = categoryIcons[category.name];
-    //         return (
-    //           <div>
-    //             <IconComponent />
-    //             <p className="dash-icon-title">{category.name}</p>
-    //           </div>
-    //         );
-    //       })}
-    //     </div> */}
+          <div className="linear-progress-container2">
+            <h6 className="progress-left">budget</h6>
+            <span className="progress-right">{budgetSum} $</span>
+            <LinearProgress
+              variant="determinate"
+              value={budgetBar > 100 ? 100 : budgetBar}
+            />
+          </div>
+        </div>
+        <Charts />
+        {/* <h3 className="dash-title">Top spending</h3>
+        <div className="dash-topSpending">
+          {categories.map((category) => {
+            const IconComponent = categoryIcons[category.name];
+            return (
+              <div>
+                <IconComponent />
+                <p className="dash-icon-title">{category.name}</p>
+              </div>
+            );
+          })}
+        </div> */}
 
-    //     <h3 className="dash-title">Monthly Budgets</h3>
-    //     <div class="swiper">
-    //       <div class="swiper-wrapper">
-    //         {budgetData?.map((each) => (
-    //           <div className="swiper-slide">
-    //             <div className="dash-budget">
-    //               {(() => {
-    //                 const Icon = categoryIcons[each.category_name];
-    //                 return <Icon />;
-    //               })()}
-    //               <div className="dash-budget-title">
-    //                 <h2 className="dash-budget-title">{each.category_name}</h2>
-    //                 <p className="dash-budget-info">
-    //                   {each.limit_amount} $ / Month
-    //                 </p>
-    //               </div>
-    //             </div>
+        <h3 className="dash-title">Monthly Budgets</h3>
+        <div className="swiper">
+          <div className="swiper-wrapper">
+            {budgetData?.map((each) => (
+              <div className="swiper-slide">
+                <div className="dash-budget">
+                  {(() => {
+                    const Icon =
+                      categoryIcons[
+                        each.category_name ? each.category_name : "others"
+                      ];
 
-    //             <div className="linear-progress-container2">
-    //               <h6 className="progress-left">
-    //                 {categoriesObj?.hasOwnProperty(each.category_name)
-    //                   ? `${categoriesObj[each.category_name].spent} $`
-    //                   : "0 $"}
-    //               </h6>
-    //               <span className="progress-right">{each.limit_amount} $</span>
-    //               <LinearProgress variant="determinate" value={60} />
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
+                    return <Icon />;
+                  })()}
+                  <div className="dash-budget-title">
+                    <h2 className="dash-budget-title">{each.category_name}</h2>
+                    <p className="dash-budget-info">
+                      {Number(each.limit_amount) - Number(each.spent)} $
+                      remaining
+                    </p>
+                  </div>
+                </div>
 
-    //       <div class="swiper-pagination"></div>
+                <div className="linear-progress-container2">
+                  <h6 className="progress-left">
+                    {categoriesObj?.hasOwnProperty(each.category_name)
+                      ? `${categoriesObj[each.category_name].spent} $`
+                      : "0 $"}
+                  </h6>
+                  <span className="progress-right">{each.limit_amount} $</span>
+                  <LinearProgress
+                    variant="determinate"
+                    // value={categoriesObj[each.category_name] ? 90 : 20}
+                    value={
+                      categoriesObj[each.category_name]
+                        ? (categoriesObj[each.category_name].spent * 100) /
+                          categoriesObj[each.category_name].limit
+                        : 0
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
 
-    //       <div class="swiper-scrollbar"></div>
-    //     </div>
-    //   </div>
-    // </div>
+          <div class="swiper-pagination"></div>
+
+          <div class="swiper-scrollbar"></div>
+        </div>
+      </div>
+    </div>
   );
 }
