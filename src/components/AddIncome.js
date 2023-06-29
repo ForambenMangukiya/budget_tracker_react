@@ -15,6 +15,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../context/AuthContext";
+import { DataContext } from "../context/DataContext";
+
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 
@@ -31,7 +33,7 @@ export default function AddIncome() {
   const [alert, setAlert] = useState(false);
   const [user, setUser] = useState("");
   const { token } = React.useContext(AuthContext);
-
+  const { refresh, setRefresh } = React.useContext(DataContext);
   const handleAddIncomesChange = async (e) => {
     e.preventDefault();
 
@@ -46,7 +48,7 @@ export default function AddIncome() {
       setIsLoading(true);
     }
     try {
-      const response = await fetch("http://localhost:8080/Transaction", {
+      const response = await fetch("https://piggybank-api.onrender.com/Transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +76,8 @@ export default function AddIncome() {
       setDate(null);
       setDescription("");
       setAmount("");
-      setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+      setAlert(<Alert severity="success">Your income has been saved</Alert>);
+      setRefresh(!refresh);
     } catch (error) {
       console.log(error);
     }
