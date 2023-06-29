@@ -11,7 +11,7 @@ export default function DataContextProvider(props) {
   const [categories, setCategories] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const [categoriesObj, setCategoriesObj] = useState();
+  const [categoriesObj, setCategoriesObj] = useState({});
 
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
