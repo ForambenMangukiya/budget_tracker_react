@@ -29,41 +29,41 @@ import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
 
 export default function Dashboard() {
-  const { token } = useContext(AuthContext);
-  const { decodedToken } = useJwt(token);
-  const {
-    categories,
-    setCategories,
-    categoriesObj,
-    budgetData,
-    setBudgetData,
-    tranData,
-    setTranData,
-  } = useContext(DataContext);
+  // const { token } = useContext(AuthContext);
+  // const { decodedToken } = useJwt(token);
+  // const {
+  //   categories,
+  //   setCategories,
+  //   categoriesObj,
+  //   budgetData,
+  //   setBudgetData,
+  //   tranData,
+  //   setTranData,
+  // } = useContext(DataContext);
 
-  //===========================
-  //Library Initialization
-  //===========================
+  // //===========================
+  // //Library Initialization
+  // //===========================
 
-  // init Swiper:
-  const swiper = new Swiper(".swiper", {
-    effect: "cards",
-    cardsEffect: {
-      // ...
-    },
+  // // init Swiper:
+  // const swiper = new Swiper(".swiper", {
+  //   effect: "cards",
+  //   cardsEffect: {
+  //     // ...
+  //   },
 
-    direction: "horizontal",
-    loop: true,
+  //   direction: "horizontal",
+  //   loop: true,
 
-    // pagination: {
-    //   el: ".swiper-pagination",
-    // },
+  // pagination: {
+  //   el: ".swiper-pagination",
+  // },
 
-    scrollbar: {
-      el: ".swiper-scrollbar",
-      draggable: true,
-    },
-  });
+  //   scrollbar: {
+  //     el: ".swiper-scrollbar",
+  //     draggable: true,
+  //   },
+  // });
 
   // ===========================
   // useStates
@@ -78,51 +78,50 @@ export default function Dashboard() {
   // const [creditTrans, setCreditTrans] = useState([]);
   // const [incomeSum, setIncomeSum] = useState();
 
-  const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
-  // setCreditTrans(creditTrans);
-  const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
+  // const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
+  // // setCreditTrans(creditTrans);
+  // const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
 
-  // setDebitTrans(debitTrans);
-  const incomeSum = creditTrans.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.tran_amount),
-    0
-  );
+  // // setDebitTrans(debitTrans);
+  // const incomeSum = creditTrans.reduce(
+  //   (accumulator, currentValue) =>
+  //     accumulator + Number(currentValue.tran_amount),
+  //   0
+  // );
 
-  const expensesSum = debitTrans.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.tran_amount),
-    0
-  );
+  // const expensesSum = debitTrans.reduce(
+  //   (accumulator, currentValue) =>
+  //     accumulator + Number(currentValue.tran_amount),
+  //   0
+  // );
 
+  // const expensesSumBudgets = categories.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue.spent,
+  //   0
+  // );
+  // // console.log("expensesSumBudgets", expensesSumBudgets);
 
-  const expensesSumBudgets = categories.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.spent,
-    0
-  );
-  // console.log("expensesSumBudgets", expensesSumBudgets);
+  // //calculate budgets
 
-  //calculate budgets
+  // const budgetSum = budgetData?.reduce(
+  //   (accumulator, currentValue) =>
+  //     accumulator + Number(currentValue.limit_amount),
+  //   0
+  // );
+  // // setBudgetSum(budgetSum);
+  // // setIncomeSum(incomeSum);
 
-  const budgetSum = budgetData?.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.limit_amount),
-    0
-  );
-  // setBudgetSum(budgetSum);
-  // setIncomeSum(incomeSum);
-
-  //expected to save
-  const savings = incomeSum - budgetSum + expensesSum;
-  // setSavings(incomeSum - budgetSum);
+  // //expected to save
+  // const savings = incomeSum - budgetSum + expensesSum;
+  // // setSavings(incomeSum - budgetSum);
 
   // console.log("income:", incomeSum);
   // console.log("expenses:", expensesSum);
   // console.log("budget:", budgetSum);
 
   //graphic bars
-  const spentBar = (expensesSum * 100) / incomeSum;
-  const budgetBar = (expensesSumBudgets * 100) / budgetSum;
+  // const spentBar = (expensesSum * 100) / incomeSum;
+  // const budgetBar = (expensesSumBudgets * 100) / budgetSum;
 
   // setBudgetBar((budgetSum * 100) / incomeSum);
   // setSpentBar((expensesSum * 100) / budgetSum);
@@ -137,34 +136,35 @@ export default function Dashboard() {
 
   // console.log("tranData", tranData);
   // console.log("categories", categories);
-  console.log("categoriesObj", categoriesObj);
+  // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
 
-  const categoryIcons = {
-    bills: IconBills,
-    communication: IconCommunication,
-    eatingOut: IconEatingOut,
-    education: IconEducation,
-    entertainment: IconEntertainment,
-    groceries: IconGroceries,
-    insurance: IconInsurance,
-    medicine: IconMedicine,
-    others: IconOthers,
-    pets: IconPets,
-    rent: IconRent,
-    repairs: IconRepairs,
-    transport: IconTransportation,
-    work: IconWork,
-    food: IconEatingOut,
-    others: IconOthers,
-  };
+  // const categoryIcons = {
+  //   bills: IconBills,
+  //   communication: IconCommunication,
+  //   eatingOut: IconEatingOut,
+  //   education: IconEducation,
+  //   entertainment: IconEntertainment,
+  //   groceries: IconGroceries,
+  //   insurance: IconInsurance,
+  //   medicine: IconMedicine,
+  //   others: IconOthers,
+  //   pets: IconPets,
+  //   rent: IconRent,
+  //   repairs: IconRepairs,
+  //   transport: IconTransportation,
+  //   work: IconWork,
+  //   food: IconEatingOut,
+  //   others: IconOthers,
+  // };
 
   return (
     <div>
+      {/*       
       <div className="dash-container">
         <div className="dash-progress">
           <p className="dash-expected">Expected savings</p>
@@ -189,7 +189,9 @@ export default function Dashboard() {
           </div>
         </div>
         <Charts />
-        {/* <h3 className="dash-title">Top spending</h3>
+         */}
+
+      {/* <h3 className="dash-title">Top spending</h3>
         <div className="dash-topSpending">
           {categories.map((category) => {
             const IconComponent = categoryIcons[category.name];
@@ -202,6 +204,7 @@ export default function Dashboard() {
           })}
         </div> */}
 
+      {/* 
         <h3 className="dash-title">Monthly Budgets</h3>
         <div className="swiper">
           <div className="swiper-wrapper">
@@ -251,7 +254,7 @@ export default function Dashboard() {
 
           <div class="swiper-scrollbar"></div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
