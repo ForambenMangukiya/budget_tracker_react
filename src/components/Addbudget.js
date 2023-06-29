@@ -19,9 +19,19 @@ export default function Addbudget() {
   const [selectedCurrency, setSelectedCurrency] = useState("$");
   const [amount, setAmount] = useState(""); //last
   const [category_name, setCategory] = useState("");
+  //alert msg
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleAddBudget = () => {
     console.log("add budget clicked");
+    //alert
+    if (!category_name || !description || !selectedDate || !amount) {
+      setErrorMessage("Please fill all the fields.");
+      setSuccessMessage("");
+      return;
+    }
+
     updateUserBudgetData();
   };
 
@@ -44,6 +54,7 @@ export default function Addbudget() {
       ],
     };
 
+    //main
     console.log("requestBody", requestBody);
     // Fetch budget data if decodedToken is available
     axios
@@ -53,12 +64,22 @@ export default function Addbudget() {
       })
       .then((response) => {
         console.log("response:", response);
+        setBudgetData(response.data);
         //TODO: handle error if user.budget is successfully updated or there is an error.
 
-        setBudgetData(response.data);
+        setSuccessMessage("Budget added successfully.");
+        // Clear form fields
+        setDescription("");
+        setSelectedDate(null);
+        setSelectedCurrency("$");
+        setAmount("");
+        setCategory("");
+        setErrorMessage("");
       })
       .catch((error) => {
         console.error("Error fetching budget data:", error);
+        //alert
+        setErrorMessage("Error adding budget. Please try again.");
       });
   };
 
@@ -146,8 +167,11 @@ export default function Addbudget() {
         <button className="Add_budget" onClick={handleAddBudget}>
           Add Budget
         </button>
+        {/* alert */}
+        {successMessage && <p>{successMessage}</p>}
+        {errorMessage && <p>{errorMessage}</p>}
       </div>
-      <div>
+      {/* <div>
         Budget Data:
         {budgetData && (
           <div>
@@ -162,7 +186,7 @@ export default function Addbudget() {
             <br />
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
