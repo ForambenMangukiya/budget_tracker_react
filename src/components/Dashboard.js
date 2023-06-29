@@ -96,6 +96,7 @@ export default function Dashboard() {
     0
   );
 
+
   const expensesSumBudgets = categories.reduce(
     (accumulator, currentValue) => accumulator + currentValue.spent,
     0
@@ -127,13 +128,14 @@ export default function Dashboard() {
   // setBudgetBar((budgetSum * 100) / incomeSum);
   // setSpentBar((expensesSum * 100) / budgetSum);
 
-  // //================
-  // //Top Spendings
-  // //================
+  //================
+  //Top Spendings
+  //================
 
-  // // setCategories(sortedArray);
+  // setCategories(sortedArray);
 
   //console.logs
+
   // console.log("tranData", tranData);
   // console.log("categories", categories);
   console.log("categoriesObj", categoriesObj);
