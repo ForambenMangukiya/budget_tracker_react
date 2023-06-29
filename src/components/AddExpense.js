@@ -42,7 +42,7 @@ export default function AddExpense() {
     } else {
       setIsLoading(true);
       try {
-        const res = await fetch("http://localhost:8080/transaction/", {
+        const res = await fetch("https://piggybank-api.onrender.com/transaction/", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
