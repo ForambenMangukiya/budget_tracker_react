@@ -102,6 +102,7 @@ Top spending
 =========================== */
 .dash-topSpending {
   display: flex;
+  flex-direction: column;
   gap: 2em;
 }
 .dash-title {

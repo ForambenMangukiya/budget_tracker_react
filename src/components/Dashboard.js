@@ -27,6 +27,7 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
+import Topspending from "./Topspending";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -187,18 +188,6 @@ export default function Dashboard() {
           </div>
         </div>
         <Charts />
-        {/* <h3 className="dash-title">Top spending</h3>
-        <div className="dash-topSpending">
-          {categories.map((category) => {
-            const IconComponent = categoryIcons[category.name];
-            return (
-              <div>
-                <IconComponent />
-                <p className="dash-icon-title">{category.name}</p>
-              </div>
-            );
-          })}
-        </div> */}
 
         <h3 className="dash-title">Monthly Budgets</h3>
         <div className="swiper">
@@ -249,6 +238,7 @@ export default function Dashboard() {
 
           <div class="swiper-scrollbar"></div>
         </div>
+        <Topspending />
       </div>
     </div>
   );
