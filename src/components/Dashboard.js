@@ -27,7 +27,6 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
-import Topspending from "./Topspending";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -96,7 +95,6 @@ export default function Dashboard() {
     0
   );
 
-
   const expensesSumBudgets = categories.reduce(
     (accumulator, currentValue) => accumulator + currentValue.spent,
     0
@@ -114,7 +112,7 @@ export default function Dashboard() {
   // setIncomeSum(incomeSum);
 
   //expected to save
-  const savings = incomeSum - budgetSum + expensesSum;
+  const savings = incomeSum - budgetSum - expensesSum;
   // setSavings(incomeSum - budgetSum);
 
   // console.log("income:", incomeSum);
@@ -138,7 +136,7 @@ export default function Dashboard() {
 
   // console.log("tranData", tranData);
   // console.log("categories", categories);
-  console.log("categoriesObj", categoriesObj);
+  //console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
@@ -240,7 +238,6 @@ export default function Dashboard() {
 
           <div class="swiper-scrollbar"></div>
         </div>
-        <Topspending />
       </div>
     </div>
   );
