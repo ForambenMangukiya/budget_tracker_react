@@ -6,10 +6,9 @@ import Box from "@mui/material/Box";
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
-
 import { AuthContext } from "../context/AuthContext";
 
-export default function Link() {
+export default function Link({ id }) {
 const { linkToken, linkSuccess, setLinkSuccess } = useContext(AuthContext);
 const [isLoading, setIsLoading] = useState(false);
 const [transactions, setTransactions] = useState([]);
@@ -17,25 +16,23 @@ const [syncSuccess, setSyncSuccess] = useState(false)
 const [syncCount, setSyncCount] = useState(1);
 const navigate = useNavigate();
 
-console.log("START LINK....")
+console.log("START LINK....", id)
 
 const handleGetTransaction = async () => {
     setIsLoading(true);
     setSyncSuccess(false);
-    const response = await fetch("http://localhost:8080/api/transactions", {
+    const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
         method: "GET",
     });
     const data = await response.json();
     
     if (!response.ok) {
-      console.log("sync is not successful")
       setIsLoading(false);
       setSyncSuccess(false);
       setSyncCount(syncCount + 1);    
     }
 
     if (response.ok) {
-      console.log("sync successful")
         setIsLoading(false);
         setTransactions(data)
         setSyncSuccess(true);
@@ -78,8 +75,6 @@ const config = {
 const { open, ready } = usePlaidLink(config);
 
 console.log("Transactions here:", transactions);
-console.log("sync success:", syncSuccess);
-console.log("sync count:", syncCount);
 
 const handleGoBack = () => {
   navigate("/transactions");
