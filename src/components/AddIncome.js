@@ -46,43 +46,43 @@ export default function AddIncome() {
       setAlert(<Alert severity="warning">Please fill all the fields !</Alert>);
     } else {
       setIsLoading(true);
-    }
-    try {
-      const response = await fetch(
-        "https://piggybank-api.onrender.com/Transaction",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      try {
+        const response = await fetch(
+          "https://piggybank-api.onrender.com/Transaction",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
 
-          body: JSON.stringify({
-            category_name, // HOUSE, TRANSPORTATION
-            tran_description,
-            tran_amount,
-            tran_sign: "CR", //DR (income) or CR(expense)
-            tran_currency: "US",
-            tran_date,
-            user,
-          }),
+            body: JSON.stringify({
+              category_name, // HOUSE, TRANSPORTATION
+              tran_description,
+              tran_amount,
+              tran_sign: "CR", //DR (income) or CR(expense)
+              tran_currency: "US",
+              tran_date,
+              user,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to add income");
         }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error("Failed to add income");
+        setIsLoading(false);
+        setCatgeroy("");
+        setDate(null);
+        setDescription("");
+        setAmount("");
+        setAlert(<Alert severity="success">Your income has been saved</Alert>);
+        setRefresh(!refresh);
+      } catch (error) {
+        console.log(error);
       }
-      setIsLoading(false);
-      setCatgeroy("");
-      setDate(null);
-      setDescription("");
-      setAmount("");
-      setAlert(<Alert severity="success">Your income has been saved</Alert>);
-      setRefresh(!refresh);
-    } catch (error) {
-      console.log(error);
     }
   };
   const handlecategoryChange = (event) => {

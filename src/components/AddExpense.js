@@ -32,7 +32,8 @@ export default function AddExpense() {
   const { token } = React.useContext(AuthContext);
   const { refresh, setRefresh } = React.useContext(DataContext);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (
       category === "" ||
       recurrence === "" ||
