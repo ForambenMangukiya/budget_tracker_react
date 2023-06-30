@@ -70,6 +70,7 @@ export default function Transactions() {
   const paperStyles = {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
+    size: "large",
   };
 
   //   const handleSubmit = async (e) => {
@@ -189,6 +190,10 @@ export default function Transactions() {
       maxWidth="sm"
       id="transactions-container-id"
       className="transactions-container"
+      sx={{
+        paddingTop: "100px",
+        paddingBottom: "100px",
+      }}
     >
       <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Tabs
@@ -387,16 +392,22 @@ export default function Transactions() {
               })}
           </Box>
         )}
+        </Box>
 
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          sx={{ position: "sticky", bottom: 70, right: 16,
+          '& .MuiFab-root': {
+            width: '68px', // Increase the width
+            height: '68px', // Increase the height
+          },
+        }}
           icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
-          FabProps={{
+          FabProps={{ 
             style: paperStyles,
           }}
         >
@@ -410,7 +421,6 @@ export default function Transactions() {
             />
           ))}
         </SpeedDial>
-      </Box>
     </Container>
   );
 }

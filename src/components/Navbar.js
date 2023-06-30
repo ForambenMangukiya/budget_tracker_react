@@ -101,25 +101,27 @@ export default function Navbar() {
   return (
     <Container
       sx={{
-        maxWidth: "600px",
+        maxWidth: "sm",
         background: "linear-gradient(#c80048, #961c48)",
-        height: "100%",
-        padding: "35px",
-        paddingTop: "70px",
+        // height: "100%",
+        padding: "20px",
+        paddingTop: "30px",
         display: "flex",
         justifyContent: "space-evenly",
         boxSizing: "border-box",
+        position: "fixed",
+        zIndex: 9,
       }}
     >
       <Box>
         <Typography
-          variant="h4"
+          variant="h5"
           gutterBottom
           component="a"
           sx={{
-            ml: 10,
+            ml: 12,
             fontFamily: "Inter",
-            fontWeight: 700,
+            fontWeight: 500,
             color: "#FFFF",
             textDecoration: "none",
           }}
