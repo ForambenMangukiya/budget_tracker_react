@@ -10,6 +10,9 @@
 
   --header: linear-gradient(#c80048, #961c48);
 
+  --black: rgb(48, 48, 48);
+  --white:white;
+
   /* use these predefined colors by adding .. var()
   for example color : var(--red) */
 }

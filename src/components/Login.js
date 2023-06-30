@@ -5,7 +5,7 @@ import "./styles/login.css";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -20,11 +20,14 @@ export default function Login() {
     setIsLoading(true);
     setError(null);
     console.log(`Email:${email},Password:${password}`);
-    const response = await fetch("https://piggybank-api.onrender.com/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      "https://piggybank-api.onrender.com/users/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -33,9 +36,9 @@ export default function Login() {
     }
     if (response.ok) {
       setTimeout(() => {
-      localStorage.setItem("token", data.token);
-      setIsLoading(false);
-      login(data.token);
+        localStorage.setItem("token", data.token);
+        setIsLoading(false);
+        login(data.token);
       }, 5000);
     }
     console.log("token:", data.token);
@@ -47,12 +50,13 @@ export default function Login() {
   return (
     <Container maxWidth="sm">
       {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px"  }}>
+        <Box
+          sx={{ display: "flex", justifyContent: "center", padding: "20px" }}
+        >
           <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
         <form className="login-container" onSubmit={handleSubmit}>
-    
           <label className="login-email">Email: </label>
           <input
             id="login-emailinput"

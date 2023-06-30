@@ -1,19 +1,22 @@
 .dash-container {
   padding: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 .dash-progress{
   border: solid 1px rgb(199, 199, 199);
   padding: 1em;
   border-radius: 1em;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-    margin-bottom: 1em;
+
 }
 .swiper {
-  width: 88%;
+  width: 100%;
 }
 .swiper-wrapper {
   /* border: 2px solid red; */
-  padding: 10px 0px 10px 0;
+  padding: 0px 0px 10px 0;
   width: 90%;
   padding-bottom: 1em;
 }
@@ -25,7 +28,7 @@
   /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); */
   border-radius: 15px;
   padding: 1em;
-  margin-bottom: 1em;
+
 }
 .swiper-scrollbar {
   width: 50px;
@@ -41,8 +44,8 @@ MUI styles
 }
 
 .linear-progress-container1 .MuiLinearProgress-determinate {
-  padding: 8px;
-  margin: 1em 0;
+  padding: 12px;
+  margin-bottom: 1em;
   background-color: var(--gray-1);
   border-radius: 1em;
 }
@@ -52,11 +55,12 @@ MUI styles
 }
 
 .linear-progress-container2 .MuiLinearProgress-determinate {
-  padding: 8px;
-  margin: 1em 0;
+  padding: 12px;
+  margin-bottom: 1em;
   background-color: var(--gray-1);
   border-radius: 1em;
 }
+
 
 .dash-h2 {
   text-align: left;
@@ -65,9 +69,16 @@ MUI styles
 }
 .dash-expected {
   text-align: left;
-  color: var(--gray-3);
-  font-size: 15px;
+  color: var(--black);
+  font-size: 12px;
   margin: 0;
+}
+.dash-balance{
+  text-align: left;
+  color: var(--black);
+  font-size: 25px;
+  margin: 0;
+
 }
 
 .linear-progress-container1 {
@@ -78,21 +89,48 @@ MUI styles
 }
 .progress-left {
   position: absolute;
-  top: 3px;
-  left: 7px;
+  top: 0px;
+  left: 10px;
   z-index: 2;
   margin: 0;
+  font-size: 10px;
   color: white;
 }
 .progress-right {
   position: absolute;
-  top: 4px;
-  right: 7px;
+  top: 0px;
+  right: 10px;
   z-index: 2;
   margin: 0;
   font-size: 10px;
-  color: var(--gray-3);
+  color: var(--black);
 }
+
+.progress-left-card {
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  z-index: 2;
+  margin: 0;
+  font-size: 10px;
+  color: white;
+}
+.progress-right-card {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  z-index: 2;
+  margin: 0;
+  font-size: 10px;
+  color: var(--black);
+}
+.spent-title{
+  color: var(black);
+  text-align: left;
+  margin-bottom: 3px;
+  margin-left: 0.5em;
+}
+
 
 
 
@@ -120,6 +158,7 @@ Top spending
   display: flex;
   align-items: center;
   gap: 0.7em;
+  margin-bottom: 1em;
 }
 
 .dash-icon {
@@ -130,4 +169,40 @@ Top spending
   color: var(--gray-3);
   font-size: 10px;
   margin: 0;
+}
+
+/* .dash-filtering{
+  border: solid 1px var(--gray-3);
+  border-radius: 1em;
+  display: flex;
+  justify-content: space-between;
+  padding:  0.3em 1em;
+
+
+} */
+
+.filter-active {
+  background-color: var(--red);
+  border-radius: 1em;
+
+  
+}
+
+.optionFilter{
+  padding: 0px;
+  margin: 0;
+}
+
+.dash-graph{
+  margin-bottom: 1em;
+}
+.dash-graph h2{
+  text-align: center;
+  color: var(--black);
+  font-size: 25px;
+  margin: 0;
+}
+.dash-graph p{
+  margin: 5px;
+  font-size: 10px;
 }

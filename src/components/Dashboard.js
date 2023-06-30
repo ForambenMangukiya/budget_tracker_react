@@ -6,6 +6,10 @@ import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
 import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
+import FormControl from "@mui/material/FormControl";
+import { MenuItem, InputLabel } from "@mui/material";
+import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -27,6 +31,7 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
+import { Refresh } from "plaid-threads";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -47,10 +52,10 @@ export default function Dashboard() {
 
   // init Swiper:
   const swiper = new Swiper(".swiper", {
-    effect: "cards",
-    cardsEffect: {
-      // ...
-    },
+    // effect: "cards",
+    // cardsEffect: {
+    //   // ...
+    // },
 
     direction: "horizontal",
     loop: true,
@@ -77,10 +82,96 @@ export default function Dashboard() {
   // const [debitTrans, setDebitTrans] = useState([]);
   // const [creditTrans, setCreditTrans] = useState([]);
   // const [incomeSum, setIncomeSum] = useState();
+  const [filter, setFilter] = useState("month");
+  const [filteredData, setFilteredData] = useState([]);
+  const [startDate, setStartDate] = useState(Date);
+  const [endDate, setEndDate] = useState(Date);
 
-  const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
+  // =============================================================================================
+  // =============================================================================================
+  // =========================================================================
+  // filtering Data
+  // ========================================================================
+
+  useEffect(() => {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setEndDate(today);
+    const last5Years = new Date(
+      now.getFullYear() - 5,
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setStartDate(last5Years);
+  }, []);
+
+  useEffect(() => {
+    const now = new Date();
+    if (filter === "week") {
+      const lastWeek = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() - 7
+      ).getTime();
+      setStartDate(lastWeek);
+    }
+    if (filter === "month") {
+      const lastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      ).getTime();
+      setStartDate(lastMonth);
+    }
+    if (filter === "3months") {
+      const last3Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 3,
+        now.getDate()
+      ).getTime();
+      setStartDate(last3Months);
+    }
+    if (filter === "6months") {
+      const last6Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 6,
+        now.getDate()
+      ).getTime();
+      setStartDate(last6Months);
+    }
+    if (filter === "year") {
+      const lastYear = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(lastYear);
+    }
+    if (filter === "all") {
+      const last5Years = new Date(
+        now.getFullYear() - 5,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(last5Years);
+    }
+  }, [filter]);
+
+  useEffect(() => {
+    const filtered = tranData?.filter((data) => {
+      const timestampDate = new Date(data.tran_date).getTime();
+      return timestampDate < endDate && timestampDate > startDate;
+    });
+    setFilteredData(filtered);
+  }, [tranData, endDate, startDate]);
+
+  const creditTrans = filteredData?.filter((trans) => trans.tran_sign === "CR");
   // setCreditTrans(creditTrans);
-  const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
+  const debitTrans = filteredData?.filter((trans) => trans.tran_sign === "DR");
 
   // setDebitTrans(debitTrans);
   const incomeSum = creditTrans.reduce(
@@ -95,53 +186,45 @@ export default function Dashboard() {
     0
   );
 
-  const expensesSumBudgets = categories.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.spent,
-    0
-  );
-  // console.log("expensesSumBudgets", expensesSumBudgets);
-
+  let expensesSumBudgets = 0;
+  categories.map((category) => {
+    if (category.limit > 0) {
+      expensesSumBudgets = expensesSumBudgets + category.spent;
+    }
+  });
+  //==============================================================
   //calculate budgets
-  console.log("%%Budget DAta", budgetData);
+  //===============================================================
+
   const budgetSum = budgetData?.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.limit_amount),
     0
   );
-  // setBudgetSum(budgetSum);
-  // setIncomeSum(incomeSum);
 
   //expected to save
   const savings = incomeSum - budgetSum - expensesSum;
-  // setSavings(incomeSum - budgetSum);
-
-  // console.log("income:", incomeSum);
-  // console.log("expenses:", expensesSum);
-  // console.log("budget:", budgetSum);
 
   //graphic bars
   const spentBar = (expensesSum * 100) / incomeSum;
   const budgetBar = (expensesSumBudgets * 100) / budgetSum;
 
-  // setBudgetBar((budgetSum * 100) / incomeSum);
-  // setSpentBar((expensesSum * 100) / budgetSum);
+  // =========================================================================
+  // filtering Data
+  // ========================================================================
 
-  //================
-  //Top Spendings
-  //================
-
-  // setCategories(sortedArray);
-
-  //console.logs
-
+  console.log("filtered Data", filteredData);
   // console.log("tranData", tranData);
   // console.log("categories", categories);
-  //console.log("categoriesObj", categoriesObj);
+  // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
+  console.log("sumBudgets", expensesSumBudgets);
+  console.log("endDate", endDate);
+  console.log("################### filteredDat In Dashboard", filteredData);
 
   const categoryIcons = {
     bills: IconBills,
@@ -165,21 +248,65 @@ export default function Dashboard() {
   return (
     <div>
       <div className="dash-container">
-        <div className="dash-progress">
-          <p className="dash-expected">Expected savings</p>
-          <h2 className="dash-h2">{savings} $</h2>
+        <Box component="div" className="transaction-filter">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={filter}
+              label="Filter"
+              onChange={(e) => setFilter(e.target.value)}
+              sx={{
+                textAlign: "left",
+                "& fieldset": {
+                  borderRadius: "10px",
+                },
+              }}
+            >
+              <MenuItem value={"all"}>All</MenuItem>
+              <MenuItem value={"week"}>Last Week</MenuItem>
+              <MenuItem value={"month"}>Last Month</MenuItem>
+              <MenuItem value={"3months"}>Last 3 Months</MenuItem>
+              <MenuItem value={"6months"}>Last 6 Months</MenuItem>
+              <MenuItem value={"year"}>Last Year</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        {/* <span onClick={() => setFilter("all")} value="all">
+            All
+          </span>
+          <span onClick={() => setFilter("year")} value="year">
+            Year
+          </span>
+          <span onClick={() => setFilter("6months")} value="6months">
+            6
+          </span>
+          <span onClick={() => setFilter("3months")} value="3months">
+            3 Months
+          </span>
+          <span onClick={() => setFilter("month")} value="month">
+            Month
+          </span>
+          <span onClick={() => setFilter("week")} value="week">
+            Week
+          </span> */}
 
+        <div className="dash-progress">
+          <h2 className="dash-balance">Balance: {incomeSum - expensesSum} $</h2>
+          <p className="dash-expected">Expected savings: {savings} $</p>
+          <h5 className="spent-title">Spent</h5>
           <div className="linear-progress-container1">
-            <h6 className="progress-left">spent</h6>
+            <span className="progress-left">{expensesSum} $</span>
             <span className="progress-right">{incomeSum} $</span>
             <LinearProgress
               variant="determinate"
               value={spentBar > 100 ? 100 : spentBar}
             />
           </div>
-
+          <h5 className="spent-title">Budget</h5>
           <div className="linear-progress-container2">
-            <h6 className="progress-left">budget</h6>
+            <span className="progress-left">{expensesSumBudgets} $</span>
             <span className="progress-right">{budgetSum} $</span>
             <LinearProgress
               variant="determinate"
@@ -189,7 +316,6 @@ export default function Dashboard() {
         </div>
         <Charts />
 
-        <h3 className="dash-title">Monthly Budgets</h3>
         <div className="swiper">
           <div className="swiper-wrapper">
             {budgetData?.map((each) => (
@@ -206,28 +332,46 @@ export default function Dashboard() {
                   <div className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
-                      {Number(each.limit_amount) - Number(each.spent)} $
-                      remaining
+                      {categoriesObj[each.category_name]
+                        ? Number(each.limit_amount) -
+                          categoriesObj[each.category_name].spent
+                        : Number(each.limit_amount)}
+                      $ remaining
                     </p>
                   </div>
                 </div>
 
                 <div className="linear-progress-container2">
-                  <h6 className="progress-left">
+                  <span className="progress-left">
                     {categoriesObj?.hasOwnProperty(each.category_name)
                       ? `${categoriesObj[each.category_name].spent} $`
                       : "0 $"}
-                  </h6>
+                  </span>
                   <span className="progress-right">{each.limit_amount} $</span>
                   <LinearProgress
                     variant="determinate"
-                    // value={categoriesObj[each.category_name] ? 90 : 20}
+                    // value={(() => {
+                    //   if (categoriesObj[each.category_name]) {
+                    //     const percentage =
+                    //       (categoriesObj[each.category_name].spent *
+                    //         100 *
+                    //         100) /
+                    //       categoriesObj[each.category_name.limit];
+                    //     return percentage > 100 ? 100 : percentage;
+                    //   }
+                    // })()}
                     value={
-                      categoriesObj[each.category_name]
+                      categoriesObj[each.category_name] &&
+                      categoriesObj[each.category_name].spent <
+                        categoriesObj[each.category_name].limit
                         ? (categoriesObj[each.category_name].spent * 100) /
                           categoriesObj[each.category_name].limit
+                        : categoriesObj[each.category_name] &&
+                          categoriesObj[each.category_name].spent !== 0
+                        ? 100
                         : 0
                     }
+                    // value={50}
                   />
                 </div>
               </div>
