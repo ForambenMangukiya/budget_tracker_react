@@ -44,21 +44,24 @@ export default function AddExpense() {
     } else {
       setIsLoading(true);
       try {
-        const res = await fetch("https://piggybank-api.onrender.com/transaction/", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            category_name: category,
-            tran_description: description,
-            tran_amount: amount,
-            tran_sign: "DR", //DR (expense) or CR(income)
-            tran_currency: "US",
-            tran_date: date,
-          }),
-        });
+        const res = await fetch(
+          "https://piggybank-api.onrender.com/transaction/",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              category_name: category,
+              tran_description: description,
+              tran_amount: amount,
+              tran_sign: "DR", //DR (expense) or CR(income)
+              tran_currency: "US",
+              tran_date: date,
+            }),
+          }
+        );
         setIsLoading(false);
         setCategory("");
         setRecurrence("");
@@ -148,7 +151,6 @@ export default function AddExpense() {
                   <DatePicker
                     label="Date"
                     className="background_grey"
-                    // inputFormat="DD/MM/YYYY"
                     value={date}
                     onChange={(selectedDate) => setDate(selectedDate)}
                     sx={{
@@ -199,12 +201,18 @@ export default function AddExpense() {
               </FormControl>
               {/* Submit Button */}
               <Button
-                variant="outlined"
+                sx={{
+                  ":hover": { bgcolor: "grey" },
+                  borderRadius: "31px",
+                  background: "#c80048",
+                  width: "150px",
+                  height: "50px",
+                  margin: "20px",
+                  color: "white",
+                }}
                 onClick={handleSubmit}
-                className="btn_add"
-                sx={{ mt: 1, pt: 2, pb: 2, pl: 5, pr: 5 }}
               >
-                Add
+                ADD
               </Button>
               {/* Alert Message */}
               <Box sx={{ mt: 1 }}>{alert}</Box>

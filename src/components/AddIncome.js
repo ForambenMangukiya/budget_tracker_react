@@ -16,6 +16,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../context/AuthContext";
 import { DataContext } from "../context/DataContext";
+import Button from "@mui/material/Button";
 
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -139,6 +140,7 @@ export default function AddIncome() {
                 <DatePicker
                   label="Date"
                   value={tran_date}
+                  className="background_grey"
                   onChange={handleDateChange}
                   sx={{
                     borderRadius: "31px",
@@ -181,10 +183,20 @@ export default function AddIncome() {
               sx={{ borderRadius: "31px" }}
             ></OutlinedInput>
           </FormControl>
-          <button className="addincome-btn " onClick={handleAddIncomesChange}>
-            {" "}
-            Add{" "}
-          </button>
+          <Button
+            sx={{
+              ":hover": { bgcolor: "grey" },
+              borderRadius: "31px",
+              background: "#c80048",
+              width: "150px",
+              height: "50px",
+              margin: "20px",
+              color: "white",
+            }}
+            onClick={handleAddIncomesChange}
+          >
+            ADD
+          </Button>
           <Box sx={{ mt: 1 }}>{alert}</Box>
         </Box>
       )}
