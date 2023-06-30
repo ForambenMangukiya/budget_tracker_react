@@ -102,7 +102,11 @@ export default function AddIncome() {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm"
+    sx={{
+      paddingTop: "100px",
+    }}
+    >
       {isLoading ? (
         <Box
           sx={{

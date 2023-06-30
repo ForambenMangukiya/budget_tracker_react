@@ -44,21 +44,24 @@ export default function AddExpense() {
     } else {
       setIsLoading(true);
       try {
-        const res = await fetch("https://piggybank-api.onrender.com/transaction/", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            category_name: category,
-            tran_description: description,
-            tran_amount: amount,
-            tran_sign: "DR", //DR (expense) or CR(income)
-            tran_currency: "US",
-            tran_date: date,
-          }),
-        });
+        const res = await fetch(
+          "https://piggybank-api.onrender.com/transaction/",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              category_name: category,
+              tran_description: description,
+              tran_amount: amount,
+              tran_sign: "DR", //DR (expense) or CR(income)
+              tran_currency: "US",
+              tran_date: date,
+            }),
+          }
+        );
         setIsLoading(false);
         setCategory("");
         setRecurrence("");
@@ -81,8 +84,11 @@ export default function AddExpense() {
   };
 
   return (
-    <>
-      <Container maxWidth="sm" id="transactions-container-id">
+      <Container maxWidth="sm" id="transactions-container-id"
+        sx={{
+          paddingTop: "100px",
+        }}
+      >
         {isLoading ? (
           <Box
             sx={{
@@ -212,6 +218,5 @@ export default function AddExpense() {
           </Box>
         )}
       </Container>
-    </>
   );
 }

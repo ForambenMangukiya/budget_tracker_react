@@ -50,29 +50,29 @@ export default function Addbudget() {
     } else {
       setIsLoading(true);
       try {
-        //Get existing budgets
-        const res = await fetch(
-          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
-          {
-            method: "GET", // Fetch the current data first
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await res.json();
-        const currentBudgets = data || []; // Get the current budgets array
+        // //Get existing budgets
+        // const res = await fetch(
+        //   `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
+        //   {
+        //     method: "GET", // Fetch the current data first
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+        // const data = await res.json();
+        // const currentBudgets = data || []; // Get the current budgets array
 
-        const updatedBudgets = [
-          ...currentBudgets,
-          {
-            category_name: category,
-            budget_description: description,
-            budget_date: date,
-            limit_amount: amount,
-          },
-        ];
+        // const updatedBudgets = [
+        //   ...currentBudgets,
+        //   {
+        //     category_name: category,
+        //     budget_description: description,
+        //     budget_date: date,
+        //     limit_amount: amount,
+        //   },
+        // ];
         // Append the new object to the existing array
 
         const resPut = await fetch(
@@ -84,7 +84,12 @@ export default function Addbudget() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              budgets: updatedBudgets,
+              budgets: {
+                category_name: category,
+                budget_description: description,
+                budget_date: date,
+                limit_amount: amount,
+              },
             }),
           }
         );
@@ -111,7 +116,11 @@ export default function Addbudget() {
   };
 
   return (
-    <Container>
+    <Container
+    sx={{
+      paddingTop: "100px",
+    }}
+    >
       {isLoading ? (
         <Box
           sx={{
