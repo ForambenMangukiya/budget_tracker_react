@@ -33,6 +33,7 @@ function App() {
             <Route path="/addexpense" element={<AddExpense />} />
             <Route path="/addincome" element={<AddIncome />} />
             <Route path="/budget" element={<Budget />} />
+            <Route path="/addbudget" element={<Addbudget />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/link" element={<Client />} />

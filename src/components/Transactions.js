@@ -255,8 +255,8 @@ export default function Transactions() {
                   element.tran_date
                 ).getTime();
                 return (
-                  tran_date_timestamp < endDate &&
-                  tran_date_timestamp > startDate
+                  tran_date_timestamp <= endDate &&
+                  tran_date_timestamp >= startDate
                 );
               })
               .filter((element) => element.tran_sign === "DR")
@@ -332,8 +332,8 @@ export default function Transactions() {
                   element.tran_date
                 ).getTime();
                 return (
-                  tran_date_timestamp < endDate &&
-                  tran_date_timestamp > startDate
+                  tran_date_timestamp <= endDate &&
+                  tran_date_timestamp >= startDate
                 );
               })
               .filter((element) => element.tran_sign === "CR")
