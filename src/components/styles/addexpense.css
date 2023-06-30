@@ -43,15 +43,3 @@
 .addexp_box .background_grey {
   background-color: var(--gray-1);
 }
-.addexp_box .btn_add {
-  background-color: var(--red);
-  color: white;
-  border-radius: 31px;
-  border: none;
-  text-transform: none;
-}
-.addexp_box .btn_add:hover {
-  background-color: var(--red2);
-  color: rgb(180, 180, 180);
-  border: none;
-}
