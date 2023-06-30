@@ -104,17 +104,17 @@ export default function Dashboard() {
   // //calculate budgets
 
   //calculate budgets
-  console.log("%%Budget DAta", budgetData);
-  const budgetSum = budgetData?.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.limit_amount),
-    0
-  );
+  // console.log("%%Budget DAta", budgetData);
+  // const budgetSum = budgetData?.reduce(
+  //   (accumulator, currentValue) =>
+  //     accumulator + Number(currentValue.limit_amount),
+  //   0
+  // );
   // setBudgetSum(budgetSum);
   // setIncomeSum(incomeSum);
 
   //expected to save
-  const savings = incomeSum - budgetSum + expensesSum;
+  // const savings = incomeSum - budgetSum + expensesSum;
   // setSavings(incomeSum - budgetSum);
 
   // console.log("income:", incomeSum);
