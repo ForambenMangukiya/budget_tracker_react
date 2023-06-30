@@ -26,24 +26,22 @@
   border-radius: 31px;
 }
 
-.addincome-btn {
-  width: 150px;
-  height: 50px;
-  background: var(--red);
-  border-radius: 31px;
-  border: 0;
-  color: white;
-}
-.addincome-btn:hover {
-  background-color: rgb(131, 129, 129);
-  color: var(--red);
-  transition: all ease 0.3s;
-}
 .text-field-label {
   margin-bottom: -25px;
   float: left;
   text-align: left;
 }
-.css-utcgeo-MuiInputBase-root-MuiOutlinedInput-root {
+.income_container .css-utcgeo-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: var(--gray-1);
+}
+
+.income_container
+  .css-1pcz7ke-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  background-color: var(--gray-1);
+}
+.add_income .css-b3dvpx-MuiStack-root {
+  background-color: var(--gray-1);
+}
+.background_grey {
   background-color: var(--gray-1);
 }
