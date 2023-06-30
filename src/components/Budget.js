@@ -7,17 +7,8 @@ import Backdrop from "@mui/material/Backdrop";
 import ManualEntry from "./svg/IconManuallyEnter";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-// 1.  getting data from mongodb
-import { AuthContext } from "../context/AuthContext";
-import { useJwt } from "react-jwt";
-import { DataContext } from "../context/DataContext";
 
 export default function Budget() {
-  //2
-  const { token } = useContext(AuthContext);
-  const [budgetData, setBudgetData] = useState([]);
-  const { decodedToken } = useJwt(token);
-
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const actions = [
@@ -32,30 +23,6 @@ export default function Budget() {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
   };
-
-  //3
-  useEffect(() => {
-    const fetchBudgets = async () => {
-      try {
-        const response = await fetch(
-          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await response.json();
-        setBudgetData(data.budgets);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchBudgets();
-  }, [decodedToken._id, token]);
-
   return (
     <Container>
       <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
