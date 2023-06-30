@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Box from '@mui/material/Box';
 import Home from './svg/IconHome';
 import Planner from './svg/IconPlanner';
 import Transactions from './svg/IconTransactions';
 import Graph from './svg/IconGraph';
 import Games from './svg/IconGame'
-import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import zIndex from '@mui/material/styles/zIndex';
+
 
 export default function Menu() {
     const [value, setValue] = useState('home');
@@ -38,9 +39,20 @@ export default function Menu() {
 
 
     return (
-    <Box sx={{ maxWidth: "600px"  }}>
-    {/* <Box> */}
-        <BottomNavigation value={value} onChange={handleChange}>
+
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 150, right: 150, zIndex: 5 }} elevation={5}>
+    {/* <Paper elevation={5}> */}
+        <BottomNavigation value={value} onChange={handleChange}
+          sx={{
+            '& .MuiBottomNavigationAction-root': {
+              minWidth: 0, // Remove the minimum width
+              padding: '5px', // Increase the padding
+            },
+            '& .MuiSvgIcon-root': {
+              fontSize: '90px', // Increase the icon size
+            },
+          }}
+        >
         <BottomNavigationAction
         // label="Home"
         value="home"
@@ -62,13 +74,13 @@ export default function Menu() {
         value="graph"
         icon={<Graph />}
         />
-
+{/* 
         <BottomNavigationAction 
         // label="Games" 
         value="games" 
-        icon={<Games />} />
+        icon={<Games />} /> */}
         </BottomNavigation>  
 
-    </Box>
+    </Paper>
     )
 }

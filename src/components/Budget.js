@@ -57,46 +57,35 @@ export default function Budget() {
   }, [decodedToken._id, token]);
 
   return (
-    <div>
-      {/* 4 */}
-      {budgetData.map((budget) => (
-        <div key={budget._id}>
-          <h3>{budget.category_name}</h3>
-          <p>{budget.budget_date}</p>
-          <p>{budget.limit_amount}</p>
-          <p>{budget.budget_description}</p>
-        </div>
-      ))}
-      <Container>
-        <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
-          <Backdrop open={open} />
-          <SpeedDial
-            ariaLabel="SpeedDial tooltip example"
-            sx={{ position: "absolute", bottom: 16, right: 16 }}
-            icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
-            onClose={() => {
-              setOpen(false);
-            }}
-            onOpen={() => {
-              setOpen(true);
-            }}
-            open={open}
-            FabProps={{
-              style: paperStyles,
-            }}
-          >
-            {actions.map((action) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-                tooltipOpen
-                onClick={() => handleActionClick(action.route)}
-              />
-            ))}
-          </SpeedDial>
-        </Box>
-      </Container>
-    </div>
+    <Container>
+      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
+        <Backdrop open={open} />
+        <SpeedDial
+          ariaLabel="SpeedDial tooltip example"
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
+          onClose={() => {
+            setOpen(false);
+          }}
+          onOpen={() => {
+            setOpen(true);
+          }}
+          open={open}
+          FabProps={{
+            style: paperStyles,
+          }}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              tooltipOpen
+              onClick={() => handleActionClick(action.route)}
+            />
+          ))}
+        </SpeedDial>
+      </Box>
+    </Container>
   );
 }

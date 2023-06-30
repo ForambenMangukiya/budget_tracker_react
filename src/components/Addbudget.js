@@ -116,7 +116,11 @@ export default function Addbudget() {
   };
 
   return (
-    <Container>
+    <Container
+    sx={{
+      paddingTop: "100px",
+    }}
+    >
       {isLoading ? (
         <Box
           sx={{

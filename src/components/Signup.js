@@ -62,7 +62,7 @@ export default function Signup() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ borderRadius: "20px" }}>
+    <Container maxWidth="sm">
       <Cornerright className="cornerright" />
       {isLoading ? (
         <Box
