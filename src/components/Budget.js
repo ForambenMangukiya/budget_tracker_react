@@ -26,12 +26,20 @@ export default function Budget() {
   };
 
   return (
-    <Container>
-      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1 }}>
+    <Container
+    sx={{
+      paddingTop: "100px",
+    }}
+    >
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          sx={{ position: "sticky", bottom: 70, right: 16,
+          '& .MuiFab-root': {
+            width: '68px', // Increase the width
+            height: '68px', // Increase the height
+          },
+          }}
           icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
           onClose={() => {
             setOpen(false);
@@ -54,7 +62,6 @@ export default function Budget() {
             />
           ))}
         </SpeedDial>
-      </Box>
     </Container>
   );
 
