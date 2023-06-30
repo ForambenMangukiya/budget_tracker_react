@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import { MenuItem, InputLabel } from "@mui/material";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
+import Grid from '@mui/material/Grid';
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -32,6 +33,7 @@ import { ReactComponent as IconTransportation } from "./svgCategories/transporta
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
 import { Refresh } from "plaid-threads";
+import { Container, Box } from "@mui/material";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -246,56 +248,19 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
-      <div className="dash-container">
-        <Box component="div" className="transaction-filter">
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={filter}
-              label="Filter"
-              onChange={(e) => setFilter(e.target.value)}
-              sx={{
-                textAlign: "left",
-                "& fieldset": {
-                  borderRadius: "10px",
-                },
-              }}
-            >
-              <MenuItem value={"all"}>All</MenuItem>
-              <MenuItem value={"week"}>Last Week</MenuItem>
-              <MenuItem value={"month"}>Last Month</MenuItem>
-              <MenuItem value={"3months"}>Last 3 Months</MenuItem>
-              <MenuItem value={"6months"}>Last 6 Months</MenuItem>
-              <MenuItem value={"year"}>Last Year</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        {/* <span onClick={() => setFilter("all")} value="all">
-            All
-          </span>
-          <span onClick={() => setFilter("year")} value="year">
-            Year
-          </span>
-          <span onClick={() => setFilter("6months")} value="6months">
-            6
-          </span>
-          <span onClick={() => setFilter("3months")} value="3months">
-            3 Months
-          </span>
-          <span onClick={() => setFilter("month")} value="month">
-            Month
-          </span>
-          <span onClick={() => setFilter("week")} value="week">
-            Week
-          </span> */}
+    <Container 
+    sx={{
+      paddingTop: "100px", 
+      maxWidth: "sm",
+      minHeight: "100vh",
+    }}
+    >
+      <Grid container spacing={2} className="dash-container">
+        
+        <Grid item xs={12} className="dash-progress">
+          <p className="dash-expected">Expected savings</p>
+          <h2 className="dash-h2">{savings} $</h2>
 
-        <div className="dash-progress">
-          <h2 className="dash-balance">Balance: {incomeSum - expensesSum} $</h2>
-          <p className="dash-expected">Expected savings: {savings} $</p>
-          <h5 className="spent-title">Spent</h5>
           <div className="linear-progress-container1">
             <span className="progress-left">{expensesSum} $</span>
             <span className="progress-right">{incomeSum} $</span>
@@ -313,14 +278,34 @@ export default function Dashboard() {
               value={budgetBar > 100 ? 100 : budgetBar}
             />
           </div>
-        </div>
-        <Charts />
+        </Grid>
 
-        <div className="swiper">
-          <div className="swiper-wrapper">
+        <Grid item xs={12}>
+          <Charts />
+        </Grid>
+        
+        {/* <h3 className="dash-title">Top spending</h3>
+        <div className="dash-topSpending">
+          {categories.map((category) => {
+            const IconComponent = categoryIcons[category.name];
+            return (
+              <div>
+                <IconComponent />
+                <p className="dash-icon-title">{category.name}</p>
+              </div>
+            );
+          })}
+        </div> */}
+
+
+      <Grid item xs={12}>
+        <h3 className="dash-title">Monthly Budgets</h3>
+        <Box className="swiper">
+          <Box className="swiper-wrapper">
             {budgetData?.map((each) => (
-              <div className="swiper-slide">
-                <div className="dash-budget">
+              <Box className="swiper-slide">
+                <Box className="dash-budget">
+                 
                   {(() => {
                     const Icon =
                       categoryIcons[
@@ -329,7 +314,7 @@ export default function Dashboard() {
 
                     return <Icon />;
                   })()}
-                  <div className="dash-budget-title">
+                  <Box className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
                       {categoriesObj[each.category_name]
@@ -338,11 +323,11 @@ export default function Dashboard() {
                         : Number(each.limit_amount)}
                       $ remaining
                     </p>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
 
-                <div className="linear-progress-container2">
-                  <span className="progress-left">
+                <Box className="linear-progress-container2">
+                  <h6 className="progress-left">
                     {categoriesObj?.hasOwnProperty(each.category_name)
                       ? `${categoriesObj[each.category_name].spent} $`
                       : "0 $"}
@@ -373,16 +358,20 @@ export default function Dashboard() {
                     }
                     // value={50}
                   />
-                </div>
-              </div>
+                </Box>
+            
+              </Box>
             ))}
-          </div>
+             
+          </Box>
+            <Box class="swiper-pagination"></Box>
+            <Box class="swiper-scrollbar"></Box>
+        </Box>
+        </Grid>
+      </Grid>
+     
 
-          <div class="swiper-pagination"></div>
 
-          <div class="swiper-scrollbar"></div>
-        </div>
-      </div>
-    </div>
+    </Container>
   );
 }

@@ -115,8 +115,6 @@ export default function DataContextProvider(props) {
 
   console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
-  console.log("categories:", categories);
-
   //   console.log("decoded token id:", decodedToken);
 
   return (
