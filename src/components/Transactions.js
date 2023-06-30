@@ -397,7 +397,11 @@ export default function Transactions() {
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          sx={{ position: "sticky", bottom: 70, right: 16,
+          style={{
+            zIndex: 5,
+            transform: 'translateX(+40%)',
+          }}
+          sx={{ position: "sticky", bottom: 70,
           '& .MuiFab-root': {
             width: '68px', // Increase the width
             height: '68px', // Increase the height

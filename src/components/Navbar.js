@@ -69,7 +69,7 @@ export default function Navbar() {
     }
 
     if (location.pathname == "/reports") {
-      return "Graph";
+      return "Reports";
     }
 
     if (location.pathname == "/transactions") {
@@ -99,27 +99,27 @@ export default function Navbar() {
   };
 
   return (
-    <Container
-      sx={{
-        maxWidth: "sm",
-        background: "linear-gradient(#c80048, #961c48)",
-        // height: "100%",
-        padding: "20px",
-        paddingTop: "30px",
-        display: "flex",
-        justifyContent: "space-evenly",
-        boxSizing: "border-box",
-        position: "fixed",
-        zIndex: 9,
-      }}
-    >
+    <Container style={{ maxWidth: '600px' }}
+    sx={{
+      maxWidth: "600px",
+      background: "linear-gradient(#c80048, #961c48)",
+      // height: "100%",
+      padding: "20px",
+      paddingTop: "30px",
+      display: "flex",
+      justifyContent: "space-evenly",
+      boxSizing: "border-box",
+      position: "fixed",
+      zIndex: 5,
+    }}
+  >
       <Box>
         <Typography
           variant="h5"
           gutterBottom
           component="a"
           sx={{
-            ml: 12,
+            ml: 8,
             fontFamily: "Inter",
             fontWeight: 500,
             color: "#FFFF",
