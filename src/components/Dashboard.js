@@ -9,8 +9,7 @@ import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
 import FormControl from "@mui/material/FormControl";
 import { MenuItem, InputLabel } from "@mui/material";
 import Select from "@mui/material/Select";
-import Box from "@mui/material/Box";
-import Grid from '@mui/material/Grid';
+import { Container, Box } from "@mui/material";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -33,7 +32,7 @@ import { ReactComponent as IconTransportation } from "./svgCategories/transporta
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
 import { Refresh } from "plaid-threads";
-import { Container, Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -248,19 +247,64 @@ export default function Dashboard() {
   };
 
   return (
-    <Container 
-    sx={{
-      paddingTop: "100px", 
-      maxWidth: "sm",
-      minHeight: "100vh",
-    }}
+    <Container
+      sx={{
+        paddingTop: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
     >
-      <Grid container spacing={2} className="dash-container">
-        
-        <Grid item xs={12} className="dash-progress">
-          <p className="dash-expected">Expected savings</p>
-          <h2 className="dash-h2">{savings} $</h2>
+      <Grid container className="dash-container">
+        <Grid item xs={12}>
+          <Box component="div" className="transaction-filter">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filter}
+                label="Filter"
+                onChange={(e) => setFilter(e.target.value)}
+                sx={{
+                  textAlign: "left",
+                  "& fieldset": {
+                    borderRadius: "10px",
+                  },
+                }}
+              >
+                <MenuItem value={"all"}>All</MenuItem>
+                <MenuItem value={"week"}>Last Week</MenuItem>
+                <MenuItem value={"month"}>Last Month</MenuItem>
+                <MenuItem value={"3months"}>Last 3 Months</MenuItem>
+                <MenuItem value={"6months"}>Last 6 Months</MenuItem>
+                <MenuItem value={"year"}>Last Year</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Grid>
+        {/* <span onClick={() => setFilter("all")} value="all">
+            All
+          </span>
+          <span onClick={() => setFilter("year")} value="year">
+            Year
+          </span>
+          <span onClick={() => setFilter("6months")} value="6months">
+            6
+          </span>
+          <span onClick={() => setFilter("3months")} value="3months">
+            3 Months
+          </span>
+          <span onClick={() => setFilter("month")} value="month">
+            Month
+          </span>
+          <span onClick={() => setFilter("week")} value="week">
+            Week
+          </span> */}
 
+        <Grid item xs={12} className="dash-progress">
+          <h2 className="dash-balance">Balance: {incomeSum - expensesSum} $</h2>
+          <p className="dash-expected">Expected savings: {savings} $</p>
+          <h5 className="spent-title">Spent</h5>
           <div className="linear-progress-container1">
             <span className="progress-left">{expensesSum} $</span>
             <span className="progress-right">{incomeSum} $</span>
@@ -279,99 +323,83 @@ export default function Dashboard() {
             />
           </div>
         </Grid>
-
         <Grid item xs={12}>
           <Charts />
         </Grid>
-        
-        {/* <h3 className="dash-title">Top spending</h3>
-        <div className="dash-topSpending">
-          {categories.map((category) => {
-            const IconComponent = categoryIcons[category.name];
-            return (
-              <div>
-                <IconComponent />
-                <p className="dash-icon-title">{category.name}</p>
-              </div>
-            );
-          })}
-        </div> */}
 
+        <Grid item xs={12}>
+          <Box className="swiper">
+            <Box className="swiper-wrapper">
+              {budgetData?.map((each) => (
+                <Box className="swiper-slide">
+                  <Box className="dash-budget">
+                    {(() => {
+                      const Icon =
+                        categoryIcons[
+                          each.category_name ? each.category_name : "others"
+                        ];
 
-      <Grid item xs={12}>
-        <h3 className="dash-title">Monthly Budgets</h3>
-        <Box className="swiper">
-          <Box className="swiper-wrapper">
-            {budgetData?.map((each) => (
-              <Box className="swiper-slide">
-                <Box className="dash-budget">
-                 
-                  {(() => {
-                    const Icon =
-                      categoryIcons[
-                        each.category_name ? each.category_name : "others"
-                      ];
+                      return <Icon />;
+                    })()}
+                    <Box className="dash-budget-title">
+                      <h2 className="dash-budget-title">
+                        {each.category_name}
+                      </h2>
+                      <p className="dash-budget-info">
+                        {categoriesObj[each.category_name]
+                          ? Number(each.limit_amount) -
+                            categoriesObj[each.category_name].spent
+                          : Number(each.limit_amount)}
+                        $ remaining
+                      </p>
+                    </Box>
+                  </Box>
 
-                    return <Icon />;
-                  })()}
-                  <Box className="dash-budget-title">
-                    <h2 className="dash-budget-title">{each.category_name}</h2>
-                    <p className="dash-budget-info">
-                      {categoriesObj[each.category_name]
-                        ? Number(each.limit_amount) -
-                          categoriesObj[each.category_name].spent
-                        : Number(each.limit_amount)}
-                      $ remaining
-                    </p>
+                  <Box className="linear-progress-container2">
+                    <span className="progress-left">
+                      {categoriesObj?.hasOwnProperty(each.category_name)
+                        ? `${categoriesObj[each.category_name].spent} $`
+                        : "0 $"}
+                    </span>
+                    <span className="progress-right">
+                      {each.limit_amount} $
+                    </span>
+                    <LinearProgress
+                      variant="determinate"
+                      // value={(() => {
+                      //   if (categoriesObj[each.category_name]) {
+                      //     const percentage =
+                      //       (categoriesObj[each.category_name].spent *
+                      //         100 *
+                      //         100) /
+                      //       categoriesObj[each.category_name.limit];
+                      //     return percentage > 100 ? 100 : percentage;
+                      //   }
+                      // })()}
+                      value={
+                        categoriesObj[each.category_name] &&
+                        categoriesObj[each.category_name].spent <
+                          categoriesObj[each.category_name].limit
+                          ? (categoriesObj[each.category_name].spent * 100) /
+                            categoriesObj[each.category_name].limit
+                          : categoriesObj[each.category_name] &&
+                            categoriesObj[each.category_name].spent !== 0
+                          ? 100
+                          : 0
+                      }
+                      // value={50}
+                    />
                   </Box>
                 </Box>
+              ))}
+            </Box>
 
-                <Box className="linear-progress-container2">
-                  <h6 className="progress-left">
-                    {categoriesObj?.hasOwnProperty(each.category_name)
-                      ? `${categoriesObj[each.category_name].spent} $`
-                      : "0 $"}
-                  </span>
-                  <span className="progress-right">{each.limit_amount} $</span>
-                  <LinearProgress
-                    variant="determinate"
-                    // value={(() => {
-                    //   if (categoriesObj[each.category_name]) {
-                    //     const percentage =
-                    //       (categoriesObj[each.category_name].spent *
-                    //         100 *
-                    //         100) /
-                    //       categoriesObj[each.category_name.limit];
-                    //     return percentage > 100 ? 100 : percentage;
-                    //   }
-                    // })()}
-                    value={
-                      categoriesObj[each.category_name] &&
-                      categoriesObj[each.category_name].spent <
-                        categoriesObj[each.category_name].limit
-                        ? (categoriesObj[each.category_name].spent * 100) /
-                          categoriesObj[each.category_name].limit
-                        : categoriesObj[each.category_name] &&
-                          categoriesObj[each.category_name].spent !== 0
-                        ? 100
-                        : 0
-                    }
-                    // value={50}
-                  />
-                </Box>
-            
-              </Box>
-            ))}
-             
+            <div class="swiper-pagination"></div>
+
+            <div class="swiper-scrollbar"></div>
           </Box>
-            <Box class="swiper-pagination"></Box>
-            <Box class="swiper-scrollbar"></Box>
-        </Box>
         </Grid>
       </Grid>
-     
-
-
     </Container>
   );
 }
