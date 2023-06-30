@@ -6,6 +6,7 @@ import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
 import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
+import Grid from '@mui/material/Grid';
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -27,6 +28,7 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
+import { Container, Box } from "@mui/material";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -164,9 +166,16 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
-      <div className="dash-container">
-        <div className="dash-progress">
+    <Container 
+    sx={{
+      paddingTop: "100px", 
+      maxWidth: "sm",
+      minHeight: "100vh",
+    }}
+    >
+      <Grid container spacing={2} className="dash-container">
+        
+        <Grid item xs={12} className="dash-progress">
           <p className="dash-expected">Expected savings</p>
           <h2 className="dash-h2">{savings} $</h2>
 
@@ -187,8 +196,12 @@ export default function Dashboard() {
               value={budgetBar > 100 ? 100 : budgetBar}
             />
           </div>
-        </div>
-        <Charts />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Charts />
+        </Grid>
+        
         {/* <h3 className="dash-title">Top spending</h3>
         <div className="dash-topSpending">
           {categories.map((category) => {
@@ -202,12 +215,14 @@ export default function Dashboard() {
           })}
         </div> */}
 
+
+      <Grid item xs={12}>
         <h3 className="dash-title">Monthly Budgets</h3>
-        <div className="swiper">
-          <div className="swiper-wrapper">
+        <Box className="swiper">
+          <Box className="swiper-wrapper">
             {budgetData?.map((each) => (
-              <div className="swiper-slide">
-                <div className="dash-budget">
+              <Box className="swiper-slide">
+                <Box className="dash-budget">
                  
                   {(() => {
                     const Icon =
@@ -217,16 +232,16 @@ export default function Dashboard() {
 
                     return <Icon />;
                   })()}
-                  <div className="dash-budget-title">
+                  <Box className="dash-budget-title">
                     <h2 className="dash-budget-title">{each.category_name}</h2>
                     <p className="dash-budget-info">
                       {Number(each.limit_amount) - Number(each.spent)} $
                       remaining
                     </p>
-                  </div>
-                </div>
+                  </Box>
+                </Box>
 
-                <div className="linear-progress-container2">
+                <Box className="linear-progress-container2">
                   <h6 className="progress-left">
                     {categoriesObj?.hasOwnProperty(each.category_name)
                       ? `${categoriesObj[each.category_name].spent} $`
@@ -243,16 +258,20 @@ export default function Dashboard() {
                         : 0
                     }
                   />
-                </div>
-              </div>
+                </Box>
+            
+              </Box>
             ))}
-          </div>
+             
+          </Box>
+            <Box class="swiper-pagination"></Box>
+            <Box class="swiper-scrollbar"></Box>
+        </Box>
+        </Grid>
+      </Grid>
+     
 
-          <div class="swiper-pagination"></div>
 
-          <div class="swiper-scrollbar"></div>
-        </div>
-      </div>
-    </div>
+    </Container>
   );
 }

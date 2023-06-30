@@ -21,7 +21,6 @@ export default function Landingpage() {
     <Container
       className="landingPage"
       maxWidth="sm"
-      sx={{ borderRadius: "20px" }}
     >
       <Cornerright className="cornerright" />
       <Box

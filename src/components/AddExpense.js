@@ -84,8 +84,11 @@ export default function AddExpense() {
   };
 
   return (
-    <>
-      <Container maxWidth="sm" id="transactions-container-id">
+      <Container maxWidth="sm" id="transactions-container-id"
+        sx={{
+          paddingTop: "100px",
+        }}
+      >
         {isLoading ? (
           <Box
             sx={{
@@ -220,6 +223,5 @@ export default function AddExpense() {
           </Box>
         )}
       </Container>
-    </>
   );
 }
