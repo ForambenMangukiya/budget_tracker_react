@@ -17,7 +17,8 @@ import { ReactComponent as IconRent } from "./svgCategories/rent.svg";
 import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
-export default function Reports() {
+
+export default function Topspending() {
   const { categories } = useContext(DataContext);
   const categoryIcons = {
     bills: IconBills,
