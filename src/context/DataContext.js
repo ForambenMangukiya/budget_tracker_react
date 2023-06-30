@@ -11,7 +11,7 @@ export default function DataContextProvider(props) {
   const [categories, setCategories] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const [categoriesObj, setCategoriesObj] = useState();
+  const [categoriesObj, setCategoriesObj] = useState({});
 
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
@@ -62,7 +62,6 @@ export default function DataContextProvider(props) {
         console.log("###budget data", data);
 
         setBudgetData(data);
-        console.log("budget function is working");
         // setLoading(false)
       } catch (error) {
         console.log(error);
@@ -114,8 +113,6 @@ export default function DataContextProvider(props) {
 
   console.log("transaction data:", tranData);
   console.log("Budget data:", budgetData);
-  console.log("categories:", categories);
-
   //   console.log("decoded token id:", decodedToken);
 
   return (

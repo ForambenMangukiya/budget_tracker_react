@@ -5,7 +5,6 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Backdrop from "@mui/material/Backdrop";
 import ManualEntry from "./svg/IconManuallyEnter";
-import AddIcon from "@mui/icons-material/Add";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 // 1.  getting data from mongodb
