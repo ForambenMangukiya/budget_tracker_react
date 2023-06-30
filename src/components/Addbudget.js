@@ -117,9 +117,10 @@ export default function Addbudget() {
 
   return (
     <Container
-    sx={{
-      paddingTop: "100px",
-    }}
+      sx={{
+        maxWidth: "sm",
+        paddingTop: "100px",
+      }}
     >
       {isLoading ? (
         <Box
@@ -238,6 +239,6 @@ export default function Addbudget() {
           </form>
         </Box>
       )}
-    </>
+    </Container>
   );
 }
