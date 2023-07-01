@@ -11,6 +11,8 @@ import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 import { TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
+import { styled } from '@mui/system';
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,20 +48,27 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         setIsLoading(false);
         login(data.token);
-      }, 5000);
+      }, 50000);
     }
-    console.log("token:", data.token);
 
     if (data.token !== null && data.token !== undefined) {
       navigate("/dashboard");
     }
   };
+
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      backgroundColor: '#ffa726',
+      transform: 'scale(1.05)',
+    },
+  });
+
   return (
     <Container maxWidth="sm">
       <Cornerright className="cornerright" />
       {isLoading ? (
         <Box
-          sx={{ display: "flex", justifyContent: "center", padding: "20px" }}
+          sx={{ display: "flex", justifyContent: "center", padding: "20px", paddingTop: "300px", }}
         >
           <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
@@ -72,6 +81,7 @@ export default function Login() {
             alignItems: "center",
             gap: "20px",
             minHeight: "100vh",
+            paddingTop: "150px",
           }}
         >
           <FormControl fullWidth className="login-container">
@@ -86,6 +96,9 @@ export default function Login() {
                 borderRadius: "31px",
                 "& fieldset": {
                   borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
                 },
               }}
             >
@@ -105,29 +118,39 @@ export default function Login() {
                 "& fieldset": {
                   borderRadius: "30px",
                 },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
               }}
             ></TextField>
-            <Box>
-              <Button
+            <Box
+             sx={{
+              padding: "30px",
+            }}
+            >
+              <CustomButton
                 sx={{
-                  ":hover": { bgcolor: "grey" },
+                  ":hover": { bgcolor: "#C42B0A" },
                   borderRadius: "31px",
                   background: "#c80048",
                   width: "150px",
                   height: "50px",
                   margin: "20px",
                   color: "white",
+                  fontSize: "16px",
+                  padding: "5px 100px",
                 }}
                 onClick={handleSubmit}
                 className="login"
               >
                 Login
-              </Button>
+              </CustomButton>
             </Box>
           </FormControl>
 
+          <p>Don't have an account?</p>
           <NavLink to="/signup" className="backtosignup">
-            Sign Up
+            Signup here
           </NavLink>
           {error && <div className="error">{error}</div>}
         </Box>

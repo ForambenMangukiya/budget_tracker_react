@@ -49,7 +49,7 @@ export default function Menu() {
         zIndex: 5,
         left: '50%',
         transform: 'translateX(-50%)',
-        minWidth: "500px",
+        minWidth: "400px",
         maxWidth: "600px",
         padding: "5px",
       }}

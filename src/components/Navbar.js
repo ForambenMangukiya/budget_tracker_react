@@ -226,7 +226,7 @@ export default function Navbar() {
               }}
             >
               <ListItemIcon sx={{ color: "#FFFF" }}>
-                <Logout fontSize="small" />
+                <Logout sx={{ fontSize: '25px' }} />
               </ListItemIcon>
               <Typography
                 sx={{
@@ -234,6 +234,7 @@ export default function Navbar() {
                   fontWeight: 700,
                   color: "#FFFF",
                   textDecoration: "none",
+                  fontSize: '16px', 
                 }}
               >
                 Logout
@@ -254,7 +255,7 @@ export default function Navbar() {
                 }}
               >
                 <ListItemIcon sx={{ color: "#FFFF" }}>
-                  <Settings fontSize="small" />
+                  <Settings sx={{ fontSize: '25px' }} />
                 </ListItemIcon>
 
                 <Typography
@@ -263,6 +264,7 @@ export default function Navbar() {
                     fontWeight: 700,
                     color: "#FFFF",
                     textDecoration: "none",
+                    fontSize: '16px', 
                   }}
                 >
                   Settings

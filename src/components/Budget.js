@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Backdrop from "@mui/material/Backdrop";
 import ManualEntry from "./svg/IconManuallyEnter";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import AddIcon from '@mui/icons-material/Add';
 
 
 export default function Budget() {
@@ -40,11 +39,11 @@ export default function Budget() {
           }}
           sx={{ position: "sticky", bottom: 70,
           '& .MuiFab-root': {
-            width: '68px', // Increase the width
-            height: '68px', // Increase the height
+            width: '64px', // Increase the width
+            height: '64px', // Increase the height
           },
           }}
-          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
+          icon={<AddIcon sx={{ color: "#FFFF", fontSize: '30px' }} />}
           onClose={() => {
             setOpen(false);
           }}

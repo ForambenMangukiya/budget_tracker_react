@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
+import { Container } from "@mui/material";
 
 //importing SVG -------------------
 import { ReactComponent as IconAddNew } from "./svgCategories/add-new.svg";
@@ -38,8 +39,14 @@ export default function Reports() {
     others: IconOthers,
   };
   return (
-    <div>
-      <h3 className="dash-title">Top spending</h3>
+    <Container
+      sx={{
+        paddingTop: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+    >
+       <h3 className="dash-title">Top spending</h3>
       <div className="dash-topSpending">
         {categories?.map((category) => {
           const IconComponent = categoryIcons[category.name]
@@ -53,6 +60,7 @@ export default function Reports() {
           );
         })}
       </div>
-    </div>
+    </Container>
+     
   );
 }
