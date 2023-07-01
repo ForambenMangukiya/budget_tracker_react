@@ -8,6 +8,7 @@ import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 // import { ReactComponent as Welcoming } from "./svgCategories/welcoming.svg";
 import welcoming from "./images/welcoming.jpg";
 import { useNavigate } from "react-router-dom";
+import { styled } from '@mui/system';
 
 export default function LandingPage2() {
   const navigate = useNavigate();
@@ -20,11 +21,16 @@ export default function LandingPage2() {
     navigate("/login");
   };
 
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      transform: 'scale(1.05)',
+    },
+  });
+
   return (
     <Container
       className="landingPage"
       maxWidth="sm"
-      sx={{ borderRadius: "20px" }}
     >
       <Cornerright className="cornerright" />
       {/* <Welcoming /> */}
@@ -36,33 +42,45 @@ export default function LandingPage2() {
         minHeight="100vh"
         gap="20px"
       >
-        <img className="welcomeimage" src={welcoming} width="500px" />
+      <Box
+      sx={{
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          transform: 'scale(1.1)',
+        },
+        paddingBottom: "30px",
+      }}
+      >
+      <img className="welcomeimage" src={welcoming} width="400px" />
+    </Box>
 
-        <Button
+        <CustomButton
           style={{
             borderRadius: 35,
             backgroundColor: "#c80048",
-            padding: "5px 88px",
+            padding: "5px 80px",
+            fontSize: "16px",
           }}
           className="register-btn"
           variant="contained"
           onClick={handelRegister}
         >
           Register
-        </Button>
+        </CustomButton>
 
-        <Button
+        <CustomButton
           style={{
             borderRadius: 35,
             backgroundColor: "#c80048",
             padding: "5px 100px",
+            fontSize: "16px",
           }}
           className="login-btn"
           variant="contained"
           onClick={handelLogin}
         >
           Login
-        </Button>
+        </CustomButton>
       </Box>
 
       <Cornerleft className="cornerleft" />

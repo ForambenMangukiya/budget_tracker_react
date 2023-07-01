@@ -15,7 +15,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import CardHeader from "@mui/material/CardHeader";
-
+import AddIcon from "@mui/icons-material/Add";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
@@ -115,7 +115,11 @@ export default function Budget() {
   });
 
   return (
-    <Container>
+    <Container
+      sx={{
+        paddingTop: "100px",
+      }}
+    >
       <Box
         sx={{
           height: 600,

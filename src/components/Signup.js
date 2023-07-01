@@ -11,6 +11,12 @@ import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import { InputLabel, TextField } from "@mui/material";
+import { MenuItem } from "@mui/material";
+import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import { styled } from '@mui/system';
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -20,6 +26,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
@@ -29,17 +36,20 @@ export default function Signup() {
     setError("");
     setIsLoading(true);
 
-    const response = await fetch("https://piggybank-api.onrender.com/users/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password,
-        country_code,
-        first_name,
-        last_name,
-      }),
-    });
+    const response = await fetch(
+      "https://piggybank-api.onrender.com/users/signup",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          country_code,
+          first_name,
+          last_name,
+        }),
+      }
+    );
 
     const data = await response.json();
 
@@ -61,8 +71,15 @@ export default function Signup() {
     }
   };
 
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      backgroundColor: '#ffa726',
+      transform: 'scale(1.05)',
+    },
+  });
+
   return (
-    <Container maxWidth="sm" sx={{ borderRadius: "20px" }}>
+    <Container maxWidth="sm">
       <Cornerright className="cornerright" />
       {isLoading ? (
         <Box
@@ -75,69 +92,149 @@ export default function Signup() {
           <CircularProgress sx={{ color: "#b9b9b9" }} />
         </Box>
       ) : (
-        <form className="signup-container" onSubmit={handleSubmit}>
-          <label className="firstname">First name:</label>
-          <input
-            id="firstnameinput"
-            type="text"
-            value={first_name}
-            onChange={(e) => setFirst_name(e.target.value)}
-            placeholder="Please fill in this field"
-          />
-
-          <label className="lastname">Last name:</label>
-          <input
-            id="lastnameinput"
-            type="text"
-            value={last_name}
-            onChange={(e) => setLast_name(e.target.value)}
-            placeholder="Please fill in this field"
-          />
-
-          <label className="country">Country:</label>
-          <select
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+            minHeight: "100vh",
+            padding: "10px",
+            paddingTop: "100px",
+          }}
+        >
+          <FormControl fullWidth className="signup-container">
+            <TextField
+              id="firstnameinput"
+              label="First name"
+              type="text"
+              value={first_name}
+              onChange={(e) => setFirst_name(e.target.value)}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
+              }}
+            ></TextField>
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              id="lastnameinput"
+              label="Last name"
+              type="text"
+              value={last_name}
+              onChange={(e) => setLast_name(e.target.value)}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
+              }}
+            ></TextField>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel className="country">Country</InputLabel>
+            <Select
             id="countryselectinput"
             value={country_code}
             onChange={(e) => setCountry_code(e.target.value)}
+            sx={{
+              borderRadius: "31px",
+              "& fieldset": {
+                borderRadius: "30px",
+              },
+              fontSize: '16px',
+            }}
           >
-            <option value="countryselectinput">Select Country</option>
-            <option value="US">US</option>
-            <option value="DE">DE</option>
-            {countryList.map((countryCode) => {
-              if (countryCode !== "US" && countryCode !== "DE") {
-                return (
-                  <option key={countryCode} value={countryCode}>
-                    {countryCode}
-                  </option>
-                );
-              }
-              return null;
-            })}
-          </select>
+            <MenuItem value="US"
+            sx={{ fontSize: '16px' }}>US</MenuItem>
+            <MenuItem value="DE"
+            sx={{ fontSize: '16px' }}>DE</MenuItem>
+            {countryList
+              .filter((countryCode) => countryCode !== "US" && countryCode !== "DE")
+              .map((countryCode) => (
+                <MenuItem key={countryCode} value={countryCode}
+                sx={{ fontSize: '16px' }}>
+                  {countryCode}
+                </MenuItem>
+              ))}
+          </Select>
 
-          <label className="email">Email:</label>
-          <input
-            id="emailinput"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Please fill in this field"
-          />
-
-          <label className="password">Password:</label>
-          <input
-            id="passwordinput"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Please fill in this field"
-          />
-          <button className="signup">Register</button>
-          <NavLink to="/login" className="backtologin">
-            Login
-          </NavLink>
-          {error && <div className="error">{error}</div>}
-        </form>
+           
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              id="emailinput"
+              type="email"
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              id="passwordinput"
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
+              }}
+            />
+            <Box
+            sx={{
+              padding: "30px",
+            }}
+            >
+              <CustomButton
+                sx={{
+                  ":hover": { bgcolor: "#C42B0A" },
+                  borderRadius: "31px",
+                  background: "#c80048",
+                  width: "150px",
+                  height: "50px",
+                  margin: "20px",
+                  color: "white",
+                  fontSize: "16px",
+                  padding: "5px 100px",
+                }}
+                onClick={handleSubmit}
+                className="signup"
+              >
+                Register
+              </CustomButton>
+              <p>Already have an account?</p>
+              <NavLink to="/login" className="backtologin">
+                Login here
+              </NavLink>
+              {error && <div className="error">{error}</div>}
+            </Box>
+          </FormControl>
+        </Box>
       )}
       <Cornerleft className="cornerleft" />
     </Container>

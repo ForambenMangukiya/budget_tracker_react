@@ -129,25 +129,60 @@ const COLORS = [
 //   );
 // };
 
+//Percentage labels
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  percent,
+  index,
+}) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 1.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="black"
+      textAnchor={x > cx ? "start" : "end"}
+      dominantBaseline="central"
+    >
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
 export default function Charts() {
   const { categories } = useContext(DataContext);
 
   return (
     <div className="dash-progress">
-      <ResponsiveContainer width="100%" height={300} debounce={1}>
+      <div className="dash-graph">
+        <h2>Spendings</h2>
+        <p>Top spending :{categories[0]?.name}</p>
+      </div>
+
+      <ResponsiveContainer width="100%" height={340} debounce={1}>
         <PieChart>
           <Legend
-            verticalAlign="bottom"
+            // verticalAlign="bottom"
             align="middle"
             layout="horizontal"
             iconSize={6}
+            // margin={50}
           />
+
           <Pie
             data={categories}
             cx="50%"
             cy="50%"
             labelLine={true}
-            label={true}
+            label={renderCustomizedLabel}
             outerRadius={80}
             fill="#8884d8"
             dataKey="spent"

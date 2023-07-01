@@ -116,7 +116,12 @@ export default function Addbudget() {
   };
 
   return (
-    <Container>
+    <Container
+      sx={{
+        maxWidth: "sm",
+        paddingTop: "100px",
+      }}
+    >
       {isLoading ? (
         <Box
           sx={{
@@ -215,10 +220,17 @@ export default function Addbudget() {
             </FormControl>
             {/* Submit Button */}
             <Button
-              variant="outlined"
+              sx={{
+                ":hover": { bgcolor: "grey" },
+                borderRadius: "31px",
+                background: "#c80048",
+                width: "150px",
+                height: "50px",
+                margin: "20px",
+                color: "white",
+              }}
               onClick={handleSubmit}
               className="btn_add"
-              sx={{ mt: 1, pt: 2, pb: 2, pl: 5, pr: 5 }}
             >
               Add
             </Button>

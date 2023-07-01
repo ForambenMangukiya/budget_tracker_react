@@ -1,92 +1,20 @@
-.signup-container {
-  text-align: left;
-  max-width: 320px;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  margin-top: 70px;
-}
-
-.firstname,
-.lastname,
-.country,
-.email,
-.password {
-  display: flex;
-  position: relative;
-  width: 100%;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-/* 
-.firstname::after,
-.lastname::after,
-.country::after,
-.email::after,
-.password::after {
-  content: ":";
-  position: absolute;
-  top: 6px;
-  right: -5px;
-} */
-
-#firstnameinput,
-#lastnameinput,
-#countryselectinput,
-#emailinput,
-#passwordinput {
-  flex: 1;
-  width: 90%;
-  max-width: 100%;
-  padding: 8px;
-  border-radius: 31px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: black;
-  background: #e6e6e6;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-}
-.signup {
-  width: 50%;
-  max-width: 100%;
-  margin: 20px auto;
-  background: #c80048;
-  border-radius: 31px;
-  padding: 8px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 17px;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .backtologin {
   display: flex;
   justify-content: center;
   width: 100%;
   height: 31px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Inter";
   color: #c80048;
   margin-top: 10px;
   border: none;
   background: none;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 320px) {
-  .signup-container {
-    padding: 10px;
-  }
+.backtologin:hover {
+  transform: scale(1.1);
 }
+

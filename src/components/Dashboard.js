@@ -6,6 +6,10 @@ import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
 import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
+import FormControl from "@mui/material/FormControl";
+import { MenuItem, InputLabel } from "@mui/material";
+import Select from "@mui/material/Select";
+import { Container, Box, Typography } from "@mui/material";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -27,6 +31,8 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
+import { Refresh } from "plaid-threads";
+import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -47,10 +53,10 @@ export default function Dashboard() {
 
   // init Swiper:
   const swiper = new Swiper(".swiper", {
-    effect: "cards",
-    cardsEffect: {
-      // ...
-    },
+    // effect: "cards",
+    // cardsEffect: {
+    //   // ...
+    // },
 
     direction: "horizontal",
     loop: true,
@@ -77,10 +83,96 @@ export default function Dashboard() {
   // const [debitTrans, setDebitTrans] = useState([]);
   // const [creditTrans, setCreditTrans] = useState([]);
   // const [incomeSum, setIncomeSum] = useState();
+  const [filter, setFilter] = useState("month");
+  const [filteredData, setFilteredData] = useState([]);
+  const [startDate, setStartDate] = useState(Date);
+  const [endDate, setEndDate] = useState(Date);
 
-  const creditTrans = tranData?.filter((trans) => trans.tran_sign === "CR");
+  // =============================================================================================
+  // =============================================================================================
+  // =========================================================================
+  // filtering Data
+  // ========================================================================
+
+  useEffect(() => {
+    const now = new Date();
+    const today = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setEndDate(today);
+    const last5Years = new Date(
+      now.getFullYear() - 5,
+      now.getMonth(),
+      now.getDate()
+    ).getTime();
+    setStartDate(last5Years);
+  }, []);
+
+  useEffect(() => {
+    const now = new Date();
+    if (filter === "week") {
+      const lastWeek = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate() - 7
+      ).getTime();
+      setStartDate(lastWeek);
+    }
+    if (filter === "month") {
+      const lastMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+      ).getTime();
+      setStartDate(lastMonth);
+    }
+    if (filter === "3months") {
+      const last3Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 3,
+        now.getDate()
+      ).getTime();
+      setStartDate(last3Months);
+    }
+    if (filter === "6months") {
+      const last6Months = new Date(
+        now.getFullYear(),
+        now.getMonth() - 6,
+        now.getDate()
+      ).getTime();
+      setStartDate(last6Months);
+    }
+    if (filter === "year") {
+      const lastYear = new Date(
+        now.getFullYear() - 1,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(lastYear);
+    }
+    if (filter === "all") {
+      const last5Years = new Date(
+        now.getFullYear() - 5,
+        now.getMonth(),
+        now.getDate()
+      ).getTime();
+      setStartDate(last5Years);
+    }
+  }, [filter]);
+
+  useEffect(() => {
+    const filtered = tranData?.filter((data) => {
+      const timestampDate = new Date(data.tran_date).getTime();
+      return timestampDate < endDate && timestampDate > startDate;
+    });
+    setFilteredData(filtered);
+  }, [tranData, endDate, startDate]);
+
+  const creditTrans = filteredData?.filter((trans) => trans.tran_sign === "CR");
   // setCreditTrans(creditTrans);
-  const debitTrans = tranData?.filter((trans) => trans.tran_sign === "DR");
+  const debitTrans = filteredData?.filter((trans) => trans.tran_sign === "DR");
 
   // setDebitTrans(debitTrans);
   const incomeSum = creditTrans.reduce(
@@ -95,54 +187,45 @@ export default function Dashboard() {
     0
   );
 
-
-  const expensesSumBudgets = categories.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.spent,
-    0
-  );
-  // console.log("expensesSumBudgets", expensesSumBudgets);
-
+  let expensesSumBudgets = 0;
+  categories.map((category) => {
+    if (category.limit > 0) {
+      expensesSumBudgets = expensesSumBudgets + category.spent;
+    }
+  });
+  //==============================================================
   //calculate budgets
-  console.log("%%Budget DAta", budgetData);
+  //===============================================================
+
   const budgetSum = budgetData?.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.limit_amount),
     0
   );
-  // setBudgetSum(budgetSum);
-  // setIncomeSum(incomeSum);
 
   //expected to save
-  const savings = incomeSum - budgetSum + expensesSum;
-  // setSavings(incomeSum - budgetSum);
-
-  // console.log("income:", incomeSum);
-  // console.log("expenses:", expensesSum);
-  // console.log("budget:", budgetSum);
+  const savings = incomeSum - budgetSum - expensesSum;
 
   //graphic bars
   const spentBar = (expensesSum * 100) / incomeSum;
   const budgetBar = (expensesSumBudgets * 100) / budgetSum;
 
-  // setBudgetBar((budgetSum * 100) / incomeSum);
-  // setSpentBar((expensesSum * 100) / budgetSum);
+  // =========================================================================
+  // filtering Data
+  // ========================================================================
 
-  //================
-  //Top Spendings
-  //================
-
-  // setCategories(sortedArray);
-
-  //console.logs
-
+  console.log("filtered Data", filteredData);
   // console.log("tranData", tranData);
   // console.log("categories", categories);
-  console.log("categoriesObj", categoriesObj);
+  // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
+  console.log("sumBudgets", expensesSumBudgets);
+  console.log("endDate", endDate);
+  console.log("################### filteredDat In Dashboard", filteredData);
 
   const categoryIcons = {
     bills: IconBills,
@@ -164,95 +247,208 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
-      <div className="dash-container">
-        <div className="dash-progress">
-          <p className="dash-expected">Expected savings</p>
-          <h2 className="dash-h2">{savings} $</h2>
+    <Container
+      sx={{
+        paddingTop: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+    >
 
-          <div className="linear-progress-container1">
-            <h6 className="progress-left">spent</h6>
-            <span className="progress-right">{incomeSum} $</span>
+      <Grid container className="dash-container">
+        <Grid item xs={12}>
+          <Box component="div" className="transaction-filter">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={filter}
+                label="Filter"
+                onChange={(e) => setFilter(e.target.value)}
+                sx={{
+                  textAlign: "left",
+                  "& fieldset": {
+                    borderRadius: "10px",
+                  },
+                  fontSize: '14px',
+                }}
+              >
+                <MenuItem value={"all"} sx={{ fontSize: '14px' }}>All</MenuItem>
+                <MenuItem value={"week"} sx={{ fontSize: '14px' }}>Last Week</MenuItem>
+                <MenuItem value={"month"} sx={{ fontSize: '14px' }}>Last Month</MenuItem>
+                <MenuItem value={"3months"} sx={{ fontSize: '14px' }}>Last 3 Months</MenuItem>
+                <MenuItem value={"6months"} sx={{ fontSize: '14px' }}>Last 6 Months</MenuItem>
+                <MenuItem value={"year"} sx={{ fontSize: '14px' }}>Last Year</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Grid>
+        {/* <span onClick={() => setFilter("all")} value="all">
+            All
+          </span>
+          <span onClick={() => setFilter("year")} value="year">
+            Year
+          </span>
+          <span onClick={() => setFilter("6months")} value="6months">
+            6
+          </span>
+          <span onClick={() => setFilter("3months")} value="3months">
+            3 Months
+          </span>
+          <span onClick={() => setFilter("month")} value="month">
+            Month
+          </span>
+          <span onClick={() => setFilter("week")} value="week">
+            Week
+          </span> */}
+
+        <Grid item xs={12} className="dash-progress"
+              sx={{
+                paddingTop: '2rem',
+                paddingBottom: '2rem',  
+                textAlign: 'center',
+                transition: 'all 0.3s ease',
+                '&:hover': { transform: 'scale(1.1)' },
+              }}
+        >
+          <h2 className="dash-balance">Balance: {incomeSum - expensesSum} $</h2>
+          <Typography className="dash-expected">Expected savings: {savings} $</Typography>
+          <h5 className="spent-title">Spent</h5>
+          <Box className="linear-progress-container1">
+            <Typography className="progress-left" variant="h5"
+            style={{ fontSize: '18px', paddingTop: "5px" }}
+            >{expensesSum} $</Typography>
+            <Typography className="progress-right" variant="h5"
+            style={{ fontSize: '20px', color: "blue", paddingTop: "5px" }}
+            >{incomeSum} $</Typography>
             <LinearProgress
               variant="determinate"
               value={spentBar > 100 ? 100 : spentBar}
+              style={{
+                padding: "18px 100px",
+              }}
             />
-          </div>
-
-          <div className="linear-progress-container2">
-            <h6 className="progress-left">budget</h6>
-            <span className="progress-right">{budgetSum} $</span>
+          </Box>
+          <h5 className="spent-title">Budget</h5>
+          <Box className="linear-progress-container2">
+            <Typography className="progress-left" variant="h5"
+            style={{ fontSize: '18px', paddingTop: "5px", color: "red" }}>{expensesSumBudgets} $</Typography>
+            <Typography className="progress-right" variant="h5"
+            style={{ fontSize: '20px', paddingTop: "5px", color: "blue" }}>{budgetSum} $</Typography>
             <LinearProgress
               variant="determinate"
               value={budgetBar > 100 ? 100 : budgetBar}
+              style={{
+                padding: "18px 100px",
+              }}
             />
-          </div>
-        </div>
-        <Charts />
-        {/* <h3 className="dash-title">Top spending</h3>
-        <div className="dash-topSpending">
-          {categories.map((category) => {
-            const IconComponent = categoryIcons[category.name];
-            return (
-              <div>
-                <IconComponent />
-                <p className="dash-icon-title">{category.name}</p>
-              </div>
-            );
-          })}
-        </div> */}
+          </Box>
+        </Grid>
+        <Grid item xs={12}
+         sx={{
+          paddingTop: '1rem',
+          paddingBottom: '1rem',
+          textAlign: 'center',
+          transition: 'all 0.3s ease',
+          '&:hover': { transform: 'scale(1.1)' },
+        }}
+        >
+          <Charts />
+        </Grid>
 
-        <h3 className="dash-title">Monthly Budgets</h3>
-        <div className="swiper">
-          <div className="swiper-wrapper">
-            {budgetData?.map((each) => (
-              <div className="swiper-slide">
-                <div className="dash-budget">
-                 
-                  {(() => {
-                    const Icon =
-                      categoryIcons[
-                        each.category_name ? each.category_name : "others"
-                      ];
+        <Grid item xs={12}
+           sx={{
+            paddingTop: '1rem',
+            paddingBottom: '1rem',
+            textAlign: 'center',
+            transition: 'all 0.3s ease',
+            '&:hover': { transform: 'scale(1.1)' },
+          }}
+        >
+          <Box className="swiper">
+            <Box className="swiper-wrapper">
+              {budgetData?.map((each) => (
+                <Box className="swiper-slide">
+                  <Box className="dash-budget">
+                    {(() => {
+                      const Icon =
+                        categoryIcons[
+                          each.category_name ? each.category_name : "others"
+                        ];
 
-                    return <Icon />;
-                  })()}
-                  <div className="dash-budget-title">
-                    <h2 className="dash-budget-title">{each.category_name}</h2>
-                    <p className="dash-budget-info">
-                      {Number(each.limit_amount) - Number(each.spent)} $
-                      remaining
-                    </p>
-                  </div>
-                </div>
+                      return <Icon />;
+                    })()}
+                    <Box className="dash-budget-title">
+                      <Typography className="dash-budget-title" variant="h3"
+                      style={{ fontSize: '22px', paddingTop: "5px",}}>
+                        {each.category_name}
+                      </Typography>
+                      <Typography className="dash-budget-info" variant="h5"
+                      style={{ fontSize: '18px', paddingTop: "5px",  color: "blue"}}>
+                        {categoriesObj[each.category_name]
+                          ? Number(each.limit_amount) -
+                            categoriesObj[each.category_name].spent
+                          : Number(each.limit_amount)}
+                        $ remaining
+                      </Typography>
+                    </Box>
+                  </Box>
 
-                <div className="linear-progress-container2">
-                  <h6 className="progress-left">
-                    {categoriesObj?.hasOwnProperty(each.category_name)
-                      ? `${categoriesObj[each.category_name].spent} $`
-                      : "0 $"}
-                  </h6>
-                  <span className="progress-right">{each.limit_amount} $</span>
-                  <LinearProgress
-                    variant="determinate"
-                    // value={categoriesObj[each.category_name] ? 90 : 20}
-                    value={
-                      categoriesObj[each.category_name]
-                        ? (categoriesObj[each.category_name].spent * 100) /
+                  <Box className="linear-progress-container2">
+                    <Typography className="progress-left" variant="h5"
+                    style={{ fontSize: '18px', paddingTop: "5px",  color: "red"}}>
+                      {categoriesObj?.hasOwnProperty(each.category_name)
+                        ? `${categoriesObj[each.category_name].spent} $`
+                        : "0 $"}
+                    </Typography>
+                    <Typography className="progress-right" variant="h5"
+                    style={{ fontSize: '20px', paddingTop: "5px",  color: "blue"}}>
+                      {each.limit_amount} $
+                    </Typography>
+                    <LinearProgress
+                      variant="determinate"
+                      // value={(() => {
+                      //   if (categoriesObj[each.category_name]) {
+                      //     const percentage =
+                      //       (categoriesObj[each.category_name].spent *
+                      //         100 *
+                      //         100) /
+                      //       categoriesObj[each.category_name.limit];
+                      //     return percentage > 100 ? 100 : percentage;
+                      //   }
+                      // })()}
+                      value={
+                        categoriesObj[each.category_name] &&
+                        categoriesObj[each.category_name].spent <
                           categoriesObj[each.category_name].limit
-                        : 0
-                    }
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+                          ? (categoriesObj[each.category_name].spent * 100) /
+                            categoriesObj[each.category_name].limit
+                          : categoriesObj[each.category_name] &&
+                            categoriesObj[each.category_name].spent !== 0
+                          ? 100
+                          : 0
+                      }
+                      style={{
+                        padding: "18px 100px",
+                      }}
+                      // value={50}
+                    />
+                  </Box>
+                </Box>
+              ))}
+            </Box>
 
-          <div class="swiper-pagination"></div>
+            <Box class="swiper-pagination"
+            sx={{
+              padding: "15px",
+            }}
+            ></Box>
 
-          <div class="swiper-scrollbar"></div>
-        </div>
-      </div>
-    </div>
+            <Box class="swiper-scrollbar"></Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
