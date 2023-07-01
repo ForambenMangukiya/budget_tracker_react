@@ -44,11 +44,11 @@ export default function Login() {
       setError(data.error);
     }
     if (response.ok) {
-      setTimeout(() => {
+      // setTimeout(() => {
         localStorage.setItem("token", data.token);
         setIsLoading(false);
         login(data.token);
-      }, 50000);
+      // }, 5000);
     }
 
     if (data.token !== null && data.token !== undefined) {
