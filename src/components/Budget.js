@@ -129,6 +129,8 @@ export default function Budget() {
           flexDirection: "column",
         }}
       >
+        {budgetData.length ? null : "You have not added a Budget Limit yet."}
+
         {budgetData?.map((element) => (
           <Box>
             <Card
