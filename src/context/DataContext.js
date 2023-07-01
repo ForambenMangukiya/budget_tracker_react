@@ -1,7 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { useJwt } from "react-jwt";
 import { AuthContext } from "../context/AuthContext";
-import { all } from "axios";
 
 export const DataContext = createContext();
 
@@ -19,6 +18,7 @@ export default function DataContextProvider(props) {
   console.log("token", token);
   console.log("decodedToken:", decodedToken);
   console.log("_id:", decodedToken?._id);
+  console.log("refresh data?", refresh)
 
   // =============================
   // Fetching Data
@@ -30,6 +30,7 @@ export default function DataContextProvider(props) {
       try {
         const res = await fetch(
           `https://piggybank-api.onrender.com/transaction?timeperiod=all`,
+          // `${process.env.REACT_APP_BACKEND_URL}/transaction?timeperiod=all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -58,6 +59,7 @@ export default function DataContextProvider(props) {
         const res = await fetch(
           // `http://localhost:8080/users/${decodedToken._id}`
           `https://piggybank-api.onrender.com/users/${decodedToken._id}`
+          // `${process.env.REACT_APP_BACKEND_URL}/users/${decodedToken._id}`
         );
         const data = await res.json();
         console.log("###budget data", data);

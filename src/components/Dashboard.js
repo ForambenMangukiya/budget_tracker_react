@@ -31,7 +31,6 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
-import { Refresh } from "plaid-threads";
 import Grid from "@mui/material/Grid";
 
 export default function Dashboard() {
@@ -163,34 +162,43 @@ export default function Dashboard() {
   }, [filter]);
 
   useEffect(() => {
-    const filtered = tranData?.filter((data) => {
-      const timestampDate = new Date(data.tran_date).getTime();
-      return timestampDate < endDate && timestampDate > startDate;
-    });
+    console.log("started useEffect(); started to filter tranData", tranData)
+
+    // const filtered = tranData?.filter((data) => {
+    //   const timestampDate = new Date(data.tran_date).getTime();
+    //   return timestampDate < endDate && timestampDate > startDate;
+    // });
+    const filtered = tranData
+
     setFilteredData(filtered);
+    console.log("ended useEffect(); filtered is", filtered)
   }, [tranData, endDate, startDate]);
 
   const creditTrans = filteredData?.filter((trans) => trans.tran_sign === "CR");
+  console.log("creditTrans is", creditTrans)
+
   // setCreditTrans(creditTrans);
   const debitTrans = filteredData?.filter((trans) => trans.tran_sign === "DR");
+  console.log("debitTrans is", debitTrans)
 
   // setDebitTrans(debitTrans);
   const incomeSum = creditTrans.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.tran_amount),
     0
-  );
+  ).toFixed(2);
 
   const expensesSum = debitTrans.reduce(
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.tran_amount),
     0
-  );
+  ).toFixed(2);
 
   let expensesSumBudgets = 0;
   categories.map((category) => {
     if (category.limit > 0) {
-      expensesSumBudgets = expensesSumBudgets + category.spent;
+      // expensesSumBudgets = expensesSumBudgets + category.spent;
+      expensesSumBudgets = Number(expensesSumBudgets + category.spent).toFixed(2);
     }
   });
   //==============================================================
@@ -201,10 +209,11 @@ export default function Dashboard() {
     (accumulator, currentValue) =>
       accumulator + Number(currentValue.limit_amount),
     0
-  );
+  ).toFixed(2);
 
   //expected to save
-  const savings = incomeSum - budgetSum - expensesSum;
+  // const savings = incomeSum - budgetSum - expensesSum;
+  const savings = incomeSum - budgetSum;
 
   //graphic bars
   const spentBar = (expensesSum * 100) / incomeSum;
@@ -312,7 +321,7 @@ export default function Dashboard() {
                 '&:hover': { transform: 'scale(1.1)' },
               }}
         >
-          <h2 className="dash-balance">Balance: {incomeSum - expensesSum} $</h2>
+          <h2 className="dash-balance">Balance: {(incomeSum - expensesSum).toFixed(2)} $</h2>
           <Typography className="dash-expected">Expected savings: {savings} $</Typography>
           <h5 className="spent-title">Spent</h5>
           <Box className="linear-progress-container1">

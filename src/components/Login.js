@@ -29,8 +29,13 @@ export default function Login() {
 
     console.log(`Email:${email},Password:${password}`);
 
+    // const url = `${process.env.REACT_APP_BACKEND_URL}/users/login`
+    
+    // console.log("login URL:", url)
+
     const response = await fetch(
       "https://piggybank-api.onrender.com/users/login",
+      // url,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -81,7 +86,7 @@ export default function Login() {
             alignItems: "center",
             gap: "20px",
             minHeight: "100vh",
-            paddingTop: "150px",
+            paddingTop: "50px",
           }}
         >
           <FormControl fullWidth className="login-container">
@@ -125,7 +130,7 @@ export default function Login() {
             ></TextField>
             <Box
              sx={{
-              padding: "30px",
+              padding: "10px",
             }}
             >
               <CustomButton
@@ -138,7 +143,7 @@ export default function Login() {
                   margin: "20px",
                   color: "white",
                   fontSize: "16px",
-                  padding: "5px 100px",
+                  padding: "5px 50px",
                 }}
                 onClick={handleSubmit}
                 className="login"

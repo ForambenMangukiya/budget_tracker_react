@@ -38,6 +38,7 @@ export default function Signup() {
 
     const response = await fetch(
       "https://piggybank-api.onrender.com/users/signup",
+      // `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -98,7 +99,7 @@ export default function Signup() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            gap: "20px",
+            gap: "15px",
             minHeight: "100vh",
             padding: "10px",
             paddingTop: "100px",
@@ -168,7 +169,6 @@ export default function Signup() {
               ))}
           </Select>
 
-           
           </FormControl>
           <FormControl fullWidth>
             <TextField
@@ -220,14 +220,14 @@ export default function Signup() {
                   margin: "20px",
                   color: "white",
                   fontSize: "16px",
-                  padding: "5px 100px",
+                  padding: "5px 80px",
                 }}
                 onClick={handleSubmit}
                 className="signup"
               >
                 Register
               </CustomButton>
-              <p>Already have an account?</p>
+              <p> Already have an account?</p>
               <NavLink to="/login" className="backtologin">
                 Login here
               </NavLink>
