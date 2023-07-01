@@ -48,7 +48,6 @@ export default function LandingPage2() {
         '&:hover': {
           transform: 'scale(1.1)',
         },
-        paddingBottom: "30px",
       }}
       >
       <img className="welcomeimage" src={welcoming} width="400px" />
@@ -58,7 +57,7 @@ export default function LandingPage2() {
           style={{
             borderRadius: 35,
             backgroundColor: "#c80048",
-            padding: "5px 80px",
+            padding: "5px 33px",
             fontSize: "16px",
           }}
           className="register-btn"
@@ -72,7 +71,7 @@ export default function LandingPage2() {
           style={{
             borderRadius: 35,
             backgroundColor: "#c80048",
-            padding: "5px 100px",
+            padding: "5px 50px",
             fontSize: "16px",
           }}
           className="login-btn"

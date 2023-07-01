@@ -7,9 +7,11 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { DataContext } from "../context/DataContext";
 
 export default function Link({ id }) {
 const { linkToken, linkSuccess, setLinkSuccess } = useContext(AuthContext);
+const { refresh, setRefresh } = useContext(DataContext)
 const [isLoading, setIsLoading] = useState(false);
 const [transactions, setTransactions] = useState([]);
 const [syncSuccess, setSyncSuccess] = useState(false)
@@ -21,7 +23,8 @@ console.log("START LINK....", id)
 const handleGetTransaction = async () => {
     setIsLoading(true);
     setSyncSuccess(false);
-    const response = await fetch(`https://piggybank-api.onrender.com/api/transactions/${id}`, {
+    // const response = await fetch(`https://piggybank-api.onrender.com/api/transactions/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
         method: "GET",
     });
     const data = await response.json();
@@ -37,6 +40,7 @@ const handleGetTransaction = async () => {
         setTransactions(data)
         setSyncSuccess(true);
         setSyncCount(1); 
+        setRefresh(!refresh);
     }
 }
 
@@ -44,7 +48,8 @@ const onSuccess = useCallback(
     (public_token) => {
     // If the access_token is needed, send public_token to server
     const exchangePublicTokenForAccessToken = async () => {
-        const response = await fetch("https://piggybank-api.onrender.com/api/set_access_token", {
+        // const response = await fetch("https://piggybank-api.onrender.com/api/set_access_token", {
+        const response = await fetch("http://localhost:8080/api/set_access_token", {  
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -81,7 +86,12 @@ const handleGoBack = () => {
 };
 
 return (
-<Container maxWidth="sm">
+<Container maxWidth="sm"
+   sx={{
+    paddingTop: "100px",
+    paddingBottom: "100px",
+  }}
+>
   {syncSuccess ? (
     <Alert
       action={
