@@ -19,6 +19,7 @@ import Addbudget from "./components/Addbudget";
 import Topspending from "./components/Topspending";
 import { Receipt } from "@mui/icons-material";
 import ReceiptScanning from "./components/ReceiptScanning";
+import Scan from "./scanreceipts/Scan";
 
 function App() {
   const { token, logout } = useContext(AuthContext);
@@ -40,8 +41,9 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/topspendings" element={<Topspending />} />
             <Route path="/transactions" element={<Transactions />} />
-            <Route path="/scan" element={<ReceiptScanning />} />
+            {/* <Route path="/scan" element={<ReceiptScanning />} /> */}
             <Route path="/link" element={<Client />} />
+            <Route path="/scan" element={<Scan />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
           <Menu />

@@ -26,7 +26,7 @@ const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
   { icon: <ManualEntry />, name: "Expense", route: "/addexpense" },
   { icon: <ManualEntry />, name: "Income", route: "/addincome" },
-  { icon: <ScanReceipt />, name: "Scan", route: "/" },
+  { icon: <ScanReceipt />, name: "Scan", route: "/scan" },
 ];
 
 //Date Filtering in Transaction Component
