@@ -10,6 +10,9 @@
 
   --header: linear-gradient(#c80048, #961c48);
 
+  --black: rgb(48, 48, 48);
+  --white:white;
+
   /* use these predefined colors by adding .. var()
   for example color : var(--red) */
 }
@@ -19,7 +22,7 @@
   min-width: 320px;
   max-width: 600px;
   min-height: 100vh;
-  border: solid 1px whitesmoke;
+  /* border: solid 1px whitesmoke; */
   margin: 0 auto;
   /* background: linear-gradient(#1c060e, #7f173c); */
   /* padding: 1em; */
