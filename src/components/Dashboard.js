@@ -413,21 +413,17 @@ export default function Dashboard() {
           <Charts />
         </Grid>
 
-        {/* <h3 className="dash-title">Top spending</h3>
-        <div className="dash-topSpending">
-          {categories.map((category) => {
-            const IconComponent = categoryIcons[category.name];
-            return (
-              <div>
-                <IconComponent />
-                <p className="dash-icon-title">{category.name}</p>
-              </div>
-            );
-          })}
-        </div> */}
-
-        <Grid item xs={12}>
-          <h3 className="dash-title">Monthly Budgets</h3>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+            textAlign: "center",
+            transition: "all 0.3s ease",
+            "&:hover": { transform: "scale(1.1)" },
+          }}
+        >
           <Box className="swiper">
             <Box className="swiper-wrapper">
               {budgetData?.map((each) => (
@@ -468,38 +464,28 @@ export default function Dashboard() {
                   </Box>
 
                   <Box className="linear-progress-container2">
-                    <h6 className="progress-left">
-                      {categoriesObj?.hasOwnProperty(each.category_name)
-                        ? `${categoriesObj[each.category_name].spent} $`
-                        : "0 $"}
-                    </h6>
-                    <span className="progress-right">
-                      {each.limit_amount} $
-                    </span>
-                    <LinearProgress
-                      variant="determinate"
-                      // value={categoriesObj[each.category_name] ? 90 : 20}
-                      value={
-                        categoriesObj[each.category_name]
-                          ? (categoriesObj[each.category_name].spent * 100) /
-                            categoriesObj[each.category_name].limit
-                          : 0
-                      }
-                    />
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-            <Box class="swiper-pagination"></Box>
-                  <Box className="linear-progress-container2">
-                    <Typography className="progress-left" variant="h5"
-                    style={{ fontSize: '18px', paddingTop: "5px",  color: "red"}}>
+                    <Typography
+                      className="progress-left"
+                      variant="h5"
+                      style={{
+                        fontSize: "18px",
+                        paddingTop: "5px",
+                        color: "red",
+                      }}
+                    >
                       {categoriesObj?.hasOwnProperty(each.category_name)
                         ? `${categoriesObj[each.category_name].spent} $`
                         : "0 $"}
                     </Typography>
-                    <Typography className="progress-right" variant="h5"
-                    style={{ fontSize: '20px', paddingTop: "5px",  color: "blue"}}>
+                    <Typography
+                      className="progress-right"
+                      variant="h5"
+                      style={{
+                        fontSize: "20px",
+                        paddingTop: "5px",
+                        color: "blue",
+                      }}
+                    >
                       {each.limit_amount} $
                     </Typography>
                     <LinearProgress
@@ -535,10 +521,11 @@ export default function Dashboard() {
               ))}
             </Box>
 
-            <Box class="swiper-pagination"
-            sx={{
-              padding: "15px",
-            }}
+            <Box
+              class="swiper-pagination"
+              sx={{
+                padding: "15px",
+              }}
             ></Box>
 
             <Box class="swiper-scrollbar"></Box>

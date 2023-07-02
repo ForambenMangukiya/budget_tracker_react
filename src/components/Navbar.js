@@ -99,20 +99,21 @@ export default function Navbar() {
   };
 
   return (
-    <Container style={{ maxWidth: '600px' }}
-    sx={{
-      maxWidth: "600px",
-      background: "linear-gradient(#c80048, #961c48)",
-      // height: "100%",
-      padding: "20px",
-      paddingTop: "30px",
-      display: "flex",
-      justifyContent: "space-evenly",
-      boxSizing: "border-box",
-      position: "fixed",
-      zIndex: 5,
-    }}
-  >
+    <Container
+      style={{ maxWidth: "600px" }}
+      sx={{
+        maxWidth: "600px",
+        background: "linear-gradient(#c80048, #961c48)",
+        // height: "100%",
+        padding: "20px",
+        paddingTop: "30px",
+        display: "flex",
+        justifyContent: "space-evenly",
+        boxSizing: "border-box",
+        position: "fixed",
+        zIndex: 5,
+      }}
+    >
       <Box>
         <Typography
           variant="h5"
@@ -226,7 +227,7 @@ export default function Navbar() {
               }}
             >
               <ListItemIcon sx={{ color: "#FFFF" }}>
-                <Logout sx={{ fontSize: '25px' }} />
+                <Logout sx={{ fontSize: "25px" }} />
               </ListItemIcon>
               <Typography
                 sx={{
@@ -234,7 +235,7 @@ export default function Navbar() {
                   fontWeight: 700,
                   color: "#FFFF",
                   textDecoration: "none",
-                  fontSize: '16px', 
+                  fontSize: "16px",
                 }}
               >
                 Logout
@@ -255,7 +256,7 @@ export default function Navbar() {
                 }}
               >
                 <ListItemIcon sx={{ color: "#FFFF" }}>
-                  <Settings sx={{ fontSize: '25px' }} />
+                  <Settings sx={{ fontSize: "25px" }} />
                 </ListItemIcon>
 
                 <Typography
@@ -264,7 +265,7 @@ export default function Navbar() {
                     fontWeight: 700,
                     color: "#FFFF",
                     textDecoration: "none",
-                    fontSize: '16px', 
+                    fontSize: "16px",
                   }}
                 >
                   Settings

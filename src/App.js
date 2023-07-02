@@ -17,6 +17,8 @@ import Client from "./plaid/Client";
 import LandingPage2 from "./components/LandingPage2";
 import Addbudget from "./components/Addbudget";
 import Topspending from "./components/Topspending";
+import { Receipt } from "@mui/icons-material";
+import ReceiptScanning from "./components/ReceiptScanning";
 
 function App() {
   const { token, logout } = useContext(AuthContext);
@@ -38,6 +40,7 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/topspendings" element={<Topspending />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/scan" element={<ReceiptScanning />} />
             <Route path="/link" element={<Client />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
