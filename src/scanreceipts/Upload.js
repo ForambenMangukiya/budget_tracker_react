@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Modal, Button, TextField, Container, Typography, Box, Input } from "@mui/material";
-import { styled } from "@mui/system";
 import axios from "axios";
-import { Label } from "recharts";
-import Mindee from "./Mindee"
-
+import mindee from "./Mindee";
 
 // const CustomFileInput = styled("input")({
 //   display: "none",
@@ -28,7 +25,7 @@ export default function Upload({ flag, setFlag }) {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(false);
   const [onSuccess, setOnSuccess] = useState(false)
-  const [url, setUrl] = useState("")
+  // const [url, setUrl] = useState("")
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -44,9 +41,16 @@ export default function Upload({ flag, setFlag }) {
       formData.append("desc", description);
       console.log("posting image", formData )
       const res = await axios.post("http://localhost:8080/api/upload", formData);
-      console.log("postin DONE!!!!!", res )
-      const image = await res.data.url
-      setUrl(image)
+      // const image = await res.data.data.url
+      console.log("postin DONE!!!!!", res.data )
+
+      const mindeeResponse = mindee.parseReceipt(res.data.url) // TODO ensure data.url works
+
+      // const transaction = convertMindeeResponseToTransaction(mindeeResponse) // TODO implement this function
+
+      // backend.createNewTransaction(transaction) // TODO replace with existing actual backend txn creation call
+
+      // setUrl(image)
       setError(false);
       handleClose();
       setFlag(!flag);
@@ -124,8 +128,8 @@ export default function Upload({ flag, setFlag }) {
         </Box>
 
       </Modal>  
-
-      {onSuccess && <Mindee />}
+{/* 
+      {onSuccess && <Mindee />} */}
       
     </Container>
   );

@@ -18,7 +18,7 @@ import LandingPage2 from "./components/LandingPage2";
 import Addbudget from "./components/Addbudget";
 import Topspending from "./components/Topspending";
 import { Receipt } from "@mui/icons-material";
-// import ReceiptScanning from "./components/ReceiptScanning";
+import ReceiptScanning from "./components/ReceiptScanning";
 import Scan from "./scanreceipts/Scan";
 
 function App() {
