@@ -6,7 +6,7 @@ import "./styles/dashboard.css";
 import IconHome from "./svg/IconHome";
 import { DataContext } from "../context/DataContext";
 import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -28,11 +28,13 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import Charts from "./Chart";
+
 import { Container, Box } from "@mui/material";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     categories,
     setCategories,
@@ -96,7 +98,6 @@ export default function Dashboard() {
       accumulator + Number(currentValue.tran_amount),
     0
   );
-
 
   const expensesSumBudgets = categories.reduce(
     (accumulator, currentValue) => accumulator + currentValue.spent,
@@ -166,15 +167,14 @@ export default function Dashboard() {
   };
 
   return (
-    <Container 
-    sx={{
-      paddingTop: "100px", 
-      maxWidth: "sm",
-      minHeight: "100vh",
-    }}
+    <Container
+      sx={{
+        paddingTop: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
     >
       <Grid container spacing={2} className="dash-container">
-        
         <Grid item xs={12} className="dash-progress">
           <p className="dash-expected">Expected savings</p>
           <h2 className="dash-h2">{savings} $</h2>
@@ -201,7 +201,7 @@ export default function Dashboard() {
         <Grid item xs={12}>
           <Charts />
         </Grid>
-        
+
         {/* <h3 className="dash-title">Top spending</h3>
         <div className="dash-topSpending">
           {categories.map((category) => {
@@ -215,63 +215,60 @@ export default function Dashboard() {
           })}
         </div> */}
 
+        <Grid item xs={12}>
+          <h3 className="dash-title">Monthly Budgets</h3>
+          <Box className="swiper">
+            <Box className="swiper-wrapper">
+              {budgetData?.map((each) => (
+                <Box className="swiper-slide">
+                  <Box className="dash-budget">
+                    {(() => {
+                      const Icon =
+                        categoryIcons[
+                          each.category_name ? each.category_name : "others"
+                        ];
 
-      <Grid item xs={12}>
-        <h3 className="dash-title">Monthly Budgets</h3>
-        <Box className="swiper">
-          <Box className="swiper-wrapper">
-            {budgetData?.map((each) => (
-              <Box className="swiper-slide">
-                <Box className="dash-budget">
-                 
-                  {(() => {
-                    const Icon =
-                      categoryIcons[
-                        each.category_name ? each.category_name : "others"
-                      ];
+                      return <Icon />;
+                    })()}
+                    <Box className="dash-budget-title">
+                      <h2 className="dash-budget-title">
+                        {each.category_name}
+                      </h2>
+                      <p className="dash-budget-info">
+                        {Number(each.limit_amount) - Number(each.spent)} $
+                        remaining
+                      </p>
+                    </Box>
+                  </Box>
 
-                    return <Icon />;
-                  })()}
-                  <Box className="dash-budget-title">
-                    <h2 className="dash-budget-title">{each.category_name}</h2>
-                    <p className="dash-budget-info">
-                      {Number(each.limit_amount) - Number(each.spent)} $
-                      remaining
-                    </p>
+                  <Box className="linear-progress-container2">
+                    <h6 className="progress-left">
+                      {categoriesObj?.hasOwnProperty(each.category_name)
+                        ? `${categoriesObj[each.category_name].spent} $`
+                        : "0 $"}
+                    </h6>
+                    <span className="progress-right">
+                      {each.limit_amount} $
+                    </span>
+                    <LinearProgress
+                      variant="determinate"
+                      // value={categoriesObj[each.category_name] ? 90 : 20}
+                      value={
+                        categoriesObj[each.category_name]
+                          ? (categoriesObj[each.category_name].spent * 100) /
+                            categoriesObj[each.category_name].limit
+                          : 0
+                      }
+                    />
                   </Box>
                 </Box>
-
-                <Box className="linear-progress-container2">
-                  <h6 className="progress-left">
-                    {categoriesObj?.hasOwnProperty(each.category_name)
-                      ? `${categoriesObj[each.category_name].spent} $`
-                      : "0 $"}
-                  </h6>
-                  <span className="progress-right">{each.limit_amount} $</span>
-                  <LinearProgress
-                    variant="determinate"
-                    // value={categoriesObj[each.category_name] ? 90 : 20}
-                    value={
-                      categoriesObj[each.category_name]
-                        ? (categoriesObj[each.category_name].spent * 100) /
-                          categoriesObj[each.category_name].limit
-                        : 0
-                    }
-                  />
-                </Box>
-            
-              </Box>
-            ))}
-             
-          </Box>
+              ))}
+            </Box>
             <Box class="swiper-pagination"></Box>
             <Box class="swiper-scrollbar"></Box>
-        </Box>
+          </Box>
         </Grid>
       </Grid>
-     
-
-
     </Container>
   );
 }

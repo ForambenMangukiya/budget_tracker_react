@@ -21,10 +21,7 @@ export default function LandingPage2() {
   };
 
   return (
-    <Container
-      className="landingPage"
-      maxWidth="sm"
-    >
+    <Container className="landingPage" maxWidth="sm">
       <Cornerright className="cornerright" />
       {/* <Welcoming /> */}
       <Box
@@ -35,7 +32,15 @@ export default function LandingPage2() {
         minHeight="100vh"
         gap="20px"
       >
-        <img className="welcomeimage" src={welcoming} width="500px" />
+        <caption>
+          <h3>Say Hi to your new Budget tracker </h3>
+        </caption>
+        <span>
+          Financial Success Starts Here with Piggy Bank : Track Your Way to
+          Freedom
+        </span>
+
+        <img className="animated-image" src={welcoming} width="400px" />
 
         <Button
           style={{
@@ -49,7 +54,6 @@ export default function LandingPage2() {
         >
           Register
         </Button>
-
         <Button
           style={{
             borderRadius: 35,
