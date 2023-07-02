@@ -46,7 +46,7 @@ export default function Reports() {
         minHeight: "100vh",
       }}
     >
-       <h3 className="dash-title">Top spending</h3>
+      <h3 className="dash-title">Top spending</h3>
       <div className="dash-topSpending">
         {categories?.map((category) => {
           const IconComponent = categoryIcons[category.name]
@@ -61,6 +61,5 @@ export default function Reports() {
         })}
       </div>
     </Container>
-     
   );
 }

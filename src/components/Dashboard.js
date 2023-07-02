@@ -36,6 +36,7 @@ import Grid from "@mui/material/Grid";
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     categories,
     setCategories,
@@ -162,54 +163,62 @@ export default function Dashboard() {
   }, [filter]);
 
   useEffect(() => {
-    console.log("started useEffect(); started to filter tranData", tranData)
+    console.log("started useEffect(); started to filter tranData", tranData);
 
     // const filtered = tranData?.filter((data) => {
     //   const timestampDate = new Date(data.tran_date).getTime();
     //   return timestampDate < endDate && timestampDate > startDate;
     // });
-    const filtered = tranData
+    const filtered = tranData;
 
     setFilteredData(filtered);
-    console.log("ended useEffect(); filtered is", filtered)
+    console.log("ended useEffect(); filtered is", filtered);
   }, [tranData, endDate, startDate]);
 
   const creditTrans = filteredData?.filter((trans) => trans.tran_sign === "CR");
-  console.log("creditTrans is", creditTrans)
+  console.log("creditTrans is", creditTrans);
 
   // setCreditTrans(creditTrans);
   const debitTrans = filteredData?.filter((trans) => trans.tran_sign === "DR");
-  console.log("debitTrans is", debitTrans)
+  console.log("debitTrans is", debitTrans);
 
   // setDebitTrans(debitTrans);
-  const incomeSum = creditTrans.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.tran_amount),
-    0
-  ).toFixed(2);
+  const incomeSum = creditTrans
+    .reduce(
+      (accumulator, currentValue) =>
+        accumulator + Number(currentValue.tran_amount),
+      0
+    )
+    .toFixed(2);
 
-  const expensesSum = debitTrans.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.tran_amount),
-    0
-  ).toFixed(2);
+  const expensesSum = debitTrans
+    .reduce(
+      (accumulator, currentValue) =>
+        accumulator + Number(currentValue.tran_amount),
+      0
+    )
+    .toFixed(2);
 
   let expensesSumBudgets = 0;
   categories.map((category) => {
     if (category.limit > 0) {
       // expensesSumBudgets = expensesSumBudgets + category.spent;
-      expensesSumBudgets = Number(expensesSumBudgets + category.spent).toFixed(2);
+      expensesSumBudgets = Number(expensesSumBudgets + category.spent).toFixed(
+        2
+      );
     }
   });
   //==============================================================
   //calculate budgets
   //===============================================================
 
-  const budgetSum = budgetData?.reduce(
-    (accumulator, currentValue) =>
-      accumulator + Number(currentValue.limit_amount),
-    0
-  ).toFixed(2);
+  const budgetSum = budgetData
+    ?.reduce(
+      (accumulator, currentValue) =>
+        accumulator + Number(currentValue.limit_amount),
+      0
+    )
+    .toFixed(2);
 
   //expected to save
   // const savings = incomeSum - budgetSum - expensesSum;
@@ -263,7 +272,6 @@ export default function Dashboard() {
         minHeight: "100vh",
       }}
     >
-
       <Grid container className="dash-container">
         <Grid item xs={12}>
           <Box component="div" className="transaction-filter">
@@ -280,15 +288,27 @@ export default function Dashboard() {
                   "& fieldset": {
                     borderRadius: "10px",
                   },
-                  fontSize: '14px',
+                  fontSize: "14px",
                 }}
               >
-                <MenuItem value={"all"} sx={{ fontSize: '14px' }}>All</MenuItem>
-                <MenuItem value={"week"} sx={{ fontSize: '14px' }}>Last Week</MenuItem>
-                <MenuItem value={"month"} sx={{ fontSize: '14px' }}>Last Month</MenuItem>
-                <MenuItem value={"3months"} sx={{ fontSize: '14px' }}>Last 3 Months</MenuItem>
-                <MenuItem value={"6months"} sx={{ fontSize: '14px' }}>Last 6 Months</MenuItem>
-                <MenuItem value={"year"} sx={{ fontSize: '14px' }}>Last Year</MenuItem>
+                <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
+                  All
+                </MenuItem>
+                <MenuItem value={"week"} sx={{ fontSize: "14px" }}>
+                  Last Week
+                </MenuItem>
+                <MenuItem value={"month"} sx={{ fontSize: "14px" }}>
+                  Last Month
+                </MenuItem>
+                <MenuItem value={"3months"} sx={{ fontSize: "14px" }}>
+                  Last 3 Months
+                </MenuItem>
+                <MenuItem value={"6months"} sx={{ fontSize: "14px" }}>
+                  Last 6 Months
+                </MenuItem>
+                <MenuItem value={"year"} sx={{ fontSize: "14px" }}>
+                  Last Year
+                </MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -312,25 +332,40 @@ export default function Dashboard() {
             Week
           </span> */}
 
-        <Grid item xs={12} className="dash-progress"
-              sx={{
-                paddingTop: '2rem',
-                paddingBottom: '2rem',  
-                textAlign: 'center',
-                transition: 'all 0.3s ease',
-                '&:hover': { transform: 'scale(1.1)' },
-              }}
+        <Grid
+          item
+          xs={12}
+          className="dash-progress"
+          sx={{
+            paddingTop: "2rem",
+            paddingBottom: "2rem",
+            textAlign: "center",
+            transition: "all 0.3s ease",
+            "&:hover": { transform: "scale(1.1)" },
+          }}
         >
-          <h2 className="dash-balance">Balance: {(incomeSum - expensesSum).toFixed(2)} $</h2>
-          <Typography className="dash-expected">Expected savings: {savings} $</Typography>
+          <h2 className="dash-balance">
+            Balance: {(incomeSum - expensesSum).toFixed(2)} $
+          </h2>
+          <Typography className="dash-expected">
+            Expected savings: {savings} $
+          </Typography>
           <h5 className="spent-title">Spent</h5>
           <Box className="linear-progress-container1">
-            <Typography className="progress-left" variant="h5"
-            style={{ fontSize: '18px', paddingTop: "5px" }}
-            >{expensesSum} $</Typography>
-            <Typography className="progress-right" variant="h5"
-            style={{ fontSize: '20px', color: "blue", paddingTop: "5px" }}
-            >{incomeSum} $</Typography>
+            <Typography
+              className="progress-left"
+              variant="h5"
+              style={{ fontSize: "18px", paddingTop: "5px" }}
+            >
+              {expensesSum} $
+            </Typography>
+            <Typography
+              className="progress-right"
+              variant="h5"
+              style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
+            >
+              {incomeSum} $
+            </Typography>
             <LinearProgress
               variant="determinate"
               value={spentBar > 100 ? 100 : spentBar}
@@ -341,10 +376,20 @@ export default function Dashboard() {
           </Box>
           <h5 className="spent-title">Budget</h5>
           <Box className="linear-progress-container2">
-            <Typography className="progress-left" variant="h5"
-            style={{ fontSize: '18px', paddingTop: "5px", color: "red" }}>{expensesSumBudgets} $</Typography>
-            <Typography className="progress-right" variant="h5"
-            style={{ fontSize: '20px', paddingTop: "5px", color: "blue" }}>{budgetSum} $</Typography>
+            <Typography
+              className="progress-left"
+              variant="h5"
+              style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
+            >
+              {expensesSumBudgets} $
+            </Typography>
+            <Typography
+              className="progress-right"
+              variant="h5"
+              style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
+            >
+              {budgetSum} $
+            </Typography>
             <LinearProgress
               variant="determinate"
               value={budgetBar > 100 ? 100 : budgetBar}
@@ -354,25 +399,29 @@ export default function Dashboard() {
             />
           </Box>
         </Grid>
-        <Grid item xs={12}
-         sx={{
-          paddingTop: '1rem',
-          paddingBottom: '1rem',
-          textAlign: 'center',
-          transition: 'all 0.3s ease',
-          '&:hover': { transform: 'scale(1.1)' },
-        }}
+        <Grid
+          item
+          xs={12}
+          sx={{
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+            textAlign: "center",
+            transition: "all 0.3s ease",
+            "&:hover": { transform: "scale(1.1)" },
+          }}
         >
           <Charts />
         </Grid>
 
-        <Grid item xs={12}
-           sx={{
-            paddingTop: '1rem',
-            paddingBottom: '1rem',
-            textAlign: 'center',
-            transition: 'all 0.3s ease',
-            '&:hover': { transform: 'scale(1.1)' },
+        <Grid
+          item
+          xs={12}
+          sx={{
+            paddingTop: "1rem",
+            paddingBottom: "1rem",
+            textAlign: "center",
+            transition: "all 0.3s ease",
+            "&:hover": { transform: "scale(1.1)" },
           }}
         >
           <Box className="swiper">
@@ -389,12 +438,22 @@ export default function Dashboard() {
                       return <Icon />;
                     })()}
                     <Box className="dash-budget-title">
-                      <Typography className="dash-budget-title" variant="h3"
-                      style={{ fontSize: '22px', paddingTop: "5px",}}>
+                      <Typography
+                        className="dash-budget-title"
+                        variant="h3"
+                        style={{ fontSize: "22px", paddingTop: "5px" }}
+                      >
                         {each.category_name}
                       </Typography>
-                      <Typography className="dash-budget-info" variant="h5"
-                      style={{ fontSize: '18px', paddingTop: "5px",  color: "blue"}}>
+                      <Typography
+                        className="dash-budget-info"
+                        variant="h5"
+                        style={{
+                          fontSize: "18px",
+                          paddingTop: "5px",
+                          color: "blue",
+                        }}
+                      >
                         {categoriesObj[each.category_name]
                           ? Number(each.limit_amount) -
                             categoriesObj[each.category_name].spent
@@ -405,14 +464,28 @@ export default function Dashboard() {
                   </Box>
 
                   <Box className="linear-progress-container2">
-                    <Typography className="progress-left" variant="h5"
-                    style={{ fontSize: '18px', paddingTop: "5px",  color: "red"}}>
+                    <Typography
+                      className="progress-left"
+                      variant="h5"
+                      style={{
+                        fontSize: "18px",
+                        paddingTop: "5px",
+                        color: "red",
+                      }}
+                    >
                       {categoriesObj?.hasOwnProperty(each.category_name)
                         ? `${categoriesObj[each.category_name].spent} $`
                         : "0 $"}
                     </Typography>
-                    <Typography className="progress-right" variant="h5"
-                    style={{ fontSize: '20px', paddingTop: "5px",  color: "blue"}}>
+                    <Typography
+                      className="progress-right"
+                      variant="h5"
+                      style={{
+                        fontSize: "20px",
+                        paddingTop: "5px",
+                        color: "blue",
+                      }}
+                    >
                       {each.limit_amount} $
                     </Typography>
                     <LinearProgress
@@ -448,10 +521,11 @@ export default function Dashboard() {
               ))}
             </Box>
 
-            <Box class="swiper-pagination"
-            sx={{
-              padding: "15px",
-            }}
+            <Box
+              class="swiper-pagination"
+              sx={{
+                padding: "15px",
+              }}
             ></Box>
 
             <Box class="swiper-scrollbar"></Box>
