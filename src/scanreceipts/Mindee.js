@@ -25,14 +25,52 @@ async function parseReceipt(imageURL){
     
     console.log("INFO: MINDEE responded ok", mindeeResponse)
     const mindeeResponseBody = await mindeeResponse.json()
-    console.log("INFO: MINDEE body is", mindeeResponseBody)
+    console.log("INFO: MINDEE body is", mindeeResponseBody.document)
 
-    return mindeeResponseBody
+    return mindeeResponseBody.document
 }
 
-// testing
-// parseReceipt("https://res.cloudinary.com/dg2u7fmoc/image/upload/v1688314566/ldivnf51ofanou5v8bqy.jpg")
+function convertMindeeResponseToTransaction(mindeeResponse) {
+    const transaction = {
+        category_name: mindeeResponse.inference.prediction.category.value,
+        tran_description: mindeeResponse.inference.prediction.supplier_name.value,
+        tran_amount: `${mindeeResponse.inference.prediction.total_amount.value}`,
+        tran_sign: "DR", //DR (expense) or CR(income)
+        tran_currency: mindeeResponse.inference.prediction.locale.country,
+        tran_date: mindeeResponse.inference.prediction.date.value,
+    }
+
+    console.log("INFO: convertMindeeResponseToTransaction()", {transaction})
+
+    return transaction
+}
+
+const saveTransaction = async (token, transaction) => {
+    try {
+        const res = await fetch(
+            "https://piggybank-api.onrender.com/transaction/",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(transaction),
+            }
+        );
+        if (!res.ok) {
+            console.log("ERROR: saveTransaction() not ok: ", res)
+            return
+        }
+        console.log("OK: saveTransaction succeeded")
+    } catch (error) {
+        console.log("ERROR: saveTransaction() failed: ", error)
+        return
+    };
+}
 
 export default {
-    parseReceipt: parseReceipt
+    parseReceipt: parseReceipt,
+    convertMindeeResponseToTransaction: convertMindeeResponseToTransaction,
+    saveTransaction: saveTransaction
 }

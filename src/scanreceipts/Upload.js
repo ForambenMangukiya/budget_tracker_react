@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Modal, Button, TextField, Container, Typography, Box, Input } from "@mui/material";
 import axios from "axios";
 import mindee from "./Mindee";
+import { AuthContext } from "../context/AuthContext";
 
 // const CustomFileInput = styled("input")({
 //   display: "none",
@@ -25,6 +26,7 @@ export default function Upload({ flag, setFlag }) {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(false);
   const [onSuccess, setOnSuccess] = useState(false)
+  const { token } = useContext(AuthContext);
   // const [url, setUrl] = useState("")
 
   const handleShow = () => setShow(true);
@@ -44,11 +46,10 @@ export default function Upload({ flag, setFlag }) {
       // const image = await res.data.data.url
       console.log("postin DONE!!!!!", res.data )
 
-      const mindeeResponse = mindee.parseReceipt(res.data.url) // TODO ensure data.url works
-
-      // const transaction = convertMindeeResponseToTransaction(mindeeResponse) // TODO implement this function
-
-      // backend.createNewTransaction(transaction) // TODO replace with existing actual backend txn creation call
+      const mindeeResponse = await mindee.parseReceipt(res.data.url)
+      console.log("Upload.js: mindeeResponse", mindeeResponse)
+      const transaction = mindee.convertMindeeResponseToTransaction(mindeeResponse)
+      mindee.saveTransaction(token, transaction)
 
       // setUrl(image)
       setError(false);
