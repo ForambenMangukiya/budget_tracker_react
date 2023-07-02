@@ -12,16 +12,18 @@
 .backtosignup {
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 31px;
   font-weight: 700;
   font-size: 16px;
   font-family: "Inter";
   color: #c80048;
-  margin-top: 10px;
   border: none;
   background: none;
   text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.backtosignup:hover {
+  transform: scale(1.1);
 }
 .css-q9651n-MuiButtonBase-root-MuiButton-root {
   color: white;

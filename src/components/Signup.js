@@ -16,6 +16,8 @@ import { InputLabel, TextField } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import { styled } from '@mui/system';
+
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [first_name, setFirst_name] = useState("");
@@ -36,6 +38,7 @@ export default function Signup() {
 
     const response = await fetch(
       "https://piggybank-api.onrender.com/users/signup",
+      // `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,6 +72,13 @@ export default function Signup() {
     }
   };
 
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      backgroundColor: '#ffa726',
+      transform: 'scale(1.05)',
+    },
+  });
+
   return (
     <Container maxWidth="sm">
       <Cornerright className="cornerright" />
@@ -89,8 +99,10 @@ export default function Signup() {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            gap: "20px",
+            gap: "15px",
             minHeight: "100vh",
+            padding: "10px",
+            paddingTop: "100px",
           }}
         >
           <FormControl fullWidth className="signup-container">
@@ -104,6 +116,9 @@ export default function Signup() {
                 borderRadius: "31px",
                 "& fieldset": {
                   borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
                 },
               }}
             ></TextField>
@@ -120,35 +135,40 @@ export default function Signup() {
                 "& fieldset": {
                   borderRadius: "30px",
                 },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
               }}
             ></TextField>
           </FormControl>
           <FormControl fullWidth>
             <InputLabel className="country">Country</InputLabel>
             <Select
-              id="countryselectinput"
-              value={country_code}
-              onChange={(e) => setCountry_code(e.target.value)}
-              sx={{
-                borderRadius: "31px",
-                "& fieldset": {
-                  borderRadius: "30px",
-                },
-              }}
-            >
-              <MenuItem value="US">US</MenuItem>
-              <MenuItem value="DE">DE</MenuItem>
-              {countryList.map((countryCode) => {
-                if (countryCode !== "US" && countryCode !== "DE") {
-                  return (
-                    <MenuItem key={countryCode} value={countryCode}>
-                      {countryCode}
-                    </MenuItem>
-                  );
-                }
-                return null;
-              })}
-            </Select>
+            id="countryselectinput"
+            value={country_code}
+            onChange={(e) => setCountry_code(e.target.value)}
+            sx={{
+              borderRadius: "31px",
+              "& fieldset": {
+                borderRadius: "30px",
+              },
+              fontSize: '16px',
+            }}
+          >
+            <MenuItem value="US"
+            sx={{ fontSize: '16px' }}>US</MenuItem>
+            <MenuItem value="DE"
+            sx={{ fontSize: '16px' }}>DE</MenuItem>
+            {countryList
+              .filter((countryCode) => countryCode !== "US" && countryCode !== "DE")
+              .map((countryCode) => (
+                <MenuItem key={countryCode} value={countryCode}
+                sx={{ fontSize: '16px' }}>
+                  {countryCode}
+                </MenuItem>
+              ))}
+          </Select>
+
           </FormControl>
           <FormControl fullWidth>
             <TextField
@@ -161,6 +181,9 @@ export default function Signup() {
                 borderRadius: "31px",
                 "& fieldset": {
                   borderRadius: "30px",
+                },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
                 },
               }}
             />
@@ -177,26 +200,36 @@ export default function Signup() {
                 "& fieldset": {
                   borderRadius: "30px",
                 },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
               }}
             />
-            <Box>
-              <Button
+            <Box
+            sx={{
+              padding: "30px",
+            }}
+            >
+              <CustomButton
                 sx={{
-                  ":hover": { bgcolor: "grey" },
+                  ":hover": { bgcolor: "#C42B0A" },
                   borderRadius: "31px",
                   background: "#c80048",
                   width: "150px",
                   height: "50px",
                   margin: "20px",
                   color: "white",
+                  fontSize: "16px",
+                  padding: "5px 80px",
                 }}
                 onClick={handleSubmit}
                 className="signup"
               >
                 Register
-              </Button>
+              </CustomButton>
+              <p> Already have an account?</p>
               <NavLink to="/login" className="backtologin">
-                Login
+                Login here
               </NavLink>
               {error && <div className="error">{error}</div>}
             </Box>
