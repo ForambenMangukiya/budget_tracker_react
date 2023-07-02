@@ -23,6 +23,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { styled } from '@mui/system';
 
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
@@ -47,43 +48,43 @@ export default function AddIncome() {
       setAlert(<Alert severity="warning">Please fill all the fields !</Alert>);
     } else {
       setIsLoading(true);
-    }
-    try {
-      const response = await fetch(
-        "https://piggybank-api.onrender.com/Transaction",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      try {
+        const response = await fetch(
+          "https://piggybank-api.onrender.com/Transaction",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
 
-          body: JSON.stringify({
-            category_name, // HOUSE, TRANSPORTATION
-            tran_description,
-            tran_amount,
-            tran_sign: "CR", //DR (income) or CR(expense)
-            tran_currency: "US",
-            tran_date,
-            user,
-          }),
+            body: JSON.stringify({
+              category_name, // HOUSE, TRANSPORTATION
+              tran_description,
+              tran_amount,
+              tran_sign: "CR", //DR (income) or CR(expense)
+              tran_currency: "US",
+              tran_date,
+              user,
+            }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to add income");
         }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error("Failed to add income");
+        setIsLoading(false);
+        setCatgeroy("");
+        setDate(null);
+        setDescription("");
+        setAmount("");
+        setAlert(<Alert severity="success">Your income has been saved</Alert>);
+        setRefresh(!refresh);
+      } catch (error) {
+        console.log(error);
       }
-      setIsLoading(false);
-      setCatgeroy("");
-      setDate(null);
-      setDescription("");
-      setAmount("");
-      setAlert(<Alert severity="success">Your income has been saved</Alert>);
-      setRefresh(!refresh);
-    } catch (error) {
-      console.log(error);
     }
   };
   const handlecategoryChange = (event) => {
@@ -101,6 +102,13 @@ export default function AddIncome() {
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
+
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      backgroundColor: '#ffa726',
+      transform: 'scale(1.05)',
+    },
+  });
 
   return (
     <Container maxWidth="sm"
@@ -125,16 +133,16 @@ export default function AddIncome() {
 
             <Select
               required
-              className="addincome-textfield"
+              className="addincome-textfield background_grey"
               label="Category"
               value={category_name}
               onChange={handlecategoryChange}
-              sx={{ textAlign: "left", borderRadius: "31px" }}
+              sx={{ textAlign: "left", borderRadius: "31px", fontSize: '16px', }}
             >
-              <MenuItem value="Salary">salary </MenuItem>
-              <MenuItem value="Deposits"> Deposits</MenuItem>
-              <MenuItem value="Savings"> Savings</MenuItem>
-              <MenuItem value="Others"> Others</MenuItem>
+              <MenuItem value="Salary" sx={{ fontSize: '16px' }}>salary </MenuItem>
+              <MenuItem value="Deposits" sx={{ fontSize: '16px' }}> Deposits</MenuItem>
+              <MenuItem value="Savings" sx={{ fontSize: '16px' }}> Savings</MenuItem>
+              <MenuItem value="Others" sx={{ fontSize: '16px' }}> Others</MenuItem>
             </Select>
           </FormControl>
           {/* <InputLabel className="text-field-label">Date</InputLabel> */}
@@ -150,6 +158,7 @@ export default function AddIncome() {
                     borderRadius: "31px",
                     "& fieldset": {
                       borderRadius: "30px",
+                      fontSize: "16px",
                     },
                   }}
                 />
@@ -168,6 +177,9 @@ export default function AddIncome() {
                 "& fieldset": {
                   borderRadius: "30px",
                 },
+                "& input": {
+                  fontSize: "16px", // Customize the font size here
+                },
               }}
             ></TextField>
             {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
@@ -176,7 +188,7 @@ export default function AddIncome() {
           <FormControl fullWidth>
             <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
             <OutlinedInput
-              className="addincome-textfield"
+              className="addincome-textfield background_grey"
               label=" add your amount"
               type="number"
               startAdornment={
@@ -184,23 +196,25 @@ export default function AddIncome() {
               }
               value={tran_amount}
               onChange={handleAmountChange}
-              sx={{ borderRadius: "31px" }}
+              sx={{ borderRadius: "31px", fontSize: "16px"  }}
             ></OutlinedInput>
           </FormControl>
-          <Button
-            sx={{
-              ":hover": { bgcolor: "grey" },
-              borderRadius: "31px",
-              background: "#c80048",
-              width: "150px",
-              height: "50px",
-              margin: "20px",
-              color: "white",
+          <CustomButton
+                sx={{
+                  ":hover": { bgcolor: "#C42B0A" },
+                  borderRadius: "31px",
+                  background: "#c80048",
+                  width: "150px",
+                  height: "50px",
+                  margin: "20px",
+                  color: "white",
+                  fontSize: "16px",
+                  padding: "5px 80px",
             }}
             onClick={handleAddIncomesChange}
           >
             ADD
-          </Button>
+          </CustomButton>
           <Box sx={{ mt: 1 }}>{alert}</Box>
         </Box>
       )}
