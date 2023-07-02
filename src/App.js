@@ -36,7 +36,7 @@ function App() {
             <Route path="/budget" element={<Budget />} />
             <Route path="/addbudget" element={<Addbudget />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/topspendings" element={<Topspending />} />
+            {/* <Route path="/topspendings" element={<Topspending />} /> */}
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/link" element={<Client />} />
             <Route path="*" element={<Navigate to="/" />} />
