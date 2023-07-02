@@ -8,7 +8,7 @@ import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 // import { ReactComponent as Welcoming } from "./svgCategories/welcoming.svg";
 import welcoming from "./images/welcoming.jpg";
 import { useNavigate } from "react-router-dom";
-import { styled } from '@mui/system';
+import { styled } from "@mui/system";
 
 export default function LandingPage2() {
   const navigate = useNavigate();
@@ -22,16 +22,13 @@ export default function LandingPage2() {
   };
 
   const CustomButton = styled(Button)({
-    '&:hover': {
-      transform: 'scale(1.05)',
+    "&:hover": {
+      transform: "scale(1.05)",
     },
   });
 
   return (
-    <Container
-      className="landingPage"
-      maxWidth="sm"
-    >
+    <Container className="landingPage" maxWidth="sm">
       <Cornerright className="cornerright" />
       {/* <Welcoming /> */}
       <Box
@@ -42,16 +39,16 @@ export default function LandingPage2() {
         minHeight="100vh"
         gap="20px"
       >
-      <Box
-      sx={{
-        transition: 'all 0.3s ease',
-        '&:hover': {
-          transform: 'scale(1.1)',
-        },
-      }}
-      >
-      <img className="welcomeimage" src={welcoming} width="400px" />
-    </Box>
+        <Box
+          sx={{
+            transition: "all 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.1)",
+            },
+          }}
+        >
+          <img className="welcomeimage" src={welcoming} width="400px" />
+        </Box>
 
         <CustomButton
           style={{
