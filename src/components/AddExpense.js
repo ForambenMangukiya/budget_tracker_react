@@ -37,7 +37,7 @@ export default function AddExpense() {
     e.preventDefault();
     if (
       category === "" ||
-      recurrence === "" ||
+      // recurrence === "" ||
       date === null ||
       description === "" ||
       amount === ""
