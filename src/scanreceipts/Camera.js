@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import { Box, Button } from '@mui/material';
 import axios from 'axios';
 import mindee from "./Mindee";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Camera() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     let stream = null;
@@ -60,7 +62,10 @@ export default function Camera() {
       const res = await axios.post('http://localhost:8080/api/upload', formData);
       console.log('Image uploaded:', res.data);
 
-      const mindeeResponse = mindee.parseReceipt(res.data.url) // TODO ensure data.url works
+      const mindeeResponse = await mindee.parseReceipt(res.data.url)
+      const transaction = mindee.convertMindeeResponseToTransaction(mindeeResponse)
+      mindee.saveTransaction(token, transaction)
+
     } catch (error) {
       console.error('Error uploading the image:', error);
     }
