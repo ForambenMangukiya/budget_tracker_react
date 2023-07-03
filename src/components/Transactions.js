@@ -449,12 +449,11 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
-                    <IconButton
+                    <Trash
+                      width="20"
                       className="delete-button"
                       onClick={() => handleDeleteTransaction(element._id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    />
                   </Box>
                 );
               })}
