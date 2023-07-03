@@ -19,6 +19,7 @@ import "./styles/addexpense.css";
 
 import { AuthContext } from "../context/AuthContext";
 import { DataContext } from "../context/DataContext";
+import { styled } from '@mui/system';
 
 export default function AddExpense() {
   const [category, setCategory] = React.useState("");
@@ -32,10 +33,11 @@ export default function AddExpense() {
   const { token } = React.useContext(AuthContext);
   const { refresh, setRefresh } = React.useContext(DataContext);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (
       category === "" ||
-      recurrence === "" ||
+      // recurrence === "" ||
       date === null ||
       description === "" ||
       amount === ""
@@ -83,6 +85,13 @@ export default function AddExpense() {
     }
   };
 
+  const CustomButton = styled(Button)({
+    '&:hover': {
+      backgroundColor: '#ffa726',
+      transform: 'scale(1.05)',
+    },
+  });
+
   return (
       <Container maxWidth="sm" id="transactions-container-id"
         sx={{
@@ -100,10 +109,10 @@ export default function AddExpense() {
             <CircularProgress sx={{ mt: 2 }} />
           </Box>
         ) : (
-          <Box sx={{ minWidth: 120, p: 2 }} className="addexp_box">
+          <Box sx={{ minWidth: 120, p: 2, }} className="addexp_box">
             <form>
               {/*Category */}
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
                 <InputLabel id="category-label">Category</InputLabel>
                 <Select
                   required
@@ -113,25 +122,27 @@ export default function AddExpense() {
                   label="Category"
                   className="background_grey"
                   onChange={(e) => setCategory(e.target.value)}
-                  sx={{ textAlign: "left", borderRadius: "31px" }}
+                  sx={{ textAlign: "left", borderRadius: "31px",
+                  fontSize: '16px',
+                  }}
                 >
-                  <MenuItem value={"education"}>Eduaction</MenuItem>
-                  <MenuItem value={"communication"}>Communication</MenuItem>
-                  <MenuItem value={"bills"}>Bills</MenuItem>
-                  <MenuItem value={"rent"}>Rent</MenuItem>
-                  <MenuItem value={"medicine"}>Medicine</MenuItem>
-                  <MenuItem value={"groceries"}>Groceries</MenuItem>
-                  <MenuItem value={"eatingOut"}>Eating Out</MenuItem>
-                  <MenuItem value={"entertainment"}>Entertainment</MenuItem>
-                  <MenuItem value={"pets"}>Pets</MenuItem>
-                  <MenuItem value={"repairs"}>Repairs</MenuItem>
-                  <MenuItem value={"work"}>Work</MenuItem>
-                  <MenuItem value={"insurance"}>Insurance</MenuItem>
-                  <MenuItem value={"others"}>Others</MenuItem>
+                  <MenuItem value={"education"} sx={{ fontSize: '16px' }}>Education</MenuItem>
+                  <MenuItem value={"communication"} sx={{ fontSize: '16px' }}>Communication</MenuItem>
+                  <MenuItem value={"bills"} sx={{ fontSize: '16px' }}>Bills</MenuItem>
+                  <MenuItem value={"rent"} sx={{ fontSize: '16px' }}>Rent</MenuItem>
+                  <MenuItem value={"medicine"} sx={{ fontSize: '16px' }}>Medicine</MenuItem>
+                  <MenuItem value={"groceries"} sx={{ fontSize: '16px' }}>Groceries</MenuItem>
+                  <MenuItem value={"eatingOut"} sx={{ fontSize: '16px' }}>Eating Out</MenuItem>
+                  <MenuItem value={"entertainment"} sx={{ fontSize: '16px' }}>Entertainment</MenuItem>
+                  <MenuItem value={"pets"} sx={{ fontSize: '16px' }}>Pets</MenuItem>
+                  <MenuItem value={"repairs"} sx={{ fontSize: '16px' }}>Repairs</MenuItem>
+                  <MenuItem value={"work"} sx={{ fontSize: '16px' }}>Work</MenuItem>
+                  <MenuItem value={"insurance"} sx={{ fontSize: '16px' }}>Insurance</MenuItem>
+                  <MenuItem value={"others"} sx={{ fontSize: '16px' }}>Others</MenuItem>
                 </Select>
               </FormControl>
               {/*Recurrence */}
-              <FormControl fullWidth>
+              {/* <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
                 <InputLabel id="recurrence-label">Recurrence</InputLabel>
                 <Select
                   required
@@ -141,26 +152,26 @@ export default function AddExpense() {
                   label="Recurrence"
                   className="background_grey"
                   onChange={(e) => setRecurrence(e.target.value)}
-                  sx={{ textAlign: "left", borderRadius: "31px" }}
+                  sx={{ textAlign: "left", borderRadius: "31px", fontSize: '16px', }}
                 >
-                  <MenuItem value={"single"}>Single Expense</MenuItem>
-                  <MenuItem value={"recurrent"}>Recurrent Expense</MenuItem>
+                  <MenuItem value={"single"} sx={{ fontSize: '16px' }}>Single Expense</MenuItem>
+                  <MenuItem value={"recurrent"} sx={{ fontSize: '16px' }}>Recurrent Expense</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl> */}
 
               {/*Date*/}
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label="Date"
                     className="background_grey"
-                    // inputFormat="DD/MM/YYYY"
                     value={date}
                     onChange={(selectedDate) => setDate(selectedDate)}
                     sx={{
                       borderRadius: "31px",
                       "& fieldset": {
                         borderRadius: "30px",
+                        fontSize: "16px",
                       },
                     }}
                   />
@@ -168,7 +179,7 @@ export default function AddExpense() {
               </FormControl>
 
               {/*Description */}
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
                 <TextField
                   id="outlined-basic"
                   label="Description"
@@ -181,12 +192,15 @@ export default function AddExpense() {
                     "& fieldset": {
                       borderRadius: "30px",
                     },
+                    "& input": {
+                      fontSize: "16px", // Customize the font size here
+                    },
                   }}
                 />
               </FormControl>
 
               {/*Amount */}
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
                 <InputLabel htmlFor="outlined-adornment-amount">
                   Amount
                 </InputLabel>
@@ -200,18 +214,26 @@ export default function AddExpense() {
                   className="background_grey"
                   onChange={(e) => setAmount(e.target.value)}
                   value={amount}
-                  sx={{ borderRadius: "31px" }}
+                  sx={{ borderRadius: "31px", fontSize: "16px"  }}
                 />
               </FormControl>
               {/* Submit Button */}
-              <Button
-                variant="outlined"
+              <CustomButton
+                sx={{
+                  ":hover": { bgcolor: "#C42B0A" },
+                  borderRadius: "31px",
+                  background: "#c80048",
+                  width: "150px",
+                  height: "50px",
+                  margin: "20px",
+                  color: "white",
+                  fontSize: "16px",
+                  padding: "5px 80px",
+                }}
                 onClick={handleSubmit}
-                className="btn_add"
-                sx={{ mt: 1, pt: 2, pb: 2, pl: 5, pr: 5 }}
               >
-                Add
-              </Button>
+                ADD
+              </CustomButton>
               {/* Alert Message */}
               <Box sx={{ mt: 1 }}>{alert}</Box>
             </form>

@@ -17,19 +17,14 @@
   position: absolute;
   top: 0;
   right: 0;
-  border-radius: 0 18px;
+  /* border-radius: 0 18px; */
 }
 .cornerleft {
   position: absolute;
   bottom: 0;
   left: 0;
-  border-radius: 0 18px;
+  /* border-radius: 0 18px; */
 }
 .landingPage {
   position: relative;
-}
-.welcomeimage {
-  /* position: absolute;
-  top: 0;
-  left: 0; */
 }

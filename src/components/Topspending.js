@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
-import { Container } from "@mui/material";
 
 //importing SVG -------------------
 import { ReactComponent as IconAddNew } from "./svgCategories/add-new.svg";
@@ -18,7 +17,8 @@ import { ReactComponent as IconRent } from "./svgCategories/rent.svg";
 import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
-export default function Reports() {
+
+export default function Topspending() {
   const { categories } = useContext(DataContext);
   const categoryIcons = {
     bills: IconBills,
@@ -39,13 +39,7 @@ export default function Reports() {
     others: IconOthers,
   };
   return (
-    <Container
-      sx={{
-        paddingTop: "100px",
-        maxWidth: "sm",
-        minHeight: "100vh",
-      }}
-    >
+    <div>
       <h3 className="dash-title">Top spending</h3>
       <div className="dash-topSpending">
         {categories?.map((category) => {
@@ -60,6 +54,6 @@ export default function Reports() {
           );
         })}
       </div>
-    </Container>
+    </div>
   );
 }
