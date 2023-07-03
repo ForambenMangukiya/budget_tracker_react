@@ -9,6 +9,9 @@ import {
 } from "recharts";
 import { DataContext } from "../context/DataContext";
 import "../App.css";
+import "./styles/charts.css";
+
+import { Link } from "react-router-dom";
 
 // const data = [
 //   { name: "Group A", value: 400 },
@@ -160,45 +163,58 @@ const renderCustomizedLabel = ({
 export default function Charts() {
   const { categories } = useContext(DataContext);
 
-  return (
-    <div className="dash-progress">
-      <div className="dash-graph">
-        <h2>Spendings</h2>
-        <p>Top spending :{categories[0]?.name}</p>
+  if (categories.length < 1) {
+    return (
+      <div className="dash-graph-empty">
+        <p className="empty-msg">You don't have any Spendings yet</p>
+        <Link to="/transactions" className="empty-btn">
+          Add now
+        </Link>
       </div>
+    );
+  } else {
+    return (
+      <Link to="/reports" className="graph-progress">
+        <div className="dash-graph">
+          <h2>Spendings</h2>
+          <p className="top-spending-title">
+            Top spending :{categories[0]?.name}
+          </p>
+        </div>
 
-      <ResponsiveContainer width="100%" height={340} debounce={1}>
-        <PieChart>
-          <Legend
-            // verticalAlign="bottom"
-            align="middle"
-            layout="horizontal"
-            iconSize={6}
-            // margin={50}
-          />
+        <ResponsiveContainer width="100%" height={340} debounce={1}>
+          <PieChart>
+            <Legend
+              // verticalAlign="bottom"
+              align="middle"
+              layout="horizontal"
+              iconSize={6}
+              // margin={50}
+            />
 
-          <Pie
-            data={categories}
-            cx="50%"
-            cy="50%"
-            labelLine={true}
-            label={renderCustomizedLabel}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="spent"
-            innerRadius={30}
-            paddingAngle={1}
-            legendType="circle"
-          >
-            {categories?.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
-  );
+            <Pie
+              data={categories}
+              cx="50%"
+              cy="50%"
+              labelLine={true}
+              label={renderCustomizedLabel}
+              outerRadius={80}
+              fill="#8884d8"
+              dataKey="spent"
+              innerRadius={30}
+              paddingAngle={1}
+              legendType="circle"
+            >
+              {categories?.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </Link>
+    );
+  }
 }

@@ -22,6 +22,7 @@ import "./styles/addbudget.css";
 import axios from "axios"; //last
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
+import { border } from "@mui/system";
 // import { useJwt } from "react-jwt";
 
 export default function Addbudget() {
@@ -221,11 +222,15 @@ export default function Addbudget() {
             {/* Submit Button */}
             <Button
               sx={{
-                ":hover": { bgcolor: "grey" },
+                ":hover": {
+                  bgcolor: "white",
+                  color: "var(--red)",
+                  border: "1px solid var(--red) ",
+                },
                 borderRadius: "31px",
                 background: "#c80048",
-                width: "150px",
-                height: "50px",
+                width: "100px",
+                height: "35px",
                 margin: "20px",
                 color: "white",
               }}
