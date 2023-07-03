@@ -51,29 +51,29 @@ export default function Addbudget() {
     } else {
       setIsLoading(true);
       try {
-        // //Get existing budgets
-        // const res = await fetch(
-        //   `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
-        //   {
-        //     method: "GET", // Fetch the current data first
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
-        // const data = await res.json();
-        // const currentBudgets = data || []; // Get the current budgets array
+        //Get existing budgets
+        const res = await fetch(
+          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
+          {
+            method: "GET", // Fetch the current data first
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        const currentBudgets = data || []; // Get the current budgets array
 
-        // const updatedBudgets = [
-        //   ...currentBudgets,
-        //   {
-        //     category_name: category,
-        //     budget_description: description,
-        //     budget_date: date,
-        //     limit_amount: amount,
-        //   },
-        // ];
+        const budgets = [
+          ...currentBudgets,
+          {
+            category_name: category,
+            budget_description: description,
+            budget_date: date,
+            limit_amount: amount,
+          },
+        ];
         // Append the new object to the existing array
 
         const resPut = await fetch(
@@ -85,12 +85,13 @@ export default function Addbudget() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              budgets: {
-                category_name: category,
-                budget_description: description,
-                budget_date: date,
-                limit_amount: amount,
-              },
+              budgets,
+              // budgets: {
+              //   category_name: category,
+              //   budget_description: description,
+              //   budget_date: date,
+              //   limit_amount: amount,
+              // },
             }),
           }
         );
@@ -137,7 +138,8 @@ export default function Addbudget() {
         <Box sx={{ minWidth: 120, p: 2 }} className="addexp_box">
           <form>
             {/*Category */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <InputLabel id="category-label">Category</InputLabel>
               <Select
                 required
@@ -147,7 +149,11 @@ export default function Addbudget() {
                 label="Category"
                 className="background_grey"
                 onChange={(e) => setCategory(e.target.value)}
-                sx={{ textAlign: "left", borderRadius: "31px" }}
+                sx={{
+                  textAlign: "left",
+                  borderRadius: "31px",
+                  fontSize: "16px",
+                }}
               >
                 <MenuItem value={"education"}>Education</MenuItem>
                 <MenuItem value={"communication"}>Communication</MenuItem>
@@ -166,7 +172,8 @@ export default function Addbudget() {
             </FormControl>
 
             {/*Date*/}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Date"
@@ -179,13 +186,17 @@ export default function Addbudget() {
                     "& fieldset": {
                       borderRadius: "30px",
                     },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
+                    },
                   }}
                 />
               </LocalizationProvider>
             </FormControl>
 
             {/*Amount */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
               </InputLabel>
@@ -199,11 +210,15 @@ export default function Addbudget() {
                 className="background_grey"
                 onChange={(e) => setAmount(e.target.value)}
                 value={amount}
-                sx={{ borderRadius: "31px" }}
+                sx={{
+                  borderRadius: "31px",
+                  fontSize: "16px",
+                }}
               />
             </FormControl>
             {/*Description */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <TextField
                 id="outlined-basic"
                 label="Description"
@@ -215,6 +230,9 @@ export default function Addbudget() {
                   borderRadius: "31px",
                   "& fieldset": {
                     borderRadius: "30px",
+                  },
+                  "& .MuiInputBase-input": {
+                    fontSize: "16px", // Set the desired font size
                   },
                 }}
               />
@@ -240,7 +258,21 @@ export default function Addbudget() {
               Add
             </Button>
             {/* Alert Message */}
-            <Box sx={{ mt: 1 }}>{alert}</Box>
+            <Box sx={{ mt: 1 }}>
+              {/* {alert}  */}
+              {alert && (
+                <Alert
+                  severity="success"
+                  sx={{
+                    "& .MuiAlert-message": {
+                      fontSize: "14px", // Set the desired font size
+                    },
+                  }}
+                >
+                  {alert}
+                </Alert>
+              )}
+            </Box>
           </form>
         </Box>
       )}

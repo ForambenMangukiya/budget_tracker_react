@@ -12,6 +12,8 @@ import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
@@ -39,6 +41,7 @@ export default function Transactions() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+
   //navigate
   const navigate = useNavigate();
   //context
@@ -71,6 +74,33 @@ export default function Transactions() {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
     size: "large",
+  };
+
+  // for the deletebutton
+  const handleDelete = async (tranId) => {
+    try {
+      const res = await fetch(
+        `https://piggybank-api.onrender.com/transaction/${tranId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (res.ok) {
+        // Delete the transaction  from the local state
+        setTranData((prevTranData) =>
+          prevTranData.filter((tran) => tran._id !== tranId)
+        );
+      } else {
+        // Handle error if delete request fails
+        console.log("Failed to delete transaction");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //   const handleSubmit = async (e) => {
@@ -329,6 +359,19 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    {/* deletebutton */}
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDelete(element._id)}
+                      sx={{
+                        width: 50,
+                        right: 10,
+                        color: "black",
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
                 );
               })}
@@ -406,6 +449,18 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => handleDelete(element._id)}
+                      sx={{
+                        width: 50,
+                        right: 10,
+                        color: "black",
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
                 );
               })}
