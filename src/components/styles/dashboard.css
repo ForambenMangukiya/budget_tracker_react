@@ -1,38 +1,25 @@
 .dash-container {
-  padding: 2em;
+
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 .dash-progress{
   border: solid 1px rgb(199, 199, 199);
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 1em;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
 
 }
-.swiper {
-  width: 100%;
+.dash-progress:hover{
+  transform: scale(1.05);
+  transition: all 0.3s ease
 }
-.swiper-wrapper {
-  /* border: 2px solid red; */
-  padding: 0px 0px 10px 0;
-  width: 90%;
-  padding-bottom: 1em;
-}
-.swiper-slide {
-  box-sizing: border-box;
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid #b0b0b0;
-  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); */
-  border-radius: 15px;
-  padding: 1em;
 
-}
-.swiper-scrollbar {
-  width: 50px;
-}
+
+
+
 
 /* 
 ================0===========
@@ -44,10 +31,10 @@ MUI styles
 }
 
 .linear-progress-container1 .MuiLinearProgress-determinate {
-  padding: 12px;
+  padding: 15px;
   margin-bottom: 1em;
   background-color: var(--gray-1);
-  border-radius: 1em;
+  border-radius: 5em;
 }
 .linear-progress-container2 .MuiLinearProgress-bar1Determinate {
   background-color: var(--blue);
@@ -55,10 +42,10 @@ MUI styles
 }
 
 .linear-progress-container2 .MuiLinearProgress-determinate {
-  padding: 12px;
+  padding: 15px;
   margin-bottom: 1em;
   background-color: var(--gray-1);
-  border-radius: 1em;
+  border-radius: 5em;
 }
 
 
@@ -67,18 +54,30 @@ MUI styles
   color: var(--red);
   margin-top: 0.5em;
 }
-.dash-expected {
-  text-align: left;
-  color: var(--black);
-  font-size: 12px;
-  margin: 0;
-}
+
 .dash-balance{
   text-align: left;
   color: var(--black);
   font-size: 25px;
   margin: 0;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 0.5px rgb(182, 182, 182) dashed;
 
+}
+.current-balance{
+  text-align: left;
+  color: var(--black);
+  font-size: 15px;
+  margin: 0;
+
+
+}
+.dash-expected {
+  text-align: left;
+  color: var(--black);
+  font-size: 15px;
+  margin: 0;
 }
 
 .linear-progress-container1 {
@@ -89,16 +88,17 @@ MUI styles
 }
 .progress-left {
   position: absolute;
-  top: 0px;
+  top: 4px;
   left: 10px;
   z-index: 2;
   margin: 0;
   font-size: 10px;
-  color: white;
+  color: var(--white-txt);
+  /* font-family: "Inter", sans-serif; */
 }
 .progress-right {
   position: absolute;
-  top: 0px;
+  top: 4px;
   right: 10px;
   z-index: 2;
   margin: 0;
@@ -129,6 +129,7 @@ MUI styles
   text-align: left;
   margin-bottom: 3px;
   margin-left: 0.5em;
+  font-size: 15px;
 }
 
 
@@ -184,8 +185,6 @@ Top spending
 .filter-active {
   background-color: var(--red);
   border-radius: 1em;
-
-  
 }
 
 .optionFilter{
@@ -205,4 +204,32 @@ Top spending
 .dash-graph p{
   margin: 5px;
   font-size: 10px;
+}
+
+
+
+/* =======================
+Swiper
+==================== */
+.swiper {
+  width: 100%;
+}
+.swiper-wrapper {
+  /* border: 2px solid red; */
+
+  width: 90%;
+  padding-bottom: 1em;
+}
+.swiper-slide {
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #b0b0b0;
+  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); */
+  border-radius: 15px;
+  padding: 1em;
+
+}
+.swiper-scrollbar {
+  width: 50px;
 }

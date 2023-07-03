@@ -19,8 +19,7 @@ import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
-import AddIcon from '@mui/icons-material/Add';
-
+import AddIcon from "@mui/icons-material/Add";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -207,20 +206,22 @@ export default function Transactions() {
           <Tab
             label="expenses"
             value="expenses"
-            style={{fontSize: '18px'}}
+            style={{ fontSize: "18px" }}
             className={transaction === "expenses" ? "active tab" : "tab"}
           />
           <Tab
             label="income"
             value="income"
-            style={{fontSize: '18px'}}
+            style={{ fontSize: "18px" }}
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label" sx={{ fontSize: '12px' }}>Filter</InputLabel>
+            <InputLabel id="demo-simple-select-label" sx={{ fontSize: "12px" }}>
+              Filter
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -232,15 +233,27 @@ export default function Transactions() {
                 "& fieldset": {
                   borderRadius: "31px",
                 },
-                fontSize: '14px',
+                fontSize: "14px",
               }}
             >
-              <MenuItem value={"all"} sx={{ fontSize: '14px' }}>All</MenuItem>
-              <MenuItem value={"week"} sx={{ fontSize: '14px' }}>Last Week</MenuItem>
-              <MenuItem value={"month"} sx={{ fontSize: '14px' }}>Last Month</MenuItem>
-              <MenuItem value={"3months"} sx={{ fontSize: '14px' }}>Last 3 Months</MenuItem>
-              <MenuItem value={"6months"} sx={{ fontSize: '14px' }}>Last 6 Months</MenuItem>
-              <MenuItem value={"year"} sx={{ fontSize: '14px' }}>Last Year</MenuItem>
+              <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
+                All
+              </MenuItem>
+              <MenuItem value={"week"} sx={{ fontSize: "14px" }}>
+                Last Week
+              </MenuItem>
+              <MenuItem value={"month"} sx={{ fontSize: "14px" }}>
+                Last Month
+              </MenuItem>
+              <MenuItem value={"3months"} sx={{ fontSize: "14px" }}>
+                Last 3 Months
+              </MenuItem>
+              <MenuItem value={"6months"} sx={{ fontSize: "14px" }}>
+                Last 6 Months
+              </MenuItem>
+              <MenuItem value={"year"} sx={{ fontSize: "14px" }}>
+                Last Year
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -255,7 +268,9 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>Spent</Typography>
+              <Typography sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}>
+                Spent
+              </Typography>
             </Box>
 
             {tranData
@@ -329,7 +344,7 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>
+              <Typography sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}>
                 {" "}
                 Earned{" "}
               </Typography>
@@ -396,39 +411,41 @@ export default function Transactions() {
               })}
           </Box>
         )}
-        </Box>
+      </Box>
 
-        <Backdrop open={open} />
-        <SpeedDial
-          ariaLabel="SpeedDial tooltip example"
-          style={{
-            zIndex: 5,
-            transform: 'translateX(+40%)',
-          }}
-          sx={{ position: "sticky", bottom: 70,
-          '& .MuiFab-root': {
-            width: '64px', // Increase the width
-            height: '64px', // Increase the height
+      <Backdrop open={open} />
+      <SpeedDial
+        ariaLabel="SpeedDial tooltip example"
+        style={{
+          zIndex: 5,
+          transform: "translateX(+40%)",
+        }}
+        sx={{
+          position: "sticky",
+          bottom: 70,
+          "& .MuiFab-root": {
+            width: "64px", // Increase the width
+            height: "64px", // Increase the height
           },
         }}
-          icon={<AddIcon sx={{ color: "#FFFF", fontSize: '30px'  }} />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-          FabProps={{ 
-            style: paperStyles,
-          }}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              tooltipOpen
-              onClick={() => handleActionClick(action.route)}
-            />
-          ))}
-        </SpeedDial>
+        icon={<AddIcon sx={{ color: "#FFFF", fontSize: "30px" }} />}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        open={open}
+        FabProps={{
+          style: paperStyles,
+        }}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={() => handleActionClick(action.route)}
+          />
+        ))}
+      </SpeedDial>
     </Container>
   );
 }

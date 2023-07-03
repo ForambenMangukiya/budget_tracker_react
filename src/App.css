@@ -4,9 +4,14 @@
   --red: #c80048;
   --blue: #453f78;
 
+  --white-txt:white;
+  --black-txt:black;
+
+  --gray-0: #f1f1f1;
   --gray-1: #e9e9e9;
   --gray-2: #d9d9d9;
   --gray-3: #b9b9b9;
+  --gray-4: #8b8b8b;
 
   --header: linear-gradient(#c80048, #961c48);
 
@@ -24,6 +29,7 @@
   min-height: 100vh;
   /* border: solid 1px whitesmoke; */
   margin: 0 auto;
+  margin-bottom: 90px;
   /* background: linear-gradient(#1c060e, #7f173c); */
   /* padding: 1em; */
   font-family: "Inter", sans-serif;
