@@ -85,7 +85,7 @@ export default function CaptureImage() {
   useEffect(() => {
     const enableCamera = async () => {
       try {
-        await navigator.mediaDevices.getUserMedia({ video: true });
+        await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" },},});
       } catch (error) {
         console.error('Error accessing the camera:', error);
       }
