@@ -17,10 +17,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../context/AuthContext";
 import { DataContext } from "../context/DataContext";
 import Button from "@mui/material/Button";
-
+import logo from "./images/piggylogo.gif";
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
-
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { styled } from '@mui/system';
@@ -111,10 +110,11 @@ export default function AddIncome() {
   });
 
   return (
-    <Container maxWidth="sm"
-    sx={{
-      paddingTop: "100px",
-    }}
+    <Container
+      maxWidth="sm"
+      sx={{
+        paddingTop: "100px",
+      }}
     >
       {isLoading ? (
         <Box

@@ -37,6 +37,7 @@ import Grid from "@mui/material/Grid";
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
   const { decodedToken } = useJwt(token);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     categories,
     setCategories,
