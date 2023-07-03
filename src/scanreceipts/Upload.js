@@ -3,135 +3,140 @@ import { Modal, Button, TextField, Container, Typography, Box, Input } from "@mu
 import axios from "axios";
 import mindee from "./Mindee";
 import { AuthContext } from "../context/AuthContext";
+import { DataContext } from "../context/DataContext"
+import { useNavigate } from "react-router-dom";
 
-// const CustomFileInput = styled("input")({
-//   display: "none",
-// });
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-console.log("outside the function")
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
-export default function Upload({ flag, setFlag }) {
+export default function Upload() {
   const [show, setShow] = useState(false);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [error, setError] = useState(false);
-  const [onSuccess, setOnSuccess] = useState(false)
+  const [successMessage, setSuccessMessage] = useState("");
   const { token } = useContext(AuthContext);
-  // const [url, setUrl] = useState("")
+  const [flag, setFlag] = useState(false);
+  const { refresh, setRefresh } = useContext(DataContext);
+  const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-  console.log("starting UPLOAD")
+
+  const handleClose = () => {
+    setShow(false);
+    setDescription("");
+    setImage(null);
+    setSuccessMessage("");
+    navigate("/transactions");
+  };
 
   const onSubmit = async (e) => {
-    console.log("submit button clicked")
     e.preventDefault();
     try {
       const formData = new FormData();
-
       formData.append("picture", image, image.name);
       formData.append("desc", description);
-      console.log("posting image", formData )
-      const res = await axios.post("http://localhost:8080/api/upload", formData);
-      // const image = await res.data.data.url
-      console.log("postin DONE!!!!!", res.data )
 
-      const mindeeResponse = await mindee.parseReceipt(res.data.url)
-      console.log("Upload.js: mindeeResponse", mindeeResponse)
-      const transaction = mindee.convertMindeeResponseToTransaction(mindeeResponse)
-      mindee.saveTransaction(token, transaction)
+      const res = await axios.post("https://piggybank-api.onrender.com/api/upload", formData);
 
-      // setUrl(image)
+      const mindeeResponse = await mindee.parseReceipt(res.data.url);
+      const transaction = mindee.convertMindeeResponseToTransaction(mindeeResponse);
+      mindee.saveTransaction(token, transaction);
+      setRefresh(!refresh);
       setError(false);
-      handleClose();
+      setDescription("");
+      setImage(null);
+      setSuccessMessage("Upload successful!");
       setFlag(!flag);
-      setOnSuccess(true)
     } catch (error) {
       setError(true);
-      setOnSuccess(false)
+      setSuccessMessage("");
     }
   };
 
-  const fileData = () => {
-    if (image)
-      return (
-        <h5>
-          <em>{image.name}</em>
-        </h5>
-      );
-    return null;
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(file);
+    }
   };
 
   return (
     <Container>
-
-        <Button variant="contained" color="primary"
-        onClick={handleShow}>Upload Receipts</Button>
-        <Modal
-            open={show}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
+      <Button variant="contained" color="primary" onClick={handleShow}>
+        Upload Receipts
+      </Button>
+      <Modal
+        open={show}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
         <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
             Format (.jpg, .jpeg, .png)
-            </Typography>
+          </Typography>
 
           <form onSubmit={onSubmit}>
             <TextField
-                label="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-                fullWidth
-                sx={{ mb: 2 }}
+              label="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              fullWidth
+              sx={{ mb: 2 }}
             />
-                <Input
-                type="file"
-                onChange={(e) => setImage(e.target.files[0])}
-                id="image"
-                sx={{ display: "none" }}
-                inputProps={{ "aria-label": "Upload Image" }}
-                />
+            <Input
+              type="file"
+              onChange={handleFileInputChange}
+              id="image"
+              sx={{ display: "none" }}
+              inputProps={{ "aria-label": "Upload Image" }}
+            />
 
-                <label className="custom-file-label" htmlFor="image">
-                {image ? fileData() : "Choose File"}
-                </label>        
+            <label htmlFor="image">
+              <Button component="span" variant="contained" sx={{ mt: 1 }}>
+                Choose File
+              </Button>
+            </label>
 
-                <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-                Submit
-                </Button>
+            {image && (
+              <Typography component="span" variant="subtitle2">
+                {image.name}
+              </Typography>
+            )}
 
-            {error ? (
-            <div className="text-danger">
-                {" "}
-                An error occurred uploading the file{" "}
-            </div>
-            ) : null}
-    
+            <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+              Submit
+            </Button>
+
+            {error && (
+              <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                An error occurred uploading the file.
+              </Typography>
+            )}
+
+            {successMessage && (
+              <Typography variant="body2" color="success" sx={{ mt: 1 }}>
+                {successMessage}
+              </Typography>
+            )}
           </form>
-       
 
-        <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} sx={{ mt: 2 }}>
             Close
-        </Button>
+          </Button>
         </Box>
-
-      </Modal>  
-{/* 
-      {onSuccess && <Mindee />} */}
-      
+      </Modal>
     </Container>
   );
 }
