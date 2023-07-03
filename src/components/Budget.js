@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import { DataContext } from "../context/DataContext"; //importing datacontext
+import Button from "@mui/material/Button";
 import BudgetCard from "./BudgetCard";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -29,6 +30,8 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import DialogConfirm from "./DialogConfirm";
+
 import { ReactComponent as IconAddNew } from "./svgCategories/add-new.svg";
 import { ReactComponent as IconBills } from "./svgCategories/bills.svg";
 import { ReactComponent as IconCommunication } from "./svgCategories/communication.svg";
@@ -44,6 +47,7 @@ import { ReactComponent as IconRent } from "./svgCategories/rent.svg";
 import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
+import { ReactComponent as IconTrash } from "./svgCategories/trash.svg";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -68,6 +72,10 @@ export default function Budget() {
     setTranData,
   } = useContext(DataContext);
   const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [budgetDeleteName, setBudgetDeleteName] = useState("false");
+  const [budgetDeleteId, setBudgetDeleteId] = useState(null);
+
   const navigate = useNavigate();
   const actions = [
     { icon: <ManualEntry />, name: "Add Budget", route: "/addbudget" },
@@ -120,6 +128,13 @@ export default function Budget() {
         paddingTop: "100px",
       }}
     >
+      {dialogOpen ? (
+        <DialogConfirm
+          setDialogOpen={setDialogOpen}
+          budgetDeleteName={budgetDeleteName}
+          budgetDeleteId={budgetDeleteId}
+        />
+      ) : null}
       <Box
         sx={{
           height: 600,
@@ -164,6 +179,7 @@ export default function Budget() {
                       flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "flex-start",
+                      width: "80%",
                     }}
                   >
                     <Typography sx={{ fontSize: 16, fontWeight: "700" }}>
@@ -180,6 +196,26 @@ export default function Budget() {
                       {Number(element.limit_amount) - Number(element.spent)} $
                       remaining
                     </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "flex-start",
+                      width: "20%",
+                    }}
+                  >
+                    <Button
+                      sx={{ p: 1 }}
+                      onClick={() => {
+                        setBudgetDeleteName(element.category_name);
+                        setBudgetDeleteId(element._id);
+                        setDialogOpen(true);
+                      }}
+                    >
+                      <IconTrash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 </Box>
                 <div className="linear-progress-container2">
