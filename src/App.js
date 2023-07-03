@@ -16,7 +16,7 @@ import Menu from "./components/Menu";
 import Client from "./plaid/Client";
 import LandingPage2 from "./components/LandingPage2";
 import Addbudget from "./components/Addbudget";
-import Topspending from "./components/Topspending";
+
 import { Receipt } from "@mui/icons-material";
 import ReceiptScanning from "./components/ReceiptScanning";
 import Scan from "./scanreceipts/Scan";
