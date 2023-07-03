@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import { MenuItem, InputLabel } from "@mui/material";
 import Select from "@mui/material/Select";
 import { Container, Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -87,6 +88,10 @@ export default function Dashboard() {
   const [filteredData, setFilteredData] = useState([]);
   const [startDate, setStartDate] = useState(Date);
   const [endDate, setEndDate] = useState(Date);
+  const [spentBar, setSpentBar] = useState(0);
+  const [budgetBar, setBudgetBar] = useState(0);
+
+  // const [expensesSumBudgets, setExpensesSumBudgets] = useState(0);
 
   // =============================================================================================
   // =============================================================================================
@@ -222,28 +227,43 @@ export default function Dashboard() {
 
   //expected to save
   // const savings = incomeSum - budgetSum - expensesSum;
-  const savings = incomeSum - budgetSum;
+  const savings = incomeSum - budgetSum - expensesSum;
 
   //graphic bars
-  const spentBar = (expensesSum * 100) / incomeSum;
-  const budgetBar = (expensesSumBudgets * 100) / budgetSum;
+  useEffect(() => {
+    if (expensesSum !== 0) {
+      setSpentBar((expensesSum * 100) / incomeSum);
+    }
+  }, [expensesSum]);
+
+  useEffect(() => {
+    if (expensesSumBudgets !== 0) {
+      setBudgetBar((expensesSumBudgets * 100) / budgetSum);
+    }
+  }, [expensesSumBudgets]);
+
+  // const spentBar = (expensesSum * 100) / incomeSum;
+  // const spentBar = (expensesSum * 100) / incomeSum;
+  // const budgetBar = (expensesSumBudgets * 100) / budgetSum;
 
   // =========================================================================
   // filtering Data
   // ========================================================================
 
-  console.log("filtered Data", filteredData);
   // console.log("tranData", tranData);
-  // console.log("categories", categories);
-  console.log("categoriesObj", categoriesObj);
+  console.log(
+    "####################################################categories",
+    categories
+  );
+  // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
   // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
-  console.log("sumBudgets", expensesSumBudgets);
-  console.log("endDate", endDate);
-  console.log("################### filteredDat In Dashboard", filteredData);
+  // console.log("sumBudgets", expensesSumBudgets);
+  // console.log("endDate", endDate);
+  // console.log("filtered Data", filteredData);
 
   const categoryIcons = {
     bills: IconBills,
@@ -283,13 +303,13 @@ export default function Dashboard() {
                 value={filter}
                 label="Filter"
                 onChange={(e) => setFilter(e.target.value)}
-                sx={{
-                  textAlign: "left",
-                  "& fieldset": {
-                    borderRadius: "10px",
-                  },
-                  fontSize: "14px",
-                }}
+                // sx={{
+                //   textAlign: "left",
+                //   "& fieldset": {
+                //     borderRadius: "10px",
+                //   },
+                //   fontSize: "14px",
+                // }}
               >
                 <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
                   All
@@ -332,82 +352,90 @@ export default function Dashboard() {
             Week
           </span> */}
 
-        <Grid
-          item
-          xs={12}
+        <Link
+          to="/transactions"
+          // item
+          // xs={12}
           className="dash-progress"
-          sx={{
-            paddingTop: "2rem",
-            paddingBottom: "2rem",
-            textAlign: "center",
-            transition: "all 0.3s ease",
-            "&:hover": { transform: "scale(1.1)" },
-          }}
+          // sx={{
+          //   paddingTop: "2rem",
+          //   paddingBottom: "2rem",
+          //   textAlign: "center",
+          //   transition: "all 0.3s ease",
+          //   "&:hover": { transform: "scale(1.05)" },
+          // }}
         >
+          <p className="current-balance">Current Balance</p>
           <h2 className="dash-balance">
-            Balance: {(incomeSum - expensesSum).toFixed(2)} $
+            {" "}
+            {(incomeSum - expensesSum).toFixed(2)} $
           </h2>
-          <Typography className="dash-expected">
-            Expected savings: {savings} $
-          </Typography>
-          <h5 className="spent-title">Spent</h5>
+
+          <p className="dash-expected">Expected savings: {savings} $</p>
+          <p className="spent-title">Spent</p>
           <Box className="linear-progress-container1">
             <Typography
+              style={spentBar > 10 ? { color: "white" } : { color: "black" }}
               className="progress-left"
               variant="h5"
-              style={{ fontSize: "18px", paddingTop: "5px" }}
+              // style={{ fontSize: "18px", paddingTop: "5px" }}
             >
               {expensesSum} $
             </Typography>
+
             <Typography
+              style={spentBar > 90 ? { color: "white" } : { color: "black" }}
               className="progress-right"
               variant="h5"
-              style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
+              // style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
             >
               {incomeSum} $
             </Typography>
             <LinearProgress
               variant="determinate"
-              value={spentBar > 100 ? 100 : spentBar}
-              style={{
-                padding: "18px 100px",
-              }}
+              value={spentBar == 0 ? 0 : spentBar > 100 ? 100 : spentBar}
+
+              // style={{
+              //   padding: "18px 100px",
+              // }}
             />
           </Box>
-          <h5 className="spent-title">Budget</h5>
+          <p className="spent-title">Budget</p>
           <Box className="linear-progress-container2">
             <Typography
+              style={budgetBar > 10 ? { color: "white" } : { color: "black" }}
               className="progress-left"
               variant="h5"
-              style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
+              // style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
             >
               {expensesSumBudgets} $
             </Typography>
             <Typography
+              style={budgetBar > 90 ? { color: "white" } : { color: "black" }}
               className="progress-right"
               variant="h5"
-              style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
+              // style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
             >
               {budgetSum} $
             </Typography>
             <LinearProgress
               variant="determinate"
-              value={budgetBar > 100 ? 100 : budgetBar}
-              style={{
-                padding: "18px 100px",
-              }}
+              value={budgetBar === 0 ? 0 : budgetBar > 100 ? 100 : budgetBar}
+              // style={{
+              //   padding: "18px 100px",
+              // }}
             />
           </Box>
-        </Grid>
+        </Link>
+
         <Grid
           item
           xs={12}
           sx={{
-            paddingTop: "1rem",
-            paddingBottom: "1rem",
+            // margin: "1em 0",
             textAlign: "center",
             transition: "all 0.3s ease",
-            "&:hover": { transform: "scale(1.1)" },
+            "&:hover": { transform: "scale(1.06)" },
           }}
         >
           <Charts />
@@ -417,11 +445,11 @@ export default function Dashboard() {
           item
           xs={12}
           sx={{
-            paddingTop: "1rem",
-            paddingBottom: "1rem",
+            // paddingTop: "1rem",
+            // paddingBottom: "1rem",
             textAlign: "center",
             transition: "all 0.3s ease",
-            "&:hover": { transform: "scale(1.1)" },
+            "&:hover": { transform: "scale(1.06)" },
           }}
         >
           <Box className="swiper">

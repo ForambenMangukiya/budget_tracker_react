@@ -87,9 +87,15 @@ export default function DataContextProvider(props) {
         const groupedObjects = debitTrans.reduce((result, obj) => {
           const { category_name, tran_amount } = obj;
           if (!result[category_name]) {
-            result[category_name] = { name: category_name, spent: 0, limit: 0 };
+            result[category_name] = {
+              name: category_name,
+              spent: 0,
+              limit: 0,
+              transactions: 0,
+            };
           }
           result[category_name].spent += Number(tran_amount);
+          result[category_name].transactions += 1;
           return result;
         }, {});
 
