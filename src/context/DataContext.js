@@ -37,7 +37,8 @@ export default function DataContextProvider(props) {
         );
 
         const data = await res.json();
-        setTranData(data);
+        // setTranData(data);
+        Array.isArray(data) ? setTranData(data) : console.log(data);
         // setLoading(false)
       } catch (error) {
         console.log(error);
@@ -60,8 +61,8 @@ export default function DataContextProvider(props) {
         );
         const data = await res.json();
         console.log("###budget data", data);
-
-        setBudgetData(data);
+        Array.isArray(data) ? setBudgetData(data) : console.log(data);
+        // setBudgetData(data);
         // setLoading(false)
       } catch (error) {
         console.log(error);
