@@ -21,7 +21,6 @@ export default function Landingpage() {
     <Container
       className="landingPage"
       maxWidth="sm"
-      sx={{ borderRadius: "20px" }}
     >
       <Cornerright className="cornerright" />
       <Box
@@ -30,13 +29,14 @@ export default function Landingpage() {
         justifyContent="center"
         alignItems="center"
         minHeight="100vh"
-        gap="20px"
+        gap="10px"
         className="name"
       >
-        <img className="logo" src={logo} width="300px" />
-
+        <Box>
+        <img className="logo" src={logo} width="400px" />
+        </Box>
         <Link className="app_name" to="/entrypage">
-          <h1>piggy bank </h1>
+          <h3>PiggyBank </h3>
         </Link>
       </Box>
       <Cornerleft className="cornerleft" />

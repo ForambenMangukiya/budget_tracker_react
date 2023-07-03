@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
 import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Container from "@mui/material/Container";
 import ScanReceipt from "./svg/IconScanReciept";
@@ -20,12 +19,14 @@ import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
+import AddIcon from '@mui/icons-material/Add';
+
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
   { icon: <ManualEntry />, name: "Expense", route: "/addexpense" },
   { icon: <ManualEntry />, name: "Income", route: "/addincome" },
-  { icon: <ScanReceipt />, name: "Scan", route: "/" },
+  { icon: <ScanReceipt />, name: "Scan", route: "/scan" },
 ];
 
 //Date Filtering in Transaction Component
@@ -70,6 +71,7 @@ export default function Transactions() {
   const paperStyles = {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
+    size: "large",
   };
 
   //   const handleSubmit = async (e) => {
@@ -189,6 +191,10 @@ export default function Transactions() {
       maxWidth="sm"
       id="transactions-container-id"
       className="transactions-container"
+      sx={{
+        paddingTop: "100px",
+        paddingBottom: "100px",
+      }}
     >
       <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Tabs
@@ -201,18 +207,20 @@ export default function Transactions() {
           <Tab
             label="expenses"
             value="expenses"
+            style={{fontSize: '18px'}}
             className={transaction === "expenses" ? "active tab" : "tab"}
           />
           <Tab
             label="income"
             value="income"
+            style={{fontSize: '18px'}}
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+            <InputLabel id="demo-simple-select-label" sx={{ fontSize: '12px' }}>Filter</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -224,14 +232,15 @@ export default function Transactions() {
                 "& fieldset": {
                   borderRadius: "31px",
                 },
+                fontSize: '14px',
               }}
             >
-              <MenuItem value={"all"}>All</MenuItem>
-              <MenuItem value={"week"}>Last Week</MenuItem>
-              <MenuItem value={"month"}>Last Month</MenuItem>
-              <MenuItem value={"3months"}>Last 3 Months</MenuItem>
-              <MenuItem value={"6months"}>Last 6 Months</MenuItem>
-              <MenuItem value={"year"}>Last Year</MenuItem>
+              <MenuItem value={"all"} sx={{ fontSize: '14px' }}>All</MenuItem>
+              <MenuItem value={"week"} sx={{ fontSize: '14px' }}>Last Week</MenuItem>
+              <MenuItem value={"month"} sx={{ fontSize: '14px' }}>Last Month</MenuItem>
+              <MenuItem value={"3months"} sx={{ fontSize: '14px' }}>Last 3 Months</MenuItem>
+              <MenuItem value={"6months"} sx={{ fontSize: '14px' }}>Last 6 Months</MenuItem>
+              <MenuItem value={"year"} sx={{ fontSize: '14px' }}>Last Year</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -246,7 +255,7 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontWeight: "bold", mb: 1 }}>Spent</Typography>
+              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>Spent</Typography>
             </Box>
 
             {tranData
@@ -320,7 +329,7 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>
                 {" "}
                 Earned{" "}
               </Typography>
@@ -387,16 +396,26 @@ export default function Transactions() {
               })}
           </Box>
         )}
+        </Box>
 
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
+          style={{
+            zIndex: 5,
+            transform: 'translateX(+40%)',
+          }}
+          sx={{ position: "sticky", bottom: 70,
+          '& .MuiFab-root': {
+            width: '64px', // Increase the width
+            height: '64px', // Increase the height
+          },
+        }}
+          icon={<AddIcon sx={{ color: "#FFFF", fontSize: '30px'  }} />}
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
-          FabProps={{
+          FabProps={{ 
             style: paperStyles,
           }}
         >
@@ -410,7 +429,6 @@ export default function Transactions() {
             />
           ))}
         </SpeedDial>
-      </Box>
     </Container>
   );
 }
