@@ -23,8 +23,8 @@ console.log("START LINK....", id)
 const handleGetTransaction = async () => {
     setIsLoading(true);
     setSyncSuccess(false);
-    // const response = await fetch(`https://piggybank-api.onrender.com/api/transactions/${id}`, {
-      const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
+    const response = await fetch(`https://piggybank-api.onrender.com/api/transactions/${id}`, {
+      // const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
         method: "GET",
     });
     const data = await response.json();
@@ -48,8 +48,8 @@ const onSuccess = useCallback(
     (public_token) => {
     // If the access_token is needed, send public_token to server
     const exchangePublicTokenForAccessToken = async () => {
-        // const response = await fetch("https://piggybank-api.onrender.com/api/set_access_token", {
-        const response = await fetch("http://localhost:8080/api/set_access_token", {  
+        const response = await fetch("https://piggybank-api.onrender.com/api/set_access_token", {
+        // const response = await fetch("http://localhost:8080/api/set_access_token", {  
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -82,6 +82,10 @@ const { open, ready } = usePlaidLink(config);
 console.log("Transactions here:", transactions);
 
 const handleGoBack = () => {
+  navigate("/transactions");
+};
+
+const handleClose = () => {
   navigate("/transactions");
 };
 
@@ -125,6 +129,10 @@ return (
           >
             Link Account
           </Button>
+
+          <Box>
+            <Button onClick={handleClose}> CLOSE </Button>
+          </Box>
         </Box>
       )}
 

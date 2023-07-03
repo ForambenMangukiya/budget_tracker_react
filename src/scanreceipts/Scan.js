@@ -1,21 +1,33 @@
-import { Container } from "@mui/material"
-import Camera from "./Camera"
-import Upload from "./Upload"
-import { useState } from "react";
+import { Container, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { CameraAltRounded } from '@mui/icons-material';
+import Upload from "./Upload";
 
 export default function Scan() {
-    const [flag, setFlag] = useState(false)
-    return (
-        <Container
-        maxWidth="sm"
-        sx={{
-          paddingTop: "100px",
-        }}
-        >
-            <h1>Scan Receipts</h1>
-            <Upload flag={flag} setFlag={setFlag} />
-            <Camera />
+const navigate = useNavigate();
 
-        </Container>
-    )
+// const handleUploadClick = () => {
+//     navigate("/upload");
+// };
+
+const handleCameraClick = () => {
+    navigate("/camera");
+};
+
+return (
+    <Container
+    maxWidth="sm"
+    sx={{
+        paddingTop: "100px",
+    }}
+    >
+    <h4>Scan Receipts</h4>
+    <Upload />
+
+    <Button onClick={handleCameraClick} color="primary" variant="outlined">
+            <CameraAltRounded fontSize="large" />
+            <Typography>Open Camera</Typography>
+    </Button>
+    </Container>
+);
 }
