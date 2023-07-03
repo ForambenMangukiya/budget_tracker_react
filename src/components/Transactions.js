@@ -12,14 +12,16 @@ import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-
+import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
-
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
 import AddIcon from "@mui/icons-material/Add";
+import axios from "axios";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -42,8 +44,10 @@ export default function Transactions() {
   //navigate
   const navigate = useNavigate();
   //context
-  const { tranData, setTranData } = useContext(DataContext);
+  const { tranData, setTranData, refresh, setRefresh } =
+    useContext(DataContext);
   const { token } = useContext(AuthContext);
+
   console.log(tranData);
 
   //handlers
@@ -63,8 +67,42 @@ export default function Transactions() {
   const handleChange = (event, newValue) => {
     setTransaction(newValue);
   };
+
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+  };
+
+  // delete transactions
+
+  const handleDeleteTransaction = async (id) => {
+    try {
+      console.log(id);
+      const response = await fetch(
+        `https://piggybank-api.onrender.com/transaction/${id}`,
+
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Transaction successfully deleted
+        const deletedTransaction = await response.json();
+        console.log(deletedTransaction);
+        // Perform any necessary actions after deletion
+      } else {
+        // Transaction not found or other error occurred
+        const errorData = await response.json();
+        console.error(errorData.error);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the transaction:", error);
+    }
+    setRefresh(!refresh);
   };
 
   const paperStyles = {
@@ -329,6 +367,11 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    <Trash
+                      width="20"
+                      className="delete-button"
+                      onClick={() => handleDeleteTransaction(element._id)}
+                    />
                   </Box>
                 );
               })}
@@ -406,6 +449,12 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    <IconButton
+                      className="delete-button"
+                      onClick={() => handleDeleteTransaction(element._id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
                 );
               })}
