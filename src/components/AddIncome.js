@@ -22,7 +22,7 @@ import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { styled } from '@mui/system';
+import { styled } from "@mui/system";
 
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
@@ -103,9 +103,9 @@ export default function AddIncome() {
   };
 
   const CustomButton = styled(Button)({
-    '&:hover': {
-      backgroundColor: '#ffa726',
-      transform: 'scale(1.05)',
+    "&:hover": {
+      backgroundColor: "#ffa726",
+      transform: "scale(1.05)",
     },
   });
 
@@ -137,12 +137,23 @@ export default function AddIncome() {
               label="Category"
               value={category_name}
               onChange={handlecategoryChange}
-              sx={{ textAlign: "left", borderRadius: "31px", fontSize: '16px', }}
+              sx={{ textAlign: "left", borderRadius: "31px", fontSize: "16px" }}
             >
-              <MenuItem value="Salary" sx={{ fontSize: '16px' }}>salary </MenuItem>
-              <MenuItem value="Deposits" sx={{ fontSize: '16px' }}> Deposits</MenuItem>
-              <MenuItem value="Savings" sx={{ fontSize: '16px' }}> Savings</MenuItem>
-              <MenuItem value="Others" sx={{ fontSize: '16px' }}> Others</MenuItem>
+              <MenuItem value="Salary" sx={{ fontSize: "16px" }}>
+                salary{" "}
+              </MenuItem>
+              <MenuItem value="Deposits" sx={{ fontSize: "16px" }}>
+                {" "}
+                Deposits
+              </MenuItem>
+              <MenuItem value="Savings" sx={{ fontSize: "16px" }}>
+                {" "}
+                Savings
+              </MenuItem>
+              <MenuItem value="Others" sx={{ fontSize: "16px" }}>
+                {" "}
+                Others
+              </MenuItem>
             </Select>
           </FormControl>
           {/* <InputLabel className="text-field-label">Date</InputLabel> */}
@@ -158,7 +169,9 @@ export default function AddIncome() {
                     borderRadius: "31px",
                     "& fieldset": {
                       borderRadius: "30px",
-                      fontSize: "16px",
+                    },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
                     },
                   }}
                 />
@@ -196,20 +209,20 @@ export default function AddIncome() {
               }
               value={tran_amount}
               onChange={handleAmountChange}
-              sx={{ borderRadius: "31px", fontSize: "16px"  }}
+              sx={{ borderRadius: "31px", fontSize: "16px" }}
             ></OutlinedInput>
           </FormControl>
           <CustomButton
-                sx={{
-                  ":hover": { bgcolor: "#C42B0A" },
-                  borderRadius: "31px",
-                  background: "#c80048",
-                  width: "150px",
-                  height: "50px",
-                  margin: "20px",
-                  color: "white",
-                  fontSize: "16px",
-                  padding: "5px 80px",
+            sx={{
+              ":hover": { bgcolor: "#C42B0A" },
+              borderRadius: "31px",
+              background: "#c80048",
+              width: "150px",
+              height: "50px",
+              margin: "20px",
+              color: "white",
+              fontSize: "16px",
+              padding: "5px 80px",
             }}
             onClick={handleAddIncomesChange}
           >
