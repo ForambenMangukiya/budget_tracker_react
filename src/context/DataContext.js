@@ -73,7 +73,7 @@ export default function DataContextProvider(props) {
       }
     };
     if (decodedToken) getBudget();
-  }, [decodedToken]);
+  }, [decodedToken, refresh]);
 
   // console.log("transaction data in data Context :", tranData);
 
