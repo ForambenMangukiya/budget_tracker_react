@@ -18,7 +18,7 @@ export default function DataContextProvider(props) {
   console.log("token", token);
   console.log("decodedToken:", decodedToken);
   console.log("_id:", decodedToken?._id);
-  console.log("refresh data?", refresh)
+  console.log("refresh data?", refresh);
 
   // =============================
   // Fetching Data
@@ -73,7 +73,7 @@ export default function DataContextProvider(props) {
       }
     };
     if (decodedToken) getBudget();
-  }, [decodedToken]);
+  }, [decodedToken, refresh]);
 
   // console.log("transaction data in data Context :", tranData);
 
