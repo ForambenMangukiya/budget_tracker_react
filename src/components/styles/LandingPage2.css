@@ -28,3 +28,11 @@
 .landingPage {
   position: relative;
 }
+
+.logo-title{
+  font-size: 30px;
+  margin: 0;
+}
+.logo-title span{
+color: var(--red);
+}

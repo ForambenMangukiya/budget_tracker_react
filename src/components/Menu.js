@@ -12,6 +12,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
+import { Container } from "@mui/system";
 
 export default function Menu() {
   const [value, setValue] = useState("home");
@@ -39,68 +40,88 @@ export default function Menu() {
   };
 
   return (
-    <Paper
-      style={{
-        position: "fixed",
-        zIndex: 5,
-        left: "50%",
-        transform: "translateX(-50%)",
-        minWidth: "400px",
-        maxWidth: "600px",
-        padding: "5px",
-      }}
-      sx={{ bottom: 0, left: 5, right: 5 }}
-      elevation={5}
-    >
-      <BottomNavigation
-        value={value}
-        onChange={handleChange}
-        showLabels
-        sx={{
-          "& .MuiBottomNavigationAction-root": {
-            minWidth: 0, // Remove the minimum width
-            padding: "2px", // Increase the padding
-          },
-          "& .MuiSvgIcon-root": {
-            fontSize: "900px", // Increase the icon size
-          },
+    <Container sx={{ maxWidth: "600px" }}>
+      <Paper
+        style={{
+          maxWidth: "600px",
+          position: "fixed",
+          bottom: "0",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: "5",
+          width: "100%",
+          padding: "5px",
         }}
-      >
-        <BottomNavigationAction
-          label="Home"
-          value="home"
-          icon={<HomeOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />}
-        />
-        <BottomNavigationAction
-          label="Planner"
-          value="planner"
-          icon={
-            <ListAltOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />
-          }
-        />
-        <BottomNavigationAction
-          label="Transactions"
-          value="transactions"
-          icon={
-            <SyncAltOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />
-          }
-        />
+        sx={{ bottom: 0, left: 5, right: 5 }}
+        elevation={5}
 
-        <BottomNavigationAction
-          label="Reports"
-          value="reports"
-          icon={
-            <DonutSmallOutlinedIcon
-              style={{ color: "#453F78", fontSize: 40 }}
-            />
-          }
-        />
-        {/* 
+        // style={{
+        //   position: "fixed",
+        //   zIndex: 5,
+        //   // left: "50%",
+        //   bottom: "0",
+        //   // transform: "translateX(-50%)",
+        //   // minWidth: "400px",
+        //   Width: "100wv",
+        //   maxWidth: "600px",
+        //   padding: "5px",
+        //   margin: "auto 0",
+        // }}
+        // sx={{ bottom: 0, left: 5, right: 5 }}
+        // elevation={5}
+      >
+        <BottomNavigation
+          value={value}
+          onChange={handleChange}
+          showLabels
+          sx={{
+            "& .MuiBottomNavigationAction-root": {
+              minWidth: 0, // Remove the minimum width
+              padding: "2px", // Increase the padding
+            },
+            "& .MuiSvgIcon-root": {
+              fontSize: "900px", // Increase the icon size
+            },
+          }}
+        >
+          <BottomNavigationAction
+            label="Home"
+            value="home"
+            icon={
+              <HomeOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />
+            }
+          />
+          <BottomNavigationAction
+            label="Planner"
+            value="planner"
+            icon={
+              <ListAltOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />
+            }
+          />
+          <BottomNavigationAction
+            label="Transactions"
+            value="transactions"
+            icon={
+              <SyncAltOutlinedIcon style={{ color: "#453F78", fontSize: 40 }} />
+            }
+          />
+
+          <BottomNavigationAction
+            label="Reports"
+            value="reports"
+            icon={
+              <DonutSmallOutlinedIcon
+                style={{ color: "#453F78", fontSize: 40 }}
+              />
+            }
+          />
+          {/* 
         <BottomNavigationAction 
         // label="Games" 
         value="games" 
         icon={<Games />} /> */}
-      </BottomNavigation>
-    </Paper>
+        </BottomNavigation>
+      </Paper>
+    </Container>
   );
 }

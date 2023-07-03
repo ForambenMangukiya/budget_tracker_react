@@ -217,7 +217,7 @@ export default function Transactions() {
 
   return (
     <Container
-      maxWidth="sm"
+      maxWidth="600px"
       id="transactions-container-id"
       className="transactions-container"
       sx={{
