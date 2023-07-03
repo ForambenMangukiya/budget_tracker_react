@@ -65,7 +65,7 @@ export default function DataContextProvider(props) {
         console.log("###budget data", data);
 
         Array.isArray(data) ? setBudgetData(data) : console.log(data);
-        console.log("budget function is working");
+        // setBudgetData(data);
         // setLoading(false)
       } catch (error) {
         console.log(error);

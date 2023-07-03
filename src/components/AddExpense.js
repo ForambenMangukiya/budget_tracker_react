@@ -203,6 +203,9 @@ export default function AddExpense() {
                       borderRadius: "30px",
                       fontSize: "16px",
                     },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
+                    },
                   }}
                 />
               </LocalizationProvider>
