@@ -19,23 +19,27 @@ export default function CaptureImage() {
   const navigate = useNavigate();
 
   const capturePhoto = async () => {
-    const video = webcamRef.current.video;
+
+    const imageSrc = webcamRef.current.getScreenshot();
+    const image = new Image();
     const canvas = canvasRef.current;
+  
+    // Set up an onload event handler to ensure the image is loaded before drawing it
+    image.onload = () => {
+      canvas.width = image.width;
+      canvas.height = image.height;
+      canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
 
-    // Set the canvas dimensions to match the video dimensions
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    // Draw the current frame from the video onto the canvas
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Convert the canvas image to a base64 data URL
-    const capturedImageSrc = canvas.toDataURL('image/jpeg');
-    setCapturedImage(capturedImageSrc);
+    // Set the source of the image to the captured screenshot
+    image.src = imageSrc;
 
     // Create a new FormData object
     const formData = new FormData();
-    formData.append('picture', dataURLtoFile(capturedImageSrc, 'captured_image.jpg'));
+    formData.append(
+      'picture',
+      dataURLtoFile(canvas.toDataURL('image/jpeg'), 'captured_image.jpg')
+    );
 
     try {
       // Send the FormData to the API endpoint using axios
@@ -60,13 +64,20 @@ export default function CaptureImage() {
 
     } catch (error) {
       setAlert(
-        <Alert severity="error">
+        <Alert severity="error"
+        action={
+          <Button color="inherit" size="small" onClick={handleGoBack}>
+            Close Camera
+          </Button>
+        }
+        >
           Couldn't post the transaction, take a look at the console for more
           information about the error!
         </Alert>
       );
       console.error('Error uploading the image:', error);
     }
+
   };
 
   // Helper function to convert data URL to a File object
@@ -81,18 +92,6 @@ export default function CaptureImage() {
     }
     return new File([u8arr], filename, { type: mime });
   };
-
-  useEffect(() => {
-    const enableCamera = async () => {
-      try {
-        await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" },},});
-      } catch (error) {
-        console.error('Error accessing the camera:', error);
-      }
-    };
-
-    enableCamera();
-  }, []);
 
   const handleGoBack = () => {
     navigate("/transactions");
@@ -117,7 +116,9 @@ export default function CaptureImage() {
           </Box>
         )}
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Webcam ref={webcamRef} facingMode="environment" style={{ width: '400px', height: '350px' }} />
+          <Webcam videoConstraints={{ facingMode: 'environment' }} ref={webcamRef}
+          style={{ width: '400px' }}  />
+          {/* <Webcam ref={webcamRef} facingMode="environment" style={{ width: '400px', height: '350px' }} /> */}
           <Button onClick={capturePhoto} color="primary" variant="outlined">
             <Camera fontSize="large" />
             <Typography>Capture Photo</Typography>
@@ -133,7 +134,7 @@ export default function CaptureImage() {
         {capturedImage && (
           <Box mt={2}>
             <Typography variant="h6">Captured Photo:</Typography>
-            <img src={capturedImage} alt="Captured" style={{ width: '400px', height: '350px' }} />
+            <img src={capturedImage} alt="Captured" />
           </Box>
         )}
         <canvas ref={canvasRef} style={{ display: 'none' }} />
