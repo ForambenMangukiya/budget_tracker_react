@@ -63,6 +63,7 @@ export default function DataContextProvider(props) {
         );
         const data = await res.json();
         console.log("###budget data", data);
+
         Array.isArray(data) ? setBudgetData(data) : console.log(data);
         // setBudgetData(data);
         // setLoading(false)

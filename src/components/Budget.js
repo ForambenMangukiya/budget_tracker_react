@@ -183,12 +183,12 @@ export default function Budget() {
                   </Box>
                 </Box>
                 <div className="linear-progress-container2">
-                  <h6 className="progress-left">
+                  <h6 className="progress-left" style={{ fontSize: "14px" }}>
                     {categoriesObj?.hasOwnProperty(element.category_name)
                       ? `${categoriesObj[element.category_name].spent} $`
                       : "0 $"}
                   </h6>
-                  <span className="progress-right">
+                  <span className="progress-right" style={{ fontSize: "14px" }}>
                     {element.limit_amount} $
                   </span>
                   <LinearProgress
