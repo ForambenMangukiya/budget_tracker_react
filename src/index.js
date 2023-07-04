@@ -6,6 +6,7 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import AuthContextProvider from "./context/AuthContext";
 import DataContextProvider from "./context/DataContext";
+import ThemeContextProvider from "./context/ThemeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <AuthContextProvider>
       <DataContextProvider>
         <BrowserRouter>
-          <App />
+          <ThemeContextProvider>
+            <App />
+          </ThemeContextProvider>
         </BrowserRouter>
       </DataContextProvider>
     </AuthContextProvider>

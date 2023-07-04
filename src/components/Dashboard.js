@@ -1,19 +1,28 @@
-import { useJwt } from "react-jwt";
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import LinearProgress from "@mui/material/LinearProgress";
+import { useJwt } from "react-jwt";
 import "./styles/dashboard.css";
-import IconHome from "./svg/IconHome";
-import { DataContext } from "../context/DataContext";
-import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
+
+import {
+  BorderStyle,
+  ConstructionOutlined,
+  FunctionsOutlined,
+} from "@mui/icons-material";
 import FormControl from "@mui/material/FormControl";
 import { MenuItem, InputLabel } from "@mui/material";
 import Select from "@mui/material/Select";
 import { Container, Box, Typography } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 import { Link } from "react-router-dom";
+
+import { ThemeContext } from "../context/ThemeContext";
+import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
+
+import Charts from "./Chart";
+import Grid from "@mui/material/Grid";
 
 //importing SVG -------------------
 import { ReactComponent as IconAddNew } from "./svgCategories/add-new.svg";
@@ -31,8 +40,7 @@ import { ReactComponent as IconRent } from "./svgCategories/rent.svg";
 import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
-import Charts from "./Chart";
-import Grid from "@mui/material/Grid";
+import IconHome from "./svg/IconHome";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -47,6 +55,8 @@ export default function Dashboard() {
     tranData,
     setTranData,
   } = useContext(DataContext);
+
+  const { styling } = useContext(ThemeContext);
 
   //===========================
   //Library Initialization
@@ -291,8 +301,12 @@ export default function Dashboard() {
         maxWidth: "sm",
         minHeight: "100vh",
       }}
+      style={{ background: styling.backgroundColor }}
     >
       <Grid container className="dash-container">
+        {/* ===============================================
+                            filter
+        ============================================= */}
         <Grid item xs={12}>
           <Box component="div" className="transaction-filter">
             <FormControl fullWidth>
@@ -333,34 +347,31 @@ export default function Dashboard() {
             </FormControl>
           </Box>
         </Grid>
-        {/* <span onClick={() => setFilter("all")} value="all">
-            All
-          </span>
-          <span onClick={() => setFilter("year")} value="year">
-            Year
-          </span>
-          <span onClick={() => setFilter("6months")} value="6months">
-            6
-          </span>
-          <span onClick={() => setFilter("3months")} value="3months">
-            3 Months
-          </span>
-          <span onClick={() => setFilter("month")} value="month">
-            Month
-          </span>
-          <span onClick={() => setFilter("week")} value="week">
-            Week
-          </span> */}
-
-        <Link to="/transactions" className="dash-progress">
-          <p className="current-balance">Current Balance</p>
-          <h2 className="dash-balance">
+        {/* =========================================
+                          balance
+====================================== */}
+        <Link
+          to="/transactions"
+          className="dash-progress"
+          style={{
+            border: styling.borders,
+            backgroundColor: styling.backgroundBoard,
+          }}
+        >
+          <p style={{ color: styling.txtColor }} className="current-balance">
+            Current Balance
+          </p>
+          <h2 style={{ color: styling.txtColor }} className="dash-balance">
             {" "}
             {(incomeSum - expensesSum).toFixed(2)} $
           </h2>
 
-          <p className="dash-expected">Expected savings: {savings} $</p>
-          <p className="spent-title">Spent</p>
+          <p style={{ color: styling.txtColor }} className="dash-expected">
+            Expected savings: {savings} $
+          </p>
+          <p style={{ color: styling.txtColor }} className="spent-title">
+            Spent
+          </p>
           <Box className="linear-progress-container1">
             <Typography
               style={spentBar > 10 ? { color: "white" } : { color: "black" }}
@@ -388,7 +399,9 @@ export default function Dashboard() {
               // }}
             />
           </Box>
-          <p className="spent-title">Budget</p>
+          <p style={{ color: styling.txtColor }} className="spent-title">
+            Budget
+          </p>
           <Box className="linear-progress-container2">
             <Typography
               style={budgetBar > 10 ? { color: "white" } : { color: "black" }}
@@ -435,7 +448,10 @@ export default function Dashboard() {
           }}
         >
           <Box className="swiper">
-            <Box className="swiper-wrapper">
+            <Box
+              style={{ background: styling.backgroundBoard }}
+              className="swiper-wrapper"
+            >
               {budgetData?.map((each) => {
                 let spentBudgetBar = 0;
                 if (
@@ -453,7 +469,10 @@ export default function Dashboard() {
                   spentBudgetBar = 100;
                 }
                 return (
-                  <Box className="swiper-slide">
+                  <Box
+                    style={{ background: styling.backgroundBoard }}
+                    className="swiper-slide"
+                  >
                     <Box className="dash-budget">
                       {(() => {
                         const Icon =
