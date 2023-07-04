@@ -212,7 +212,7 @@ export default function AddExpense() {
               </LocalizationProvider>
             </FormControl>
             {/*Amount */}
-            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
+            {/* <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
               </InputLabel>
@@ -228,7 +228,7 @@ export default function AddExpense() {
                 value={amount}
                 sx={{ borderRadius: "31px", fontSize: "16px" }}
               />
-            </FormControl>
+            </FormControl> */}
             {/*Description */}
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <TextField

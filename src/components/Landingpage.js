@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import "../components/styles/Landingpage.css";
 import Container from "@mui/material/Container";
 import logo from "../components/images/piggylogo.gif";
+import piggylogo from "../components/svgCategories/piggylogo.gif";
 import Box from "@mui/material/Box";
 import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
@@ -18,10 +19,7 @@ export default function Landingpage() {
   }, 4000);
 
   return (
-    <Container
-      className="landingPage"
-      maxWidth="sm"
-    >
+    <Container className="landingPage" maxWidth="sm">
       <Cornerright className="cornerright" />
       <Box
         display="flex"
@@ -33,11 +31,9 @@ export default function Landingpage() {
         className="name"
       >
         <Box>
-        <img className="logo" src={logo} width="400px" />
+          <img className="logo" src={piggylogo} width="500px" />
         </Box>
-        <Link className="app_name" to="/entrypage">
-          <h3>PiggyBank </h3>
-        </Link>
+        <Link className="app_name" to="/entrypage"></Link>
       </Box>
       <Cornerleft className="cornerleft" />
     </Container>

@@ -180,7 +180,7 @@ export default function AddIncome() {
             </LocalizationProvider>
           </FormControl>
 
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
             <OutlinedInput
               className="addincome-textfield background_grey"
@@ -193,7 +193,7 @@ export default function AddIncome() {
               onChange={handleAmountChange}
               sx={{ borderRadius: "31px", fontSize: "16px" }}
             ></OutlinedInput>
-          </FormControl>
+          </FormControl> */}
           {/* <InputLabel className="text-field-label">Description </InputLabel> */}
           <FormControl fullWidth>
             <TextField
