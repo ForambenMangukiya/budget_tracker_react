@@ -3,7 +3,7 @@ import { usePlaidLink } from "react-plaid-link";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { Container, Typography} from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -24,10 +24,10 @@ export default function Link({ id }) {
   const handleGetTransaction = async () => {
     setIsLoading(true);
     setSyncSuccess(false);
-    const response = await fetch(
-      `https://piggybank-api.onrender.com/api/transactions/${id}`,
-      {
-        // const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
+    // const response = await fetch(
+    //   `https://piggybank-api.onrender.com/api/transactions/${id}`,
+    //   {
+        const response = await fetch(`http://localhost:8080/api/transactions/${id}`, {
         method: "GET",
       }
     );
@@ -51,10 +51,10 @@ export default function Link({ id }) {
   const onSuccess = useCallback((public_token) => {
     // If the access_token is needed, send public_token to server
     const exchangePublicTokenForAccessToken = async () => {
-      const response = await fetch(
-        "https://piggybank-api.onrender.com/api/set_access_token",
-        {
-          // const response = await fetch("http://localhost:8080/api/set_access_token", {
+      // const response = await fetch(
+      //   "https://piggybank-api.onrender.com/api/set_access_token",
+      //   {
+          const response = await fetch("http://localhost:8080/api/set_access_token", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export default function Link({ id }) {
       );
       if (!response.ok) {
         return (
-          <Alert severity="error">
+          <Alert severity="error" sx={{ fontSize: "14px" }}>
             Linking to bank is not successful. Try again later.
           </Alert>
         );
@@ -97,145 +97,136 @@ export default function Link({ id }) {
 
   return (
     <Container
-      maxWidth="sm"
+   sx={{
+    maxWidth: "sm",
+    minHeight: "100vh",
+    paddingTop: "100px",
+  }}
+  >
+  <Box style={{ display: "flex", flexDirection: "column" }}>
+    <Typography
       sx={{
-        paddingTop: "100px",
-        paddingBottom: "100px",
-        display: "flex",
-      }}
+        paddingLeft: "50px",
+        paddingRight: "50px",
+        fontSize: "14px",
+        textAlign: "center",
+        }}
+        >
+      PiggyBank lets you link your bank account, 
+      sync transactions securely using PLAID technology. 
+      Try it now!
+    </Typography>
+    <Box display="flex" justifyContent="center" >
+    <img src={linkbank} width="300px" />
+    </Box>
+  </Box>
+  {syncSuccess ? (
+    <Alert sx={{ fontSize: "14px" }}
+      action={
+        <Button color="inherit" onClick={handleGoBack} sx={{ fontSize: "12px" }}>
+          CLOSE
+        </Button>
+      }
     >
-      {syncSuccess ? (
-        <Alert
-          action={
-            <Button color="inherit" size="small" onClick={handleGoBack}>
-              Close
-            </Button>
-          }
-        >
-          Sync Transactions complete.
-        </Alert>
+      Sync Transactions complete.
+    </Alert>
+  ) : (
+    <div>
+      {syncCount > 1 ? (
+        <div>
+            <Alert severity="warning" sx={{ fontSize: "14px" }}
+            action={
+              <Button color="inherit" onClick={handleGoBack} sx={{ fontSize: "12px" }}>
+                CLOSE
+              </Button>
+            }>
+              Cannot sync transactions — <strong>Try again Later!</strong>
+            </Alert>
+        </div>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <img src={linkbank} ma />
-          {syncCount > 1 ? (
-            <Box>
-              <Alert
-                severity="warning"
-                action={
-                  <Button color="inherit" size="small" onClick={handleGoBack}>
-                    <h2>CLOSE </h2>
-                  </Button>
-                }
-              >
-                Cannot sync transactions — <strong>Try again Later!</strong>
-              </Alert>
-            </Box>
-          ) : (
-            <Box>
-              {" "}
-              <p>
-                PiggyBank allows you to link your bank account and get real
-                transactions. With the Technology from PLAID your account and
-                transactions will always be safe, try it now{" "}
-              </p>
+        <Box sx={{ display: "flex", justifyContent: "center", padding: "5px" }}>
+          <Button
+            variant="outlined"
+            onClick={open}
+            disabled={!ready}
+            sx={{ 
+              ":hover": { bgcolor: "#453f78", color: "white" },
+              borderRadius: "31px",
+              width: "250px",
+              height: "50px",
+              margin: "10px",
+              fontSize: "16px",
+              padding: "5px 8px",
+            textDecoration: "none",
+            }}
+          >
+            Link Account
+          </Button>
+        </Box>
+      )}
+
+      {isLoading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+          <CircularProgress sx={{ color: "#b9b9b9" }} />
+        </Box>
+      ) : (
+        <div>
+          {linkSuccess ? (
+            <Box sx={{ display: "flex", justifyContent: "center", padding: "5px" }}>
               <Button
                 variant="outlined"
-                onClick={open}
-                disabled={!ready}
+                onClick={handleGetTransaction}
                 sx={{
-                  ":hover": { bgcolor: "white", color: "#c80048" },
+                  ":hover": { bgcolor: "#453f78", color: "white" },
                   borderRadius: "31px",
-                  background: "#c80048",
-                  width: "150px",
+                  width: "250px",
+                  height: "50px",
+                  margin: "2px",
+                  fontSize: "16px",
+                  padding: "5px 8px",
+                  textDecoration: "none", 
+                }}
+              >
+                Sync Transactions
+              </Button>
+            </Box>
+          ) : (
+            <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+              <Button
+                variant="outlined"
+                disabled
+                sx={{ 
+                  color: "white",
+                  ":hover": { bgcolor: "grey" },
+                  borderRadius: "31px",
+                  width: "250px",
                   height: "50px",
                   margin: "20px",
-                  color: "white",
+                  color: "#453f78",
                   fontSize: "16px",
-                  padding: "5px 80px",
                   textDecoration: "none",
                 }}
               >
-                Link
+                Sync Transactions
               </Button>
-              <Box>
-                <Button
-                  sx={{
-                    color: "#C80048",
-                    fontSize: "16px",
-                  }}
-                  onClick={handleClose}
-                >
-                  CLOSE
-                </Button>
-              </Box>
             </Box>
           )}
-
-          {isLoading ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                padding: "20px",
-              }}
-            >
-              <CircularProgress sx={{ color: "#b9b9b9" }} />
-            </Box>
-          ) : (
-            <Box>
-              {linkSuccess ? (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "20px",
-                  }}
-                >
-                  <Button
-                    variant="outlined"
-                    onClick={handleGetTransaction}
-                    sx={{ color: "#453f78", borderColor: "#453f78" }}
-                  >
-                    Sync Transactions
-                  </Button>
-                </Box>
-              ) : (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "20px",
-                  }}
-                >
-                  <Button
-                    variant="outlined"
-                    disabled
-                    sx={{
-                      color: "white",
-                      ":hover": { bgcolor: "grey" },
-                      borderRadius: "31px",
-                      background: "#c80048",
-                      width: "150px",
-                      height: "50px",
-                      margin: "20px",
-                      color: "white",
-                      fontSize: "16px",
-                      textDecoration: "none",
-                    }}
-                  >
-                    Sync Transactions
-                  </Button>
-                </Box>
-              )}
-            </Box>
-          )}
-        </Box>
+        </div>
       )}
-    </Container>
+    </div>
+  )}
+  <Box sx={{ padding: "50px", marginBottom: "50px" }}>
+    <Button
+      sx={{
+        color: "#C80048",
+        fontSize: "16px",
+      }}
+      onClick={handleClose}
+    >
+      CLOSE
+    </Button>
+  </Box>
+</Container>
+    
   );
 }
