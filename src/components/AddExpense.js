@@ -70,7 +70,7 @@ export default function AddExpense() {
         setDate(null);
         setDescription("");
         setAmount("");
-        setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+        setAlert(<Alert severity="success" sx={{ fontSize: '16px' }}>Your expense has been saved</Alert>);
         setRefresh(!refresh);
       } catch (error) {
         setIsLoading(false);

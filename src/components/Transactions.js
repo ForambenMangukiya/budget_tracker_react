@@ -226,9 +226,9 @@ export default function Transactions() {
         minHeight: "100vh",
       }}
     >
-      <Grid>
-      <Grid item xs={12}>
-      <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
+
+      <Box sx={{ height: 600, transform: "translateZ(0px)", flexGrow: 1,   display: "flex",
+          flexDirection: "column", }}>
         
         <Tabs
           value={transaction}
@@ -472,7 +472,7 @@ export default function Transactions() {
           </Box>
         )}
       </Box>
-      </Grid>
+
 
       <Backdrop open={open} />
       <SpeedDial
@@ -508,7 +508,6 @@ export default function Transactions() {
         ))}
       </SpeedDial>
     
-      </Grid>
     </Container>
   );
 }
