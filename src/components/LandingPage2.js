@@ -9,6 +9,7 @@ import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 import welcoming from "./images/welcoming.jpg";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
+import { Typography } from "@mui/material";
 
 export default function LandingPage2() {
   const navigate = useNavigate();
@@ -48,6 +49,9 @@ export default function LandingPage2() {
           }}
         >
           <img className="welcomeimage" src={welcoming} width="400px" />
+          <h1 className="logo-title">
+            <span>Piggy</span>Bank
+          </h1>
         </Box>
 
         <CustomButton

@@ -23,7 +23,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { styled } from "@mui/system";
-import { useJwt } from "react-jwt";
 
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
@@ -33,9 +32,9 @@ export default function AddIncome() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [alert, setAlert] = useState(false);
+  const [user, setUser] = useState("");
   const { token } = React.useContext(AuthContext);
   const { refresh, setRefresh } = React.useContext(DataContext);
-
   const handleAddIncomesChange = async (e) => {
     e.preventDefault();
 
@@ -65,6 +64,7 @@ export default function AddIncome() {
               tran_sign: "CR", //DR (income) or CR(expense)
               tran_currency: "US",
               tran_date,
+              user,
             }),
           }
         );
@@ -170,12 +170,29 @@ export default function AddIncome() {
                     borderRadius: "31px",
                     "& fieldset": {
                       borderRadius: "30px",
-                      fontSize: "16px",
+                    },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
                     },
                   }}
                 />
               </DemoContainer>
             </LocalizationProvider>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
+            <OutlinedInput
+              className="addincome-textfield background_grey"
+              label=" add your amount"
+              type="number"
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
+              value={tran_amount}
+              onChange={handleAmountChange}
+              sx={{ borderRadius: "31px", fontSize: "16px" }}
+            ></OutlinedInput>
           </FormControl>
           {/* <InputLabel className="text-field-label">Description </InputLabel> */}
           <FormControl fullWidth>
@@ -197,20 +214,6 @@ export default function AddIncome() {
             {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
           </FormControl>
 
-          <FormControl fullWidth>
-            <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
-            <OutlinedInput
-              className="addincome-textfield background_grey"
-              label=" add your amount"
-              type="number"
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-              value={tran_amount}
-              onChange={handleAmountChange}
-              sx={{ borderRadius: "31px", fontSize: "16px" }}
-            ></OutlinedInput>
-          </FormControl>
           <CustomButton
             sx={{
               ":hover": { bgcolor: "#C42B0A" },

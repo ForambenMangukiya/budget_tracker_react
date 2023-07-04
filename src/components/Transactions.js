@@ -10,18 +10,18 @@ import ManualEntry from "./svg/IconManuallyEnter";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
+import Button from "@mui/material/Button";
+
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
-import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import "./styles/transactions.css";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -38,9 +38,10 @@ export default function Transactions() {
   const [transaction, setTransaction] = useState("expenses");
   const [filter, setFilter] = useState("");
   const [category_name, setCategory] = useState("");
-  const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   //navigate
   const navigate = useNavigate();
   //context
@@ -367,11 +368,12 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
-                    <Trash
-                      width="20"
-                      className="delete-button"
+                    <Button
+                      sx={{ p: 1 }}
                       onClick={() => handleDeleteTransaction(element._id)}
-                    />
+                    >
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}
@@ -449,11 +451,12 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
-                    <Trash
-                      width="20"
-                      className="delete-button"
+                    <Button
+                      sx={{ p: 1 }}
                       onClick={() => handleDeleteTransaction(element._id)}
-                    />
+                    >
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}

@@ -11,11 +11,10 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useJwt } from "react-jwt";
-
 import "./styles/addexpense.css";
 
 import { AuthContext } from "../context/AuthContext";
@@ -205,11 +204,31 @@ export default function AddExpense() {
                       borderRadius: "30px",
                       fontSize: "16px",
                     },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
+                    },
                   }}
                 />
               </LocalizationProvider>
             </FormControl>
-
+            {/*Amount */}
+            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Amount
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                type="number"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+                label="Amount"
+                className="background_grey"
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
+                sx={{ borderRadius: "31px", fontSize: "16px" }}
+              />
+            </FormControl>
             {/*Description */}
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <TextField
@@ -231,24 +250,6 @@ export default function AddExpense() {
               />
             </FormControl>
 
-            {/*Amount */}
-            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
-              <InputLabel htmlFor="outlined-adornment-amount">
-                Amount
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                type="number"
-                startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
-                }
-                label="Amount"
-                className="background_grey"
-                onChange={(e) => setAmount(e.target.value)}
-                value={amount}
-                sx={{ borderRadius: "31px", fontSize: "16px" }}
-              />
-            </FormControl>
             {/* Submit Button */}
             <CustomButton
               sx={{
