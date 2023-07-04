@@ -88,7 +88,15 @@ export default function Navbar() {
       return "Add Budget";
     }
 
+    if (token && location.pathname == "/scan") {
+      return "Scan Receipt";
+    }
+
     return "";
+  };
+
+  const handleClick2 = () => {
+    navigate("/scan");
   };
   const currentPage = page();
   console.log("Current page:", currentPage);
@@ -102,34 +110,39 @@ export default function Navbar() {
     <Container
       style={{ maxWidth: "600px" }}
       sx={{
-        maxWidth: "600px",
         background: "linear-gradient(#c80048, #961c48)",
         // height: "100%",
         padding: "20px",
         paddingTop: "30px",
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "space-between",
+        alignItems: "center",
         boxSizing: "border-box",
         position: "fixed",
         zIndex: 5,
+        borderRadius: "0 0 1em 1em",
       }}
     >
-      <Box>
-        <Typography
-          variant="h5"
-          gutterBottom
-          component="a"
-          sx={{
-            ml: 8,
-            fontFamily: "Inter",
-            fontWeight: 500,
-            color: "#FFFF",
-            textDecoration: "none",
-          }}
-        >
-          {currentPage}
-        </Typography>
-      </Box>
+      <Typography
+        variant="h5"
+        gutterBottom
+        component="a"
+        style={{ justifySelf: "center", width: "100%" }}
+        sx={{
+          // ml: 12,
+          fontFamily: "Inter",
+          fontWeight: 700,
+          color: "#FFFF",
+          fontSize: "20px",
+
+          // textDecoration: "none",
+          // justifySelf: "center",
+          // flex: "2",
+          // margin: "auto 0",
+        }}
+      >
+        {currentPage}
+      </Typography>
 
       <Fragment>
         <Box
@@ -248,7 +261,7 @@ export default function Navbar() {
           {token !== null && (
             <MenuItem onClick={handleClose}>
               <Box
-                onClick={handleClose}
+                onClick={handleClick2}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -268,7 +281,7 @@ export default function Navbar() {
                     fontSize: "16px",
                   }}
                 >
-                  Settings
+                  Scan Receipt
                 </Typography>
               </Box>
             </MenuItem>

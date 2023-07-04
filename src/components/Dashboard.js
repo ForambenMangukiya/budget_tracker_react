@@ -1,19 +1,28 @@
-import { useJwt } from "react-jwt";
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
-import LinearProgress from "@mui/material/LinearProgress";
+import { useJwt } from "react-jwt";
 import "./styles/dashboard.css";
-import IconHome from "./svg/IconHome";
-import { DataContext } from "../context/DataContext";
-import { ConstructionOutlined, FunctionsOutlined } from "@mui/icons-material";
+
+import {
+  BorderStyle,
+  ConstructionOutlined,
+  FunctionsOutlined,
+} from "@mui/icons-material";
 import FormControl from "@mui/material/FormControl";
 import { MenuItem, InputLabel } from "@mui/material";
 import Select from "@mui/material/Select";
 import { Container, Box, Typography } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
 import { Link } from "react-router-dom";
+
+import { ThemeContext } from "../context/ThemeContext";
+import { DataContext } from "../context/DataContext";
+import { AuthContext } from "../context/AuthContext";
 
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
+
+import Charts from "./Chart";
+import Grid from "@mui/material/Grid";
 
 //importing SVG -------------------
 import { ReactComponent as IconAddNew } from "./svgCategories/add-new.svg";
@@ -31,8 +40,7 @@ import { ReactComponent as IconRent } from "./svgCategories/rent.svg";
 import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
-import Charts from "./Chart";
-import Grid from "@mui/material/Grid";
+import IconHome from "./svg/IconHome";
 
 export default function Dashboard() {
   const { token } = useContext(AuthContext);
@@ -47,6 +55,8 @@ export default function Dashboard() {
     tranData,
     setTranData,
   } = useContext(DataContext);
+
+  const { styling } = useContext(ThemeContext);
 
   //===========================
   //Library Initialization
@@ -257,7 +267,7 @@ export default function Dashboard() {
   );
   // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
-  // console.log("budgetData", budgetData);
+  console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
@@ -291,8 +301,12 @@ export default function Dashboard() {
         maxWidth: "sm",
         minHeight: "100vh",
       }}
+      style={{ background: styling.backgroundColor }}
     >
       <Grid container className="dash-container">
+        {/* ===============================================
+                            filter
+        ============================================= */}
         <Grid item xs={12}>
           <Box component="div" className="transaction-filter">
             <FormControl fullWidth>
@@ -303,13 +317,13 @@ export default function Dashboard() {
                 value={filter}
                 label="Filter"
                 onChange={(e) => setFilter(e.target.value)}
-                // sx={{
-                //   textAlign: "left",
-                //   "& fieldset": {
-                //     borderRadius: "10px",
-                //   },
-                //   fontSize: "14px",
-                // }}
+                sx={{
+                  textAlign: "left",
+                  "& fieldset": {
+                    borderRadius: "10px",
+                  },
+                  fontSize: "14px",
+                }}
               >
                 <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
                   All
@@ -333,46 +347,31 @@ export default function Dashboard() {
             </FormControl>
           </Box>
         </Grid>
-        {/* <span onClick={() => setFilter("all")} value="all">
-            All
-          </span>
-          <span onClick={() => setFilter("year")} value="year">
-            Year
-          </span>
-          <span onClick={() => setFilter("6months")} value="6months">
-            6
-          </span>
-          <span onClick={() => setFilter("3months")} value="3months">
-            3 Months
-          </span>
-          <span onClick={() => setFilter("month")} value="month">
-            Month
-          </span>
-          <span onClick={() => setFilter("week")} value="week">
-            Week
-          </span> */}
-
+        {/* =========================================
+                          balance
+====================================== */}
         <Link
           to="/transactions"
-          // item
-          // xs={12}
           className="dash-progress"
-          // sx={{
-          //   paddingTop: "2rem",
-          //   paddingBottom: "2rem",
-          //   textAlign: "center",
-          //   transition: "all 0.3s ease",
-          //   "&:hover": { transform: "scale(1.05)" },
-          // }}
+          style={{
+            border: styling.borders,
+            backgroundColor: styling.backgroundBoard,
+          }}
         >
-          <p className="current-balance">Current Balance</p>
-          <h2 className="dash-balance">
+          <p style={{ color: styling.txtColor }} className="current-balance">
+            Current Balance
+          </p>
+          <h2 style={{ color: styling.txtColor }} className="dash-balance">
             {" "}
-            {(incomeSum - expensesSum).toFixed(2)} €
+            {(incomeSum - expensesSum).toFixed(2)} $
           </h2>
 
-          <p className="dash-expected">Expected savings: {savings} €</p>
-          <p className="spent-title">Spent</p>
+          <p style={{ color: styling.txtColor }} className="dash-expected">
+            Expected savings: {savings} $
+          </p>
+          <p style={{ color: styling.txtColor }} className="spent-title">
+            Spent
+          </p>
           <Box className="linear-progress-container1">
             <Typography
               style={spentBar > 10 ? { color: "white" } : { color: "black" }}
@@ -380,7 +379,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px" }}
             >
-              {expensesSum} €
+              {expensesSum} $
             </Typography>
 
             <Typography
@@ -389,7 +388,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
             >
-              {incomeSum} €
+              {incomeSum} $
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -400,7 +399,9 @@ export default function Dashboard() {
               // }}
             />
           </Box>
-          <p className="spent-title">Budget</p>
+          <p style={{ color: styling.txtColor }} className="spent-title">
+            Budget
+          </p>
           <Box className="linear-progress-container2">
             <Typography
               style={budgetBar > 10 ? { color: "white" } : { color: "black" }}
@@ -408,7 +409,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
             >
-              {expensesSumBudgets} €
+              {expensesSumBudgets} $
             </Typography>
             <Typography
               style={budgetBar > 90 ? { color: "white" } : { color: "black" }}
@@ -416,7 +417,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
             >
-              {budgetSum} €
+              {budgetSum} $
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -428,19 +429,13 @@ export default function Dashboard() {
           </Box>
         </Link>
 
-        <Grid
-          item
-          xs={12}
-          sx={{
-            // margin: "1em 0",
-            textAlign: "center",
-            transition: "all 0.3s ease",
-            "&:hover": { transform: "scale(1.06)" },
-          }}
-        >
-          <Charts />
-        </Grid>
-
+        {/* ===================================
+                 chart
+====================================== */}
+        <Charts />
+        {/* ===================================
+                  budgets
+====================================== */}
         <Grid
           item
           xs={12}
@@ -453,100 +448,113 @@ export default function Dashboard() {
           }}
         >
           <Box className="swiper">
-            <Box className="swiper-wrapper">
-              {budgetData?.map((each) => (
-                <Box className="swiper-slide">
-                  <Box className="dash-budget">
-                    {(() => {
-                      const Icon =
-                        categoryIcons[
-                          each.category_name ? each.category_name : "others"
-                        ];
+            <Box
+              style={{ background: styling.backgroundBoard }}
+              className="swiper-wrapper"
+            >
+              {budgetData?.map((each) => {
+                let spentBudgetBar = 0;
+                if (
+                  categoriesObj[each.category_name]?.spent <
+                  categoriesObj[each.category_name]?.limit
+                ) {
+                  spentBudgetBar =
+                    (categoriesObj[each.category_name].spent * 100) /
+                    categoriesObj[each.category_name].limit;
+                }
+                if (
+                  categoriesObj[each.category_name]?.spent >
+                  categoriesObj[each.category_name]?.limit
+                ) {
+                  spentBudgetBar = 100;
+                }
+                return (
+                  <Box
+                    style={{ background: styling.backgroundBoard }}
+                    className="swiper-slide"
+                  >
+                    <Box className="dash-budget">
+                      {(() => {
+                        const Icon =
+                          categoryIcons[
+                            each.category_name ? each.category_name : "others"
+                          ];
 
-                      return <Icon />;
-                    })()}
-                    <Box className="dash-budget-title">
+                        return <Icon className="dash-icon-title" />;
+                      })()}
+                      <Box className="dash-budget-wrapper">
+                        <p
+                          className="dash-budget-title"
+
+                          // style={{ fontSize: "20px", paddingTop: "5px" }}
+                        >
+                          {each.category_name.replace(/^[\w]/, (c) =>
+                            c.toUpperCase()
+                          )}
+                        </p>
+                        <p className="dash-budget-info">
+                          {categoriesObj[each.category_name]
+                            ? Number(each.limit_amount) -
+                              categoriesObj[each.category_name].spent
+                            : Number(each.limit_amount)}
+                          $ Remaining
+                        </p>
+                      </Box>
+                    </Box>
+
+                    <Box className="linear-progress-container2">
                       <Typography
-                        className="dash-budget-title"
-                        variant="h3"
-                        style={{ fontSize: "22px", paddingTop: "5px" }}
-                      >
-                        {each.category_name}
-                      </Typography>
-                      <Typography
-                        className="dash-budget-info"
+                        style={
+                          (categoriesObj[each.category_name]?.spent * 100) /
+                            categoriesObj[each.category_name]?.limit >
+                          10
+                            ? { color: "white" }
+                            : { color: "black" }
+                        }
+                        className="progress-left"
                         variant="h5"
-                        style={{
-                          fontSize: "18px",
-                          paddingTop: "5px",
-                          color: "blue",
-                        }}
                       >
-                        {categoriesObj[each.category_name]
-                          ? Number(each.limit_amount) -
-                            categoriesObj[each.category_name].spent
-                          : Number(each.limit_amount)}
-                        € remaining
+                        {categoriesObj?.hasOwnProperty(each.category_name)
+                          ? `${categoriesObj[each.category_name].spent} $`
+                          : "0 $"}
                       </Typography>
+                      <Typography
+                        style={
+                          (categoriesObj[each.category_name]?.spent * 100) /
+                            categoriesObj[each.category_name]?.limit >
+                          90
+                            ? { color: "white" }
+                            : { color: "black" }
+                        }
+                        className="progress-right"
+                        variant="h5"
+                      >
+                        {each.limit_amount} $
+                      </Typography>
+                      <LinearProgress
+                        variant="determinate"
+                        // value={(() => {
+                        //   if (categoriesObj[each.category_name]) {
+                        //     const percentage =
+                        //       (categoriesObj[each.category_name].spent *
+                        //         100 *
+                        //         100) /
+                        //       categoriesObj[each.category_name.limit];
+                        //     return percentage > 100 ? 100 : percentage;
+                        //   }
+                        // })()}
+
+                        // no spents ( zero spent)
+                        // more than limit
+                        // normal amount
+                        value={spentBudgetBar}
+
+                        // value={50}
+                      />
                     </Box>
                   </Box>
-
-                  <Box className="linear-progress-container2">
-                    <Typography
-                      className="progress-left"
-                      variant="h5"
-                      style={{
-                        fontSize: "18px",
-                        paddingTop: "5px",
-                        color: "red",
-                      }}
-                    >
-                      {categoriesObj?.hasOwnProperty(each.category_name)
-                        ? `${categoriesObj[each.category_name].spent} €`
-                        : "0 €"}
-                    </Typography>
-                    <Typography
-                      className="progress-right"
-                      variant="h5"
-                      style={{
-                        fontSize: "20px",
-                        paddingTop: "5px",
-                        color: "blue",
-                      }}
-                    >
-                      {each.limit_amount} €
-                    </Typography>
-                    <LinearProgress
-                      variant="determinate"
-                      // value={(() => {
-                      //   if (categoriesObj[each.category_name]) {
-                      //     const percentage =
-                      //       (categoriesObj[each.category_name].spent *
-                      //         100 *
-                      //         100) /
-                      //       categoriesObj[each.category_name.limit];
-                      //     return percentage > 100 ? 100 : percentage;
-                      //   }
-                      // })()}
-                      value={
-                        categoriesObj[each.category_name] &&
-                        categoriesObj[each.category_name].spent <
-                          categoriesObj[each.category_name].limit
-                          ? (categoriesObj[each.category_name].spent * 100) /
-                            categoriesObj[each.category_name].limit
-                          : categoriesObj[each.category_name] &&
-                            categoriesObj[each.category_name].spent !== 0
-                          ? 100
-                          : 0
-                      }
-                      style={{
-                        padding: "18px 100px",
-                      }}
-                      // value={50}
-                    />
-                  </Box>
-                </Box>
-              ))}
+                );
+              })}
             </Box>
 
             <Box
