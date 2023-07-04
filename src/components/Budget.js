@@ -21,6 +21,9 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -264,15 +267,82 @@ export default function Budget() {
                     }
                   />
                 </div>
-                <CardActions disableSpacing sx={{ p: 0 }}>
+                <Accordion
+                  expanded={expanded === element.category_name}
+                  onChange={handleChange(element.category_name)}
+                  sx={{ boxShadow: "none" }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                  ></AccordionSummary>
+                  <AccordionDetails>
+                    {tranData
+                      .filter(
+                        (item) =>
+                          item.tran_sign === "DR" &&
+                          item.category_name === element.category_name
+                      )
+                      .sort(
+                        (a, b) => new Date(b.tran_date) - new Date(a.tran_date)
+                      )
+                      .slice(0, 10)
+                      .map((element) => {
+                        const origDate = element.tran_date;
+                        const newDate = new Date(origDate);
+                        const newLocalDate = newDate
+                          .toLocaleDateString("en-GB")
+                          .replace(/[/]/g, ".");
+
+                        const capitalizedDesc =
+                          element.tran_description.replace(/./, (c) =>
+                            c.toUpperCase()
+                          );
+                        return (
+                          <Box
+                            component="div"
+                            className="transaction-div"
+                            key={element._id}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-around",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Typography
+                              variant="p"
+                              component="p"
+                              className="transaction-item"
+                              sx={{ fontWeight: "bold" }}
+                            >
+                              {USDollar.format(element.tran_amount)}
+                            </Typography>
+                            <Typography
+                              variant="p"
+                              component="p"
+                              className="transaction-item"
+                            >
+                              {capitalizedDesc}
+                            </Typography>
+                            <Typography
+                              variant="p"
+                              component="p"
+                              className="transaction-item"
+                            >
+                              {newLocalDate}
+                            </Typography>
+                          </Box>
+                        );
+                      })}
+                  </AccordionDetails>
+                </Accordion>
+                {/* <CardActions disableSpacing sx={{ p: 0 }}>
                   <ExpandMore
-                    /* expand={expanded} */
                     expand={
                       expandedCat === element.category_name ? true : false
                     }
-                    // onClick={() => setExpanded(!expanded)}
                     onClick={() => setExpandedCat(element.category_name)}
-                    /* aria-expanded={expanded} */
                     aria-expanded={
                       expandedCat === element.category_name ? true : false
                     }
@@ -282,9 +352,7 @@ export default function Budget() {
                   </ExpandMore>
                 </CardActions>
                 <Collapse
-                  /* in={expanded} */ in={
-                    expandedCat === element.category_name ? true : false
-                  }
+                  in={expandedCat === element.category_name ? true : false}
                   timeout="auto"
                   unmountOnExit
                 >
@@ -303,7 +371,7 @@ export default function Budget() {
                         const origDate = element.tran_date;
                         const newDate = new Date(origDate);
                         const newLocalDate = newDate
-                          .toLocaleDateString("en-GB") //ADD different Country code here to format it
+                          .toLocaleDateString("en-GB")
                           .replace(/[/]/g, ".");
 
                         const capitalizedDesc =
@@ -347,7 +415,7 @@ export default function Budget() {
                         );
                       })}
                   </CardContent>
-                </Collapse>
+                </Collapse> */}
               </CardContent>
             </Card>
           </Box>
