@@ -225,7 +225,7 @@ export default function Budget() {
                       : "0 $"}
                   </h6>
                   <span className="progress-right" style={{ fontSize: "14px" }}>
-                    {element.limit_amount} $
+                    {element.limit_amount} €
                   </span>
                   <LinearProgress
                     variant="determinate"
