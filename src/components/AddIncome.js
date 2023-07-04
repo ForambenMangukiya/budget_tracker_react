@@ -205,7 +205,7 @@ export default function AddIncome() {
               label=" add your amount"
               type="number"
               startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
+                <InputAdornment position="start">€</InputAdornment>
               }
               value={tran_amount}
               onChange={handleAmountChange}
