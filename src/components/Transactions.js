@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
-
+import Grid from "@mui/material/Grid";
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
@@ -226,15 +226,24 @@ export default function Transactions() {
 
   return (
     <Container
-      maxWidth="sm"
       id="transactions-container-id"
       className="transactions-container"
       sx={{
         paddingTop: "100px",
         paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
       }}
     >
-      <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Box
+        sx={{
+          height: 600,
+          transform: "translateZ(0px)",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Tabs
           value={transaction}
           onChange={handleChange}
@@ -255,6 +264,7 @@ export default function Transactions() {
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
+
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
@@ -330,11 +340,13 @@ export default function Transactions() {
                 const newLocalDate = newDate
                   .toLocaleDateString("en-GB") //ADD different Country code here to format it
                   .replace(/[/]/g, ".");
+                let capitalizedDesc = "Others";
+                if (element.tran_description) {
+                  capitalizedDesc = element.tran_description.replace(/./, (c) =>
+                    c.toUpperCase()
+                  );
+                }
 
-                const capitalizedDesc = element.tran_description.replace(
-                  /./,
-                  (c) => c.toUpperCase()
-                );
                 return (
                   <Box
                     component="div"

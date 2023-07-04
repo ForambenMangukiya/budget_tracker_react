@@ -2,7 +2,7 @@ import "../components/styles/Landingpage.css";
 import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../components/styles/Landingpage.css";
-import Container from "@mui/material/Container";
+import { Container, Typography } from "@mui/material";
 import logo from "../components/images/piggylogo.gif";
 import piggylogo from "../components/svgCategories/piggylogo.gif";
 import Box from "@mui/material/Box";
@@ -16,24 +16,63 @@ export default function Landingpage() {
   const { token } = useContext(AuthContext);
   setTimeout(() => {
     Navigate("/entrypage");
-  }, 4000);
+  }, 5000);
 
   return (
-    <Container className="landingPage" maxWidth="sm">
+    <Container
+      className="landingPage"
+      sx={{
+        maxWidth: "sm",
+        minHeight: "100vh",
+        paddingTop: "50px",
+      }}
+    >
       <Cornerright className="cornerright" />
       <Box
         display="flex"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
-        gap="10px"
+        // minHeight="100vh"
+        // gap="10px"
         className="name"
       >
-        <Box>
-          <img className="logo" src={piggylogo} width="500px" />
+        <Box style={{ position: "relative", width: "350px" }}>
+          <img className="logo" src={logo} width="350px" alt="Logo" />
+          <Typography
+            variant="h1"
+            sx={{
+              position: "absolute",
+              top: "75%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              fontSize: "36px",
+              fontWeight: 900,
+              color: "#eb1b67",
+              textAlign: "center",
+            }}
+          >
+            Piggy<span style={{ color: "#453f78" }}>Bank</span>
+          </Typography>
         </Box>
-        <Link className="app_name" to="/entrypage"></Link>
+
+        <Box sx={{ padding: "10px" }}>
+          <Typography
+            style={{
+              fontSize: "14px",
+              textAlign: "center",
+              paddingLeft: "50px",
+              paddingRight: "50px",
+            }}
+          >
+            You're amazing for taking this first step towards getting better
+            control over your money and financial goals.
+          </Typography>
+        </Box>
+
+        {/* <Link className="app_name" to="/entrypage"> */}
+        {/* <h3>PiggyBank </h3> */}
+        {/* </Link> */}
       </Box>
       <Cornerleft className="cornerleft" />
     </Container>
