@@ -176,6 +176,7 @@ export default function Addbudget() {
             <FormControl fullWidth sx={{ mb: 4 }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   className="background_grey"
                   // inputFormat="DD/MM/YYYY"
@@ -196,7 +197,7 @@ export default function Addbudget() {
 
             {/*Amount */}
             {/* <FormControl fullWidth> */}
-            <FormControl fullWidth sx={{ mb: 4 }}>
+            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
               </InputLabel>

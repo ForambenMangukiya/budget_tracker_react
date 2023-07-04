@@ -197,6 +197,7 @@ export default function AddExpense() {
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   className="background_grey"
                   value={date}
@@ -214,7 +215,24 @@ export default function AddExpense() {
                 />
               </LocalizationProvider>
             </FormControl>
-
+            {/*Amount */}
+            {/* <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Amount
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                type="number"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+                label="Amount"
+                className="background_grey"
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
+                sx={{ borderRadius: "31px", fontSize: "16px" }}
+              />
+            </FormControl> */}
             {/*Description */}
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <TextField
