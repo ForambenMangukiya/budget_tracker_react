@@ -14,6 +14,8 @@ export default function DialogConfirm({
   setDialogOpen,
   budgetDeleteName,
   budgetDeleteId,
+  refresh,
+  setRefresh,
 }) {
   const [open, setOpen] = React.useState(true);
   const [isLoading, setIsLoading] = React.useState(null);
@@ -67,6 +69,7 @@ export default function DialogConfirm({
           body: JSON.stringify({ budgets }),
         }
       );
+      setRefresh(!refresh);
     } catch (error) {
       console.log("Here is the Error with more Info:", error);
     }

@@ -73,6 +73,8 @@ export default function Budget() {
     setBudgetData,
     tranData,
     setTranData,
+    refresh,
+    setRefresh,
   } = useContext(DataContext);
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -140,6 +142,8 @@ export default function Budget() {
           setDialogOpen={setDialogOpen}
           budgetDeleteName={budgetDeleteName}
           budgetDeleteId={budgetDeleteId}
+          refresh={refresh}
+          setRefresh={setRefresh}
         />
       ) : null}
       <Box
