@@ -17,9 +17,6 @@
   min-height: 100%; 
 } */
 
-.container {
-  /* Add container styles if needed */
-}
 
 .transaction-item {
   flex: 1;
@@ -44,7 +41,7 @@
 .transactions-container .active {
   background-color: var(--red);
   border-radius: 31px;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .transactions-container

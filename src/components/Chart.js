@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 export default function Charts() {
   const { categories } = useContext(DataContext);
-  const { styling } = useContext(ThemeContext);
+  const { styling, theme } = useContext(ThemeContext);
 
   const COLORS = [
     "#C80048",
@@ -42,7 +42,7 @@ export default function Charts() {
     percent,
     index,
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 1.3;
+    const radius = innerRadius + (outerRadius - innerRadius) * 1.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -93,7 +93,8 @@ export default function Charts() {
               // verticalAlign="bottom"
               align="middle"
               layout="horizontal"
-              iconSize={6}
+              iconSize={10}
+              // wrapperStyle={{ color: "white" }}
               // margin={50}
             />
 

@@ -9,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 // import Login from "@mui/icons-material/Login";
 // import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
@@ -16,9 +17,11 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Navbar() {
   const { token, logout } = useContext(AuthContext);
+  const { toggleTheme, theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -243,6 +246,7 @@ export default function Navbar() {
               <ListItemIcon sx={{ color: "#FFFF" }}>
                 <Logout sx={{ fontSize: "25px" }} />
               </ListItemIcon>
+
               <Typography
                 sx={{
                   fontFamily: "Inter",
@@ -287,6 +291,32 @@ export default function Navbar() {
               </Box>
             </MenuItem>
           )}
+          <Divider />
+          <MenuItem>
+            <Box
+              onClick={toggleTheme}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <ListItemIcon sx={{ color: "#FFFF" }}>
+                <DarkModeIcon sx={{ fontSize: "25px" }} />
+              </ListItemIcon>
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontWeight: 700,
+                  color: "#FFFF",
+                  textDecoration: "none",
+                  fontSize: "16px",
+                }}
+              >
+                {theme === "dark" ? "Light mode" : "Dark Mode"}
+              </Typography>
+            </Box>
+          </MenuItem>
         </Menu>
       </Fragment>
 

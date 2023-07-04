@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { DataContext } from "../context/DataContext";
+import { ThemeContext } from "../context/ThemeContext";
 import { Container } from "@mui/material";
 import "./styles/reports.css";
 
@@ -27,6 +28,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Box } from "plaid-threads";
 export default function Reports() {
   const { categories, tranData } = useContext(DataContext);
+  const { styling } = useContext(ThemeContext);
   const categoryIcons = {
     bills: IconBills,
     communication: IconCommunication,
@@ -52,6 +54,10 @@ export default function Reports() {
         maxWidth: "sm",
         minHeight: "100vh",
       }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
+      }}
     >
       <div className="dash-topSpending">
         {categories?.map((category) => {
@@ -66,6 +72,10 @@ export default function Reports() {
                 alignItems: "center",
                 border: "1px solid var( --gray-3);",
               }}
+              style={{
+                backgroundColor: styling.backgroundBoard,
+                border: styling.borders,
+              }}
             >
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -75,17 +85,23 @@ export default function Reports() {
                 <div className="spending-container">
                   <IconComponent />
                   <Box className="spending-box">
-                    <p className="rep-title">
+                    <p
+                      className="rep-title"
+                      style={{ color: styling.txtColor }}
+                    >
                       {category.name.replace(/^[\w]/, (c) => c.toUpperCase())}
                     </p>
-                    <p className="rep-tran">
+                    <p style={{ color: styling.txtColor }} className="rep-tran">
                       {category.transactions}{" "}
                       {category.transactions > 1
                         ? "Transactions"
                         : "Transaction"}
                     </p>
                   </Box>
-                  <span className="rep-total-spent">
+                  <span
+                    className="rep-total-spent"
+                    style={{ color: styling.txtColor }}
+                  >
                     {category.spent.toFixed(2)} €
                   </span>
                 </div>

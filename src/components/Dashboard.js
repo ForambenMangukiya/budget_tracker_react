@@ -301,7 +301,10 @@ export default function Dashboard() {
         maxWidth: "sm",
         minHeight: "100vh",
       }}
-      style={{ background: styling.backgroundColor }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
+      }}
     >
       <Grid container className="dash-container">
         {/* ===============================================
@@ -310,8 +313,18 @@ export default function Dashboard() {
         <Grid item xs={12}>
           <Box component="div" className="transaction-filter">
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+              <InputLabel
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: " 20px" }}
+                id="demo-simple-select-label"
+              >
+                Filter
+              </InputLabel>
               <Select
+                style={{
+                  backgroundColor: styling.backgroundBoard,
+                  borderRadius: "15px",
+                }}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={filter}
@@ -320,9 +333,10 @@ export default function Dashboard() {
                 sx={{
                   textAlign: "left",
                   "& fieldset": {
-                    borderRadius: "10px",
+                    borderRadius: "15px",
                   },
-                  fontSize: "14px",
+                  fontSize: "15px",
+                  border: "1px solid #fff",
                 }}
               >
                 <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
@@ -363,11 +377,11 @@ export default function Dashboard() {
           </p>
           <h2 style={{ color: styling.txtColor }} className="dash-balance">
             {" "}
-            {(incomeSum - expensesSum).toFixed(2)} $
+            {(incomeSum - expensesSum).toFixed(2)} €
           </h2>
 
           <p style={{ color: styling.txtColor }} className="dash-expected">
-            Expected savings: {savings} $
+            Expected savings: {savings} €
           </p>
           <p style={{ color: styling.txtColor }} className="spent-title">
             Spent
@@ -379,7 +393,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px" }}
             >
-              {expensesSum} $
+              {expensesSum} €
             </Typography>
 
             <Typography
@@ -388,7 +402,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
             >
-              {incomeSum} $
+              {incomeSum} €
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -409,7 +423,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
             >
-              {expensesSumBudgets} $
+              {expensesSumBudgets} €
             </Typography>
             <Typography
               style={budgetBar > 90 ? { color: "white" } : { color: "black" }}
@@ -417,7 +431,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
             >
-              {budgetSum} $
+              {budgetSum} €
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -448,10 +462,7 @@ export default function Dashboard() {
           }}
         >
           <Box className="swiper">
-            <Box
-              style={{ background: styling.backgroundBoard }}
-              className="swiper-wrapper"
-            >
+            <Box className="swiper-wrapper">
               {budgetData?.map((each) => {
                 let spentBudgetBar = 0;
                 if (
@@ -470,7 +481,10 @@ export default function Dashboard() {
                 }
                 return (
                   <Box
-                    style={{ background: styling.backgroundBoard }}
+                    style={{
+                      background: styling.backgroundBoard,
+                      border: styling.borders,
+                    }}
                     className="swiper-slide"
                   >
                     <Box className="dash-budget">
@@ -484,6 +498,7 @@ export default function Dashboard() {
                       })()}
                       <Box className="dash-budget-wrapper">
                         <p
+                          style={{ color: styling.txtColor }}
                           className="dash-budget-title"
 
                           // style={{ fontSize: "20px", paddingTop: "5px" }}
@@ -492,12 +507,15 @@ export default function Dashboard() {
                             c.toUpperCase()
                           )}
                         </p>
-                        <p className="dash-budget-info">
+                        <p
+                          style={{ color: styling.txtColor }}
+                          className="dash-budget-info"
+                        >
                           {categoriesObj[each.category_name]
                             ? Number(each.limit_amount) -
                               categoriesObj[each.category_name].spent
                             : Number(each.limit_amount)}
-                          $ Remaining
+                          € Remaining
                         </p>
                       </Box>
                     </Box>
@@ -529,7 +547,7 @@ export default function Dashboard() {
                         className="progress-right"
                         variant="h5"
                       >
-                        {each.limit_amount} $
+                        {each.limit_amount} €
                       </Typography>
                       <LinearProgress
                         variant="determinate"
@@ -564,7 +582,10 @@ export default function Dashboard() {
               }}
             ></Box>
 
-            <Box class="swiper-scrollbar"></Box>
+            <Box
+              style={{ backgroundColor: styling.pagination }}
+              class="swiper-scrollbar"
+            ></Box>
           </Box>
         </Grid>
       </Grid>
