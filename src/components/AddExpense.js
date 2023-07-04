@@ -243,7 +243,7 @@ export default function AddExpense() {
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-amount"
-                type="number"
+                type="text"
                 inputmode="numeric"
                 startAdornment={
                   <InputAdornment position="start">€</InputAdornment>
