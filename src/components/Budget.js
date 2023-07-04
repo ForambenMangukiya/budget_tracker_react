@@ -122,6 +122,10 @@ export default function Budget() {
     currency: "GBP",
   });
 
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
   return (
     <Container
       sx={{
@@ -345,53 +349,9 @@ export default function Budget() {
                   </CardContent>
                 </Collapse>
               </CardContent>
-              {/* <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
             </Card>
-            {/* <div className="swiper-slide">
-
-<div className="dash-budget">
-  {(() => {
-    const Icon =
-      categoryIcons[
-        each.category_name ? each.category_name : "others"
-      ];
-
-    return <Icon />;
-  })()}
-  <div className="dash-budget-title">
-    <h2 className="dash-budget-title">{each.category_name}</h2>
-    <p className="dash-budget-info">
-      {Number(each.limit_amount) - Number(each.spent)} $ remaining
-    </p>
-  </div>
-</div>
-
-<div className="linear-progress-container2">
-  <h6 className="progress-left">
-    {categoriesObj?.hasOwnProperty(each.category_name)
-      ? `${categoriesObj[each.category_name].spent} $`
-      : "0 $"}
-  </h6>
-  <span className="progress-right">{each.limit_amount} $</span>
-  <LinearProgress
-    variant="determinate"
-    // value={categoriesObj[each.category_name] ? 90 : 20}
-    value={
-      categoriesObj[each.category_name]
-        ? (categoriesObj[each.category_name].spent * 100) /
-          categoriesObj[each.category_name].limit
-        : 0
-    }
-  />
-</div>
-</div> */}
           </Box>
         ))}
-        {/* {budgetData.map((element) => (
-          <BudgetCard element={element} />
-        ))} */}
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
