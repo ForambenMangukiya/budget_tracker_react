@@ -29,7 +29,11 @@ export default function LandingPage2() {
   });
 
   return (
-    <Container className="landingPage" maxWidth="sm">
+    <Container className="landingPage"
+    sx={{
+      maxWidth: "sm",
+      minHeight: "100vh",
+    }}>
       <Cornerright className="cornerright" />
       {/* <Welcoming /> */}
       <Box
@@ -48,7 +52,7 @@ export default function LandingPage2() {
             },
           }}
         >
-          <img className="welcomeimage" src={welcoming} width="400px" />
+          <img className="welcomeimage" src={welcoming} width="300px" />
           <h1 className="logo-title">
             <span>Piggy</span>Bank
           </h1>
