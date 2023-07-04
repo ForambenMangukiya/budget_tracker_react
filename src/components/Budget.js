@@ -48,6 +48,7 @@ import { ReactComponent as IconRepairs } from "./svgCategories/repairs.svg";
 import { ReactComponent as IconTransportation } from "./svgCategories/transportation.svg";
 import { ReactComponent as IconWork } from "./svgCategories/work.svg";
 import { ReactComponent as IconTrash } from "./svgCategories/trash.svg";
+import { ThemeContext } from "../context/ThemeContext";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -71,6 +72,8 @@ export default function Budget() {
     tranData,
     setTranData,
   } = useContext(DataContext);
+
+  const { styling } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [budgetDeleteName, setBudgetDeleteName] = useState("false");
@@ -127,6 +130,10 @@ export default function Budget() {
       sx={{
         paddingTop: "100px",
       }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
+      }}
     >
       {dialogOpen ? (
         <DialogConfirm
@@ -156,6 +163,10 @@ export default function Budget() {
                 display: "column",
               }}
               className="budget_card"
+              style={{
+                backgroundColor: styling.backgroundBoard,
+                border: styling.borders,
+              }}
             >
               <CardContent
                 sx={{
@@ -182,12 +193,16 @@ export default function Budget() {
                       width: "80%",
                     }}
                   >
-                    <Typography sx={{ fontSize: 16, fontWeight: "700" }}>
+                    <Typography
+                      sx={{ fontSize: 16, fontWeight: "700" }}
+                      style={{ color: styling.txtColor }}
+                    >
                       {element.category_name.replace(/^[\w]/, (c) =>
                         c.toUpperCase()
                       )}
                     </Typography>
                     <Typography
+                      style={{ color: styling.txtColor }}
                       sx={{ fontSize: 14, fontWeight: "300" }}
                       color="text.secondary"
                       gutterBottom
@@ -207,6 +222,7 @@ export default function Budget() {
                     }}
                   >
                     <Button
+                      style={{ color: styling.txtColor }}
                       sx={{ p: 1 }}
                       onClick={() => {
                         setBudgetDeleteName(element.category_name);
@@ -214,7 +230,13 @@ export default function Budget() {
                         setDialogOpen(true);
                       }}
                     >
-                      <IconTrash style={{ width: "20px", height: "20px" }} />
+                      <IconTrash
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          fill: styling.txtColor,
+                        }}
+                      />
                     </Button>
                   </Box>
                 </Box>

@@ -20,6 +20,7 @@ import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 import "./styles/transactions.css";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -47,6 +48,7 @@ export default function Transactions() {
   //context
   const { tranData, setTranData } = useContext(DataContext);
   const { token } = useContext(AuthContext);
+  const { styling } = useContext(ThemeContext);
   console.log(tranData);
 
   //handlers
@@ -224,6 +226,10 @@ export default function Transactions() {
         paddingTop: "100px",
         paddingBottom: "100px",
       }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
+      }}
     >
       <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
         <Tabs
@@ -232,17 +238,18 @@ export default function Transactions() {
           centered
           className="tabs-div"
           sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+          style={{ background: "white" }}
         >
           <Tab
             label="expenses"
             value="expenses"
-            style={{ fontSize: "18px" }}
+            style={{ fontSize: "16px" }}
             className={transaction === "expenses" ? "active tab" : "tab"}
           />
           <Tab
             label="income"
             value="income"
-            style={{ fontSize: "18px" }}
+            style={{ fontSize: "16px" }}
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
@@ -298,7 +305,10 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}>
+              <Typography
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
+              >
                 Spent
               </Typography>
             </Box>
