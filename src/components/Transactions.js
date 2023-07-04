@@ -23,6 +23,7 @@ import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
 import "./styles/transactions.css";
 import AddIcon from "@mui/icons-material/Add";
+import { Padding } from "@mui/icons-material";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -242,7 +243,6 @@ export default function Transactions() {
     >
       <Box
         sx={{
-          height: 600,
           transform: "translateZ(0px)",
           flexGrow: 1,
           display: "flex",
@@ -255,7 +255,7 @@ export default function Transactions() {
           centered
           className="tabs-div"
           sx={{ "& .MuiTabs-indicator": { display: "none" } }}
-          style={{ background: "white" }}
+          style={{ background: "snow" }}
         >
           <Tab
             label="expenses"
@@ -289,6 +289,10 @@ export default function Transactions() {
                   borderRadius: "31px",
                 },
                 fontSize: "14px",
+              }}
+              style={{
+                backgroundColor: styling.backgroundBoard,
+                borderRadius: "31px",
               }}
             >
               <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
@@ -366,6 +370,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
+                    style={{ backgroundColor: "snow" }}
                   >
                     <Typography
                       variant="p"
@@ -449,6 +454,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
+                    style={{ backgroundColor: "snow" }}
                   >
                     <Typography
                       variant="p"

@@ -180,11 +180,11 @@ export default function Dashboard() {
   useEffect(() => {
     console.log("started useEffect(); started to filter tranData", tranData);
 
-    // const filtered = tranData?.filter((data) => {
-    //   const timestampDate = new Date(data.tran_date).getTime();
-    //   return timestampDate < endDate && timestampDate > startDate;
-    // });
-    const filtered = tranData;
+    const filtered = tranData?.filter((data) => {
+      const timestampDate = new Date(data.tran_date).getTime();
+      return timestampDate < endDate && timestampDate > startDate;
+    });
+    // const filtered = tranData;
 
     setFilteredData(filtered);
     console.log("ended useEffect(); filtered is", filtered);
@@ -261,19 +261,17 @@ export default function Dashboard() {
   // ========================================================================
 
   // console.log("tranData", tranData);
-  console.log(
-    "####################################################categories",
-    categories
-  );
   // console.log("categoriesObj", categoriesObj);
   // console.log("savings", savings);
-  console.log("budgetData", budgetData);
+  // console.log("budgetData", budgetData);
   // console.log("incomeSum:", incomeSum);
   // console.log("expensesSum:", expensesSum);
   // console.log("spentbar:", spentBar);
   // console.log("sumBudgets", expensesSumBudgets);
   // console.log("endDate", endDate);
   // console.log("filtered Data", filteredData);
+  console.log("start Date", startDate);
+  console.log("end Date", endDate);
 
   const categoryIcons = {
     bills: IconBills,
@@ -314,7 +312,7 @@ export default function Dashboard() {
           <Box component="div" className="transaction-filter">
             <FormControl fullWidth>
               <InputLabel
-                style={{ color: styling.txtColor }}
+                // style={{ color: styling.txtColor }}
                 sx={{ fontSize: " 20px" }}
                 id="demo-simple-select-label"
               >
@@ -336,7 +334,6 @@ export default function Dashboard() {
                     borderRadius: "15px",
                   },
                   fontSize: "15px",
-                  border: "1px solid #fff",
                 }}
               >
                 <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
@@ -457,9 +454,8 @@ export default function Dashboard() {
             // paddingTop: "1rem",
             // paddingBottom: "1rem",
             textAlign: "center",
-            transition: "all 0.3s ease",
-            "&:hover": { transform: "scale(1.06)" },
           }}
+          style={{ cursor: "grab" }}
         >
           <Box className="swiper">
             <Box className="swiper-wrapper">
