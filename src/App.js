@@ -19,9 +19,11 @@ import Addbudget from "./components/Addbudget";
 import Scan from "./scanreceipts/Scan";
 import CaptureImage from "./scanreceipts/CaptureImage";
 import Upload from "./scanreceipts/Upload";
+import { ThemeContext } from "./context/ThemeContext";
 
 function App() {
   const { token, logout } = useContext(AuthContext);
+  const { styling } = useContext(ThemeContext);
   console.log("token:", token);
 
   return (

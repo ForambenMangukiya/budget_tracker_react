@@ -20,6 +20,7 @@ import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 import "./styles/transactions.css";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -48,7 +49,7 @@ export default function Transactions() {
   const { tranData, setTranData, refresh, setRefresh } =
     useContext(DataContext);
   const { token } = useContext(AuthContext);
-
+  const { styling } = useContext(ThemeContext);
   console.log(tranData);
 
   //handlers
@@ -235,6 +236,10 @@ export default function Transactions() {
         maxWidth: "sm",
         minHeight: "100vh",
       }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
+      }}
     >
       <Box
         sx={{
@@ -252,6 +257,7 @@ export default function Transactions() {
           centered
           className="tabs-div"
           sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+          style={{ background: "white" }}
         >
           <Tab
             label="expenses"
@@ -319,7 +325,10 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}>
+              <Typography
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
+              >
                 Spent
               </Typography>
             </Box>
