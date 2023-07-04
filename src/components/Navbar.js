@@ -120,7 +120,8 @@ export default function Navbar() {
         boxSizing: "border-box",
         position: "fixed",
         zIndex: 5,
-        borderRadius: "0 0 1em 1em",
+        borderRadius: "0 0 1.5em 1.5em",
+        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25);",
       }}
     >
       <Typography
