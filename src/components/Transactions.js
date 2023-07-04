@@ -14,7 +14,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-
+import Grid from "@mui/material/Grid";
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 
@@ -217,15 +217,19 @@ export default function Transactions() {
 
   return (
     <Container
-      maxWidth="600px"
       id="transactions-container-id"
       className="transactions-container"
       sx={{
         paddingTop: "100px",
         paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
       }}
     >
+      <Grid>
+      <Grid item xs={12}>
       <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
+        
         <Tabs
           value={transaction}
           onChange={handleChange}
@@ -246,6 +250,7 @@ export default function Transactions() {
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
+      
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
@@ -467,6 +472,7 @@ export default function Transactions() {
           </Box>
         )}
       </Box>
+      </Grid>
 
       <Backdrop open={open} />
       <SpeedDial
@@ -501,6 +507,8 @@ export default function Transactions() {
           />
         ))}
       </SpeedDial>
+    
+      </Grid>
     </Container>
   );
 }

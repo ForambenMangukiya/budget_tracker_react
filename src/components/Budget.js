@@ -395,8 +395,20 @@ export default function Budget() {
         <Backdrop open={open} />
         <SpeedDial
           ariaLabel="SpeedDial tooltip example"
-          sx={{ position: "absolute", bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon sx={{ color: "#FFFF" }} />}
+          style={{
+          zIndex: 5,
+          transform: "translateX(+40%)",
+        }}
+        sx={{
+          position: "sticky",
+          bottom: 70,
+          "& .MuiFab-root": {
+            width: "64px", // Increase the width
+            height: "64px", // Increase the height
+          },
+        }}
+          // icon={<SpeedDialIcon sx={{ color: "#FFFF"}} />}
+          icon={<AddIcon sx={{ color: "#FFFF", fontSize: "30px" }} />}
           onClose={() => {
             setOpen(false);
           }}

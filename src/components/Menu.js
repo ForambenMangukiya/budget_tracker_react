@@ -51,6 +51,7 @@ export default function Menu() {
           zIndex: "5",
           width: "100%",
           padding: "5px",
+          paddingBottom: "20px",
         }}
         sx={{ bottom: 0, left: 5, right: 5 }}
         elevation={5}
