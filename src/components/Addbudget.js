@@ -36,7 +36,7 @@ export default function Addbudget() {
 
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
-  const [currency, setCurrency] = useState("$");
+  const [currency, setCurrency] = useState("€");
   const [amount, setAmount] = useState(""); //last
   const [category, setCategory] = useState("");
 
@@ -176,6 +176,7 @@ export default function Addbudget() {
             <FormControl fullWidth sx={{ mb: 4 }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   className="background_grey"
                   // inputFormat="DD/MM/YYYY"
@@ -196,7 +197,7 @@ export default function Addbudget() {
 
             {/*Amount */}
             {/* <FormControl fullWidth> */}
-            <FormControl fullWidth sx={{ mb: 4 }}>
+            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
               </InputLabel>
@@ -204,7 +205,7 @@ export default function Addbudget() {
                 id="outlined-adornment-amount"
                 type="number"
                 startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start">€</InputAdornment>
                 }
                 label="Amount"
                 className="background_grey"

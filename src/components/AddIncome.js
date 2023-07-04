@@ -161,6 +161,7 @@ export default function AddIncome() {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DateTimePicker"]}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   value={tran_date}
                   className="background_grey"
@@ -178,6 +179,21 @@ export default function AddIncome() {
               </DemoContainer>
             </LocalizationProvider>
           </FormControl>
+
+          {/* <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
+            <OutlinedInput
+              className="addincome-textfield background_grey"
+              label=" add your amount"
+              type="number"
+              startAdornment={
+                <InputAdornment position="start">$</InputAdornment>
+              }
+              value={tran_amount}
+              onChange={handleAmountChange}
+              sx={{ borderRadius: "31px", fontSize: "16px" }}
+            ></OutlinedInput>
+          </FormControl> */}
           {/* <InputLabel className="text-field-label">Description </InputLabel> */}
           <FormControl fullWidth>
             <TextField
@@ -205,7 +221,7 @@ export default function AddIncome() {
               label=" add your amount"
               type="number"
               startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
+                <InputAdornment position="start">€</InputAdornment>
               }
               value={tran_amount}
               onChange={handleAmountChange}

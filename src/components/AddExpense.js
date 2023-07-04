@@ -70,7 +70,11 @@ export default function AddExpense() {
         setDate(null);
         setDescription("");
         setAmount("");
-        setAlert(<Alert severity="success">Your expense has been saved</Alert>);
+        setAlert(
+          <Alert severity="success" sx={{ fontSize: "16px" }}>
+            Your expense has been saved
+          </Alert>
+        );
         setRefresh(!refresh);
       } catch (error) {
         setIsLoading(false);
@@ -193,6 +197,7 @@ export default function AddExpense() {
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   className="background_grey"
                   value={date}
@@ -210,7 +215,24 @@ export default function AddExpense() {
                 />
               </LocalizationProvider>
             </FormControl>
-
+            {/*Amount */}
+            {/* <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Amount
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                type="number"
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+                label="Amount"
+                className="background_grey"
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
+                sx={{ borderRadius: "31px", fontSize: "16px" }}
+              />
+            </FormControl> */}
             {/*Description */}
             <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <TextField
@@ -239,9 +261,10 @@ export default function AddExpense() {
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-amount"
-                type="number"
+                type="text"
+                inputmode="numeric"
                 startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start">€</InputAdornment>
                 }
                 label="Amount"
                 className="background_grey"

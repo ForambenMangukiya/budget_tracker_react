@@ -10,14 +10,14 @@ import ManualEntry from "./svg/IconManuallyEnter";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
+import Button from "@mui/material/Button";
+
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-
+import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
+import Grid from "@mui/material/Grid";
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
-
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import { ThemeContext } from "../context/ThemeContext";
@@ -39,14 +39,15 @@ export default function Transactions() {
   const [transaction, setTransaction] = useState("expenses");
   const [filter, setFilter] = useState("");
   const [category_name, setCategory] = useState("");
-  const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
+  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   //navigate
   const navigate = useNavigate();
   //context
-  const { tranData, setTranData } = useContext(DataContext);
+  const { tranData, setTranData, refresh, setRefresh } =
+    useContext(DataContext);
   const { token } = useContext(AuthContext);
   const { styling } = useContext(ThemeContext);
   console.log(tranData);
@@ -68,41 +69,48 @@ export default function Transactions() {
   const handleChange = (event, newValue) => {
     setTransaction(newValue);
   };
+
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+  };
+
+  // delete transactions
+
+  const handleDeleteTransaction = async (id) => {
+    try {
+      console.log(id);
+      const response = await fetch(
+        `https://piggybank-api.onrender.com/transaction/${id}`,
+
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Transaction successfully deleted
+        const deletedTransaction = await response.json();
+        console.log(deletedTransaction);
+        // Perform any necessary actions after deletion
+      } else {
+        // Transaction not found or other error occurred
+        const errorData = await response.json();
+        console.error(errorData.error);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the transaction:", error);
+    }
+    setRefresh(!refresh);
   };
 
   const paperStyles = {
     // Customize the background color here
     background: "linear-gradient(#c80048, #961c48)",
     size: "large",
-  };
-
-  // for the deletebutton
-  const handleDelete = async (tranId) => {
-    try {
-      const res = await fetch(
-        `https://piggybank-api.onrender.com/transaction/${tranId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (res.ok) {
-        // Delete the transaction  from the local state
-        setTranData((prevTranData) =>
-          prevTranData.filter((tran) => tran._id !== tranId)
-        );
-      } else {
-        // Handle error if delete request fails
-        console.log("Failed to delete transaction");
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   //   const handleSubmit = async (e) => {
@@ -219,19 +227,28 @@ export default function Transactions() {
 
   return (
     <Container
-      maxWidth="600px"
       id="transactions-container-id"
       className="transactions-container"
       sx={{
         paddingTop: "100px",
         paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
       }}
       style={{
         background: styling.backgroundColor,
         paddingBottom: styling.paddingBottom,
       }}
     >
-      <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
+      <Box
+        sx={{
+          height: 600,
+          transform: "translateZ(0px)",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Tabs
           value={transaction}
           onChange={handleChange}
@@ -253,6 +270,7 @@ export default function Transactions() {
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
+
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
@@ -331,11 +349,13 @@ export default function Transactions() {
                 const newLocalDate = newDate
                   .toLocaleDateString("en-GB") //ADD different Country code here to format it
                   .replace(/[/]/g, ".");
+                let capitalizedDesc = "Others";
+                if (element.tran_description) {
+                  capitalizedDesc = element.tran_description.replace(/./, (c) =>
+                    c.toUpperCase()
+                  );
+                }
 
-                const capitalizedDesc = element.tran_description.replace(
-                  /./,
-                  (c) => c.toUpperCase()
-                );
                 return (
                   <Box
                     component="div"
@@ -369,19 +389,12 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
-                    {/* deletebutton */}
-                    <IconButton
-                      edge="end"
-                      aria-label="delete"
-                      onClick={() => handleDelete(element._id)}
-                      sx={{
-                        width: 50,
-                        right: 10,
-                        color: "black",
-                      }}
+                    <Button
+                      sx={{ p: 1 }}
+                      onClick={() => handleDeleteTransaction(element._id)}
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}
@@ -459,18 +472,12 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
-                    <IconButton
-                      edge="end"
-                      aria-label="delete"
-                      onClick={() => handleDelete(element._id)}
-                      sx={{
-                        width: 50,
-                        right: 10,
-                        color: "black",
-                      }}
+                    <Button
+                      sx={{ p: 1 }}
+                      onClick={() => handleDeleteTransaction(element._id)}
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}

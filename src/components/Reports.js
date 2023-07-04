@@ -102,7 +102,7 @@ export default function Reports() {
                     className="rep-total-spent"
                     style={{ color: styling.txtColor }}
                   >
-                    {category.spent.toFixed(2)} $
+                    {category.spent.toFixed(2)} €
                   </span>
                 </div>
               </AccordionSummary>
@@ -112,7 +112,7 @@ export default function Reports() {
                   .map((data) => (
                     <div key={data.id} className="rep-trans-accordion">
                       <p className="rep-trans-accordion-amount">
-                        {data.tran_amount} $
+                        {data.tran_amount} €
                       </p>
                       <p>{data.tran_description}</p>
                       <p>
