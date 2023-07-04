@@ -193,8 +193,12 @@ export default function Budget() {
                       gutterBottom
                     >
                       {/* Budget {element.limit_amount}€/Month */}
-                      {Number(element.limit_amount) - Number(element.spent)} $
-                      remaining
+                      {console.log(categoriesObj)}
+                      {categoriesObj[element.category_name]
+                        ? Number(element.limit_amount) -
+                          categoriesObj[element.category_name].spent
+                        : Number(element.limit_amount)}{" "}
+                      € remaining
                     </Typography>
                   </Box>
 
@@ -219,12 +223,30 @@ export default function Budget() {
                   </Box>
                 </Box>
                 <div className="linear-progress-container2">
-                  <h6 className="progress-left" style={{ fontSize: "14px" }}>
+                  <h6
+                    className="progress-left"
+                    style={
+                      (categoriesObj[element.category_name]?.spent * 100) /
+                        categoriesObj[element.category_name]?.limit >
+                      10
+                        ? { fontSize: "14px", color: "white" }
+                        : { fontSize: "14px", color: "black" }
+                    }
+                  >
                     {categoriesObj?.hasOwnProperty(element.category_name)
-                      ? `${categoriesObj[element.category_name].spent} $`
-                      : "0 $"}
+                      ? `${categoriesObj[element.category_name].spent} €`
+                      : "0 €"}
                   </h6>
-                  <span className="progress-right" style={{ fontSize: "14px" }}>
+                  <span
+                    className="progress-right"
+                    style={
+                      (categoriesObj[element.category_name]?.spent * 100) /
+                        categoriesObj[element.category_name]?.limit >
+                      10
+                        ? { fontSize: "14px", color: "white" }
+                        : { fontSize: "14px", color: "black" }
+                    }
+                  >
                     {element.limit_amount} €
                   </span>
                   <LinearProgress

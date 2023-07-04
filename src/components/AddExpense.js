@@ -241,7 +241,7 @@ export default function AddExpense() {
                 id="outlined-adornment-amount"
                 type="number"
                 startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start">€</InputAdornment>
                 }
                 label="Amount"
                 className="background_grey"
