@@ -321,11 +321,13 @@ export default function Transactions() {
                 const newLocalDate = newDate
                   .toLocaleDateString("en-GB") //ADD different Country code here to format it
                   .replace(/[/]/g, ".");
+                let capitalizedDesc = "Others";
+                if (element.tran_description) {
+                  capitalizedDesc = element.tran_description.replace(/./, (c) =>
+                    c.toUpperCase()
+                  );
+                }
 
-                const capitalizedDesc = element.tran_description.replace(
-                  /./,
-                  (c) => c.toUpperCase()
-                );
                 return (
                   <Box
                     component="div"
