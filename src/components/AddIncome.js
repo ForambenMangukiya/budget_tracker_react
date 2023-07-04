@@ -214,6 +214,20 @@ export default function AddIncome() {
             {/* <InputLabel className="text-field-label">Amount </InputLabel> */}
           </FormControl>
 
+          <FormControl fullWidth>
+            <InputLabel htmlFor="outlined-adornment-amount">Amount </InputLabel>
+            <OutlinedInput
+              className="addincome-textfield background_grey"
+              label=" add your amount"
+              type="number"
+              startAdornment={
+                <InputAdornment position="start">€</InputAdornment>
+              }
+              value={tran_amount}
+              onChange={handleAmountChange}
+              sx={{ borderRadius: "31px", fontSize: "16px" }}
+            ></OutlinedInput>
+          </FormControl>
           <CustomButton
             sx={{
               ":hover": { bgcolor: "#C42B0A" },

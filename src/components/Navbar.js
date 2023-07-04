@@ -88,7 +88,15 @@ export default function Navbar() {
       return "Add Budget";
     }
 
+    if (token && location.pathname == "/scan") {
+      return "Scan Receipt";
+    }
+
     return "";
+  };
+
+  const handleClick2 = () => {
+    navigate("/scan");
   };
   const currentPage = page();
   console.log("Current page:", currentPage);
@@ -112,7 +120,8 @@ export default function Navbar() {
         boxSizing: "border-box",
         position: "fixed",
         zIndex: 5,
-        borderRadius: "0 0 1em 1em",
+        borderRadius: "0 0 1.5em 1.5em",
+        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25);",
       }}
     >
       <Typography
@@ -253,7 +262,7 @@ export default function Navbar() {
           {token !== null && (
             <MenuItem onClick={handleClose}>
               <Box
-                onClick={handleClose}
+                onClick={handleClick2}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -273,7 +282,7 @@ export default function Navbar() {
                     fontSize: "16px",
                   }}
                 >
-                  Settings
+                  Scan Receipt
                 </Typography>
               </Box>
             </MenuItem>

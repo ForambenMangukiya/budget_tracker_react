@@ -352,7 +352,7 @@ export default function Transactions() {
                       className="transaction-item"
                       sx={{ fontWeight: "bold" }}
                     >
-                      {USDollar.format(element.tran_amount)}
+                      {euro.format(element.tran_amount)}
                     </Typography>
                     <Typography
                       variant="p"
@@ -435,7 +435,7 @@ export default function Transactions() {
                       className="transaction-item"
                       sx={{ fontWeight: "bold" }}
                     >
-                      {USDollar.format(element.tran_amount)}
+                      {euro.format(element.tran_amount)}
                     </Typography>
                     <Typography
                       variant="p"
