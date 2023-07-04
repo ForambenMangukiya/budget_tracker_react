@@ -368,10 +368,10 @@ export default function Dashboard() {
           <p className="current-balance">Current Balance</p>
           <h2 className="dash-balance">
             {" "}
-            {(incomeSum - expensesSum).toFixed(2)} $
+            {(incomeSum - expensesSum).toFixed(2)} €
           </h2>
 
-          <p className="dash-expected">Expected savings: {savings} $</p>
+          <p className="dash-expected">Expected savings: {savings} €</p>
           <p className="spent-title">Spent</p>
           <Box className="linear-progress-container1">
             <Typography
@@ -380,7 +380,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px" }}
             >
-              {expensesSum} $
+              {expensesSum} €
             </Typography>
 
             <Typography
@@ -389,7 +389,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", color: "blue", paddingTop: "5px" }}
             >
-              {incomeSum} $
+              {incomeSum} €
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -408,7 +408,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "18px", paddingTop: "5px", color: "red" }}
             >
-              {expensesSumBudgets} $
+              {expensesSumBudgets} €
             </Typography>
             <Typography
               style={budgetBar > 90 ? { color: "white" } : { color: "black" }}
@@ -416,7 +416,7 @@ export default function Dashboard() {
               variant="h5"
               // style={{ fontSize: "20px", paddingTop: "5px", color: "blue" }}
             >
-              {budgetSum} $
+              {budgetSum} €
             </Typography>
             <LinearProgress
               variant="determinate"
@@ -486,7 +486,7 @@ export default function Dashboard() {
                           ? Number(each.limit_amount) -
                             categoriesObj[each.category_name].spent
                           : Number(each.limit_amount)}
-                        $ remaining
+                        € remaining
                       </Typography>
                     </Box>
                   </Box>
@@ -502,8 +502,8 @@ export default function Dashboard() {
                       }}
                     >
                       {categoriesObj?.hasOwnProperty(each.category_name)
-                        ? `${categoriesObj[each.category_name].spent} $`
-                        : "0 $"}
+                        ? `${categoriesObj[each.category_name].spent} €`
+                        : "0 €"}
                     </Typography>
                     <Typography
                       className="progress-right"
@@ -514,7 +514,7 @@ export default function Dashboard() {
                         color: "blue",
                       }}
                     >
-                      {each.limit_amount} $
+                      {each.limit_amount} €
                     </Typography>
                     <LinearProgress
                       variant="determinate"
