@@ -15,7 +15,7 @@ export default function Landingpage() {
   const { token } = useContext(AuthContext);
   setTimeout(() => {
     Navigate("/entrypage");
-  }, 40000);
+  }, 5000);
 
   return (
     <Container
@@ -23,6 +23,7 @@ export default function Landingpage() {
       sx={{
         maxWidth: "sm",
         minHeight: "100vh",
+        paddingTop: "50px"
       }}
     >
       <Cornerright className="cornerright" />
