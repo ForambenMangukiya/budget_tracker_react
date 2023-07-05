@@ -54,7 +54,7 @@ export default function DialogConfirm({
       const data = await res.json();
       const currentBudgets = data || []; // Get the current budgets array
       const budgets = currentBudgets.filter(
-        (budget) => budget.category_name !== budgetDeleteName
+        (budget) => budget._id !== budgetDeleteId
       );
       console.log("updatedBudgets:", budgets);
       // Append the new object to the existing array
