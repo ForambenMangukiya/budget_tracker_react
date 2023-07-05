@@ -23,12 +23,14 @@ import axios from "axios"; //last
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
 import { border } from "@mui/system";
+import { ThemeContext } from "../context/ThemeContext";
 // import { useJwt } from "react-jwt";
 
 export default function Addbudget() {
   const { budgetData, setBudgetData, refresh, setRefresh } =
     useContext(DataContext);
   const { token } = useContext(AuthContext);
+  const { styling } = useContext(ThemeContext);
   const [alert, setAlert] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(null);
   // console.log("user_id:", decodedToken._id);
@@ -120,8 +122,14 @@ export default function Addbudget() {
   return (
     <Container
       sx={{
-        maxWidth: "sm",
         paddingTop: "100px",
+        paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
       }}
     >
       {isLoading ? (
