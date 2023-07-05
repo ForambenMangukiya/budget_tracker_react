@@ -10,7 +10,7 @@ import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./svgCategories/piggylogo.gif";
+import logo from "./images/piggylogo.gif";
 import { useState } from "react";
 export default function Landingpage() {
   const Navigate = useNavigate();
