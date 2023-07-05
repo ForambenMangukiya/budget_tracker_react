@@ -114,9 +114,15 @@ export default function AddIncome() {
 
   return (
     <Container
-      maxWidth="sm"
       sx={{
         paddingTop: "100px",
+        paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
       }}
     >
       {isLoading ? (

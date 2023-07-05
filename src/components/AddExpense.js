@@ -20,6 +20,7 @@ import "./styles/addexpense.css";
 import { AuthContext } from "../context/AuthContext";
 import { DataContext } from "../context/DataContext";
 import { styled } from "@mui/system";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function AddExpense() {
   const [category, setCategory] = React.useState("");
@@ -32,6 +33,7 @@ export default function AddExpense() {
 
   const { token } = React.useContext(AuthContext);
   const { refresh, setRefresh } = React.useContext(DataContext);
+  const { styling } = React.useContext(ThemeContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,10 +100,15 @@ export default function AddExpense() {
 
   return (
     <Container
-      maxWidth="sm"
-      id="transactions-container-id"
       sx={{
         paddingTop: "100px",
+        paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
       }}
     >
       {isLoading ? (

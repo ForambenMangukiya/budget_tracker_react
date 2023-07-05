@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
 import { ThemeContext } from "../context/ThemeContext";
+import { DataContext } from "../context/DataContext";
 
 export default function Navbar() {
   const { token, logout } = useContext(AuthContext);
@@ -26,11 +27,15 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const location = useLocation();
+  const { setTranData, setBudgetData, setCategories } = useContext(DataContext);
 
   console.log("Current route:", location.pathname);
 
   const handleClick = () => {
     localStorage.removeItem("token");
+    setTranData([]);
+    setBudgetData([]);
+    setCategories([]);
     logout();
     navigate("/");
   };
@@ -133,7 +138,7 @@ export default function Navbar() {
         component="a"
         style={{ justifySelf: "center", width: "100%" }}
         sx={{
-          // ml: 12,
+          ml: 7,
           fontFamily: "Inter",
           fontWeight: 700,
           color: "#FFFF",
