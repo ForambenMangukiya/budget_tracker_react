@@ -16,7 +16,7 @@ import { InputLabel, TextField } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { styled } from '@mui/system';
+import { styled } from "@mui/system";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -73,9 +73,9 @@ export default function Signup() {
   };
 
   const CustomButton = styled(Button)({
-    '&:hover': {
-      backgroundColor: '#ffa726',
-      transform: 'scale(1.05)',
+    "&:hover": {
+      backgroundColor: "#ffa726",
+      transform: "scale(1.05)",
     },
   });
 
@@ -102,7 +102,7 @@ export default function Signup() {
             gap: "15px",
             minHeight: "100vh",
             padding: "10px",
-            paddingTop: "100px",
+            paddingTop: "40px",
           }}
         >
           <FormControl fullWidth className="signup-container">
@@ -144,31 +144,37 @@ export default function Signup() {
           <FormControl fullWidth>
             <InputLabel className="country">Country</InputLabel>
             <Select
-            id="countryselectinput"
-            value={country_code}
-            onChange={(e) => setCountry_code(e.target.value)}
-            sx={{
-              borderRadius: "31px",
-              "& fieldset": {
-                borderRadius: "30px",
-              },
-              fontSize: '16px',
-            }}
-          >
-            <MenuItem value="US"
-            sx={{ fontSize: '16px' }}>US</MenuItem>
-            <MenuItem value="DE"
-            sx={{ fontSize: '16px' }}>DE</MenuItem>
-            {countryList
-              .filter((countryCode) => countryCode !== "US" && countryCode !== "DE")
-              .map((countryCode) => (
-                <MenuItem key={countryCode} value={countryCode}
-                sx={{ fontSize: '16px' }}>
-                  {countryCode}
-                </MenuItem>
-              ))}
-          </Select>
-
+              id="countryselectinput"
+              value={country_code}
+              onChange={(e) => setCountry_code(e.target.value)}
+              sx={{
+                borderRadius: "31px",
+                "& fieldset": {
+                  borderRadius: "30px",
+                },
+                fontSize: "16px",
+              }}
+            >
+              <MenuItem value="US" sx={{ fontSize: "16px" }}>
+                US
+              </MenuItem>
+              <MenuItem value="DE" sx={{ fontSize: "16px" }}>
+                DE
+              </MenuItem>
+              {countryList
+                .filter(
+                  (countryCode) => countryCode !== "US" && countryCode !== "DE"
+                )
+                .map((countryCode) => (
+                  <MenuItem
+                    key={countryCode}
+                    value={countryCode}
+                    sx={{ fontSize: "16px" }}
+                  >
+                    {countryCode}
+                  </MenuItem>
+                ))}
+            </Select>
           </FormControl>
           <FormControl fullWidth>
             <TextField
@@ -206,9 +212,9 @@ export default function Signup() {
               }}
             />
             <Box
-            sx={{
-              padding: "30px",
-            }}
+              sx={{
+                padding: "30px",
+              }}
             >
               <CustomButton
                 sx={{
@@ -217,7 +223,7 @@ export default function Signup() {
                   background: "#c80048",
                   width: "150px",
                   height: "50px",
-                  margin: "20px",
+                  // margin: "20px",
                   color: "white",
                   fontSize: "16px",
                   padding: "5px 80px",

@@ -16,6 +16,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../context/AuthContext";
 import { DataContext } from "../context/DataContext";
+import { ThemeContext } from "../context/ThemeContext";
 import Button from "@mui/material/Button";
 import logo from "./images/piggylogo.gif";
 import Container from "@mui/material/Container";
@@ -23,6 +24,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { styled } from "@mui/system";
+import { useContext } from "react";
 
 export default function AddIncome() {
   const [category_name, setCatgeroy] = useState("");
@@ -35,6 +37,7 @@ export default function AddIncome() {
   const [user, setUser] = useState("");
   const { token } = React.useContext(AuthContext);
   const { refresh, setRefresh } = React.useContext(DataContext);
+  const { styling } = useContext(ThemeContext);
   const handleAddIncomesChange = async (e) => {
     e.preventDefault();
 
@@ -137,7 +140,11 @@ export default function AddIncome() {
               label="Category"
               value={category_name}
               onChange={handlecategoryChange}
-              sx={{ textAlign: "left", borderRadius: "31px", fontSize: "16px" }}
+              sx={{
+                textAlign: "left",
+                borderRadius: "31px",
+                fontSize: "16px",
+              }}
             >
               <MenuItem value="Salary" sx={{ fontSize: "16px" }}>
                 salary{" "}

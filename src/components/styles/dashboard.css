@@ -15,7 +15,7 @@
 }
 
 .dash-progress:hover{
-  transform: scale(1.05);
+  transform: scale(1.02);
   transition: all 0.3s 
 }
 
@@ -243,7 +243,9 @@ Swiper
   border-radius: 15px;
   padding: 1em;
 
+
 }
 .swiper-scrollbar {
   width: 50px;
+
 }

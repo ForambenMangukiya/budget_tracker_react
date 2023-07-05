@@ -117,8 +117,8 @@ export default function Navbar() {
         // height: "100%",
         padding: "20px",
         paddingTop: "30px",
-        display: "flex",
-        justifyContent: "space-between",
+        // display: "flex",
+        // justifyContent: "space-between",
         alignItems: "center",
         boxSizing: "border-box",
         position: "fixed",
@@ -150,7 +150,8 @@ export default function Navbar() {
 
       <Fragment>
         <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+          style={{ float: "right" }}
+          // sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
           <Tooltip title="Account settings">
             <IconButton
@@ -319,6 +320,7 @@ export default function Navbar() {
           </MenuItem>
         </Menu>
       </Fragment>
+      <Box style={{ width: "50px", justifySelf: "left" }}></Box>
 
       {/* <div className="title">
         <Link to="/">PiggyBank</Link>
