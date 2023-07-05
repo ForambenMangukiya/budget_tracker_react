@@ -61,11 +61,25 @@ export default function Charts() {
 
   if (categories.length < 1) {
     return (
-      <div className="dash-graph-empty">
+      <div
+        style={{
+          border: styling.borders,
+          backgroundColor: styling.backgroundBoard,
+        }}
+        className="dash-graph-empty"
+      >
         <p style={{ color: styling.txtColor }} className="empty-msg">
-          You don't have any Spendings yet
+          You don't have any spendings yet
         </p>
-        <Link to="/transactions" className="empty-btn">
+        <Link
+          style={{
+            color: styling.txtColor,
+            border: styling.borders,
+            backgroundColor: styling.backgroundBoard,
+          }}
+          to="/transactions"
+          className="empty-btn"
+        >
           Add now
         </Link>
       </div>

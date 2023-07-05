@@ -13,10 +13,14 @@ import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
 import { Container } from "@mui/system";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Menu() {
   const [value, setValue] = useState("home");
   const navigate = useNavigate();
+
+  const { styling } = useContext(ThemeContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

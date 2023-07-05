@@ -56,7 +56,7 @@ export default function Reports() {
       }}
       style={{
         background: styling.backgroundColor,
-        paddingBottom: styling.paddingBottom,
+        paddingBottom: "100px",
       }}
     >
       <div className="dash-topSpending">

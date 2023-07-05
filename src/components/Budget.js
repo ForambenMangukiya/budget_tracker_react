@@ -294,7 +294,7 @@ export default function Budget() {
                       style={
                         (categoriesObj[element.category_name]?.spent * 100) /
                           categoriesObj[element.category_name]?.limit >
-                        10
+                        90
                           ? { fontSize: "14px", color: "white" }
                           : { fontSize: "14px", color: "black" }
                       }
