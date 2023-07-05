@@ -17,14 +17,13 @@
   min-height: 100%; 
 } */
 
-
 .transaction-item {
   flex: 1;
   margin-right: 15px;
   padding: 6px 0px 6px 0px;
 }
 .transactions-container .tabs-div {
-  border: 1px solid var(--red);
+  border: 1px solid #453f78;
   border-radius: 31px;
   padding: 0rem;
   margin: 1.7rem 2rem 0rem 1.7rem;
@@ -35,13 +34,15 @@
   padding: 0rem 4rem 0rem 2rem;
   margin: 0.2rem;
   font-size: 0.8rem;
-  color: var(--red);
+  color: black;
   font-weight: 500;
+  text-decoration: none;
 }
 .transactions-container .active {
-  background-color: var(--red);
+  background-color: #453f78;
   border-radius: 31px;
   color: rgb(255, 255, 255);
+  text-decoration: none;
 }
 
 .transactions-container

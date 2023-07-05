@@ -235,7 +235,7 @@ export default function AddIncome() {
               sx={{ borderRadius: "31px", fontSize: "16px" }}
             ></OutlinedInput>
           </FormControl>
-          <CustomButton
+          {/* <CustomButton
             sx={{
               ":hover": { bgcolor: "#C42B0A" },
               borderRadius: "31px",
@@ -250,7 +250,23 @@ export default function AddIncome() {
             onClick={handleAddIncomesChange}
           >
             ADD
-          </CustomButton>
+          </CustomButton> */}
+          <Button
+            variant="outlined"
+            onClick={handleAddIncomesChange}
+            sx={{
+              ":hover": { bgcolor: "#453f78", color: "white" },
+              borderRadius: "31px",
+              width: "250px",
+              height: "50px",
+              margin: "10px",
+              fontSize: "16px",
+              padding: "5px 8px",
+              textDecoration: "none",
+            }}
+          >
+            ADD
+          </Button>
           <Box sx={{ mt: 1 }}>{alert}</Box>
         </Box>
       )}
