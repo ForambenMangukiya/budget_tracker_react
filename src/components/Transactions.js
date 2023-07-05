@@ -384,7 +384,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
-                    style={{ backgroundColor: "snow" }}
+                    style={{ backgroundColor: " var(--gray-0)" }}
                   >
                     <Typography
                       variant="p"
@@ -476,7 +476,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
-                    style={{ backgroundColor: "snow" }}
+                    style={{ backgroundColor: " var(--gray-0)" }}
                   >
                     <Typography
                       variant="p"

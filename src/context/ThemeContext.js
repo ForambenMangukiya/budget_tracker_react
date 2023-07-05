@@ -10,8 +10,7 @@ export default function ThemeContextProvider(props) {
   };
 
   const styling = {
-    backgroundColor:
-      theme === "dark" ? "var(--bg-main)" : "var(--bg-main-light)",
+    backgroundColor: theme === "dark" ? "var(--bg-main)" : "white",
     backgroundBoard: theme === "dark" ? "var(--bg-board)" : "snow",
     txtColor: theme === "dark" ? "white" : "black",
     borders: theme === "dark" ? "1px solid white" : "1px solid var(--gray-4)",

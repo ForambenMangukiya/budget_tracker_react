@@ -378,7 +378,7 @@ export default function Dashboard() {
           </h2>
 
           <p style={{ color: styling.txtColor }} className="dash-expected">
-            Expected savings: {savings} €
+            Expected savings: {savings.toFixed(2)} €
           </p>
           <p style={{ color: styling.txtColor }} className="spent-title">
             Spent
