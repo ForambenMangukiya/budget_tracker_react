@@ -23,7 +23,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "2px solid var(--red)",
   boxShadow: 24,
   p: 4,
 };
@@ -156,20 +156,21 @@ export default function Scan() {
               >
                 <Button
                   type="submit"
-                  variant="outlined"
+                  variant="contained"
                   sx={{
                     mt: 8,
                     transition: "all 0.3s ease",
-                    "&:hover": { transform: "scale(1.1)" },
-                    mt: 8,
-                    transition: "all 0.3s ease",
-                    ":hover": { bgcolor: "#c80048", color: "white" },
-                    borderRadius: "31px",
-                    background: "#white",
+                    ":hover": { backgroundColor: "var(--red)", color: "white" },
                     width: "150px",
                     height: "50px",
-                    color: "#c80048",
                     fontSize: "10px",
+                    textDecoration: "none",
+                    borderRadius: "31px",
+                    width: "150px",
+                    margin: "20px",
+                    backgroundColor: "var(--red)",
+                    color: "white",
+                    fontSize: "16px",
                     textDecoration: "none",
                     "&:hover": { transform: "scale(1.1)" },
                   }}
@@ -184,17 +185,22 @@ export default function Scan() {
                     mt: 8,
                     transition: "all 0.3s ease",
                     "&:hover": { transform: "scale(1.1)" },
-                    mt: 8,
-                    transition: "all 0.3s ease",
-                    ":hover": { bgcolor: "#c80048", color: "white" },
-                    borderRadius: "31px",
-                    background: "#white",
+                    ":hover": {
+                      background: "white",
+                      color: "var(--red)",
+                      border: "1px solid var(--red)",
+                    },
                     width: "150px",
-                    height: "50px",
-                    color: "#c80048",
                     fontSize: "10px",
                     textDecoration: "none",
-                    "&:hover": { transform: "scale(1.1)" },
+                    borderRadius: "31px",
+                    background: "white",
+                    width: "150px",
+                    margin: "20px",
+                    border: "1px solid var(--red)",
+                    color: "var(--red)",
+                    fontSize: "16px",
+                    textDecoration: "none",
                   }}
                 >
                   <Typography variant="h5"> CLOSE</Typography>

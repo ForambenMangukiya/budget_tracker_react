@@ -3,13 +3,14 @@ import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "../components/styles/Landingpage.css";
 import { Container, Typography } from "@mui/material";
-import logo from "../components/images/piggylogo.gif";
+
 import piggylogo from "../components/svgCategories/piggylogo.gif";
 import Box from "@mui/material/Box";
 import { ReactComponent as Cornerleft } from "./svgCategories/cornerleft.svg";
 import { ReactComponent as Cornerright } from "./svgCategories/cornerright.svg";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "./images/piggylogo.gif";
 import { useState } from "react";
 export default function Landingpage() {
   const Navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function Landingpage() {
               textAlign: "center",
             }}
           >
-            Piggy<span style={{ color: "#453f78" }}>Bank</span>
+            {/* Piggy<span style={{ color: "#453f78" }}>Bank</span> */}
           </Typography>
         </Box>
 

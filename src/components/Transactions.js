@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
-import Grid from "@mui/material/Grid";
+
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
 import { DataContext } from "../context/DataContext";
@@ -228,6 +228,7 @@ export default function Transactions() {
 
   return (
     <Container
+      maxWidth="sm"
       id="transactions-container-id"
       className="transactions-container"
       sx={{
@@ -247,6 +248,7 @@ export default function Transactions() {
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
+          textDecoration: "none",
         }}
       >
         <Tabs
