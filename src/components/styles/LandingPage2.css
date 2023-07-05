@@ -2,7 +2,7 @@
   /* background-image: url(../svgCategories/Background\ main.png);
   background-size: cover;
   background-repeat: no-repeat; */
-  background: var(--bg-main);
+  background: snow;
 }
 
 .cornerright {
@@ -24,7 +24,7 @@
 .logo-title{
   font-size: 35px;
   margin: 0;
-  color: white;
+  color: #453f78;
 }
 .logo-title span{
 color: var(--red);
