@@ -281,7 +281,23 @@ export default function AddExpense() {
               />
             </FormControl>
             {/* Submit Button */}
-            <CustomButton
+            <Button
+              variant="outlined"
+              onClick={handleSubmit}
+              sx={{
+                ":hover": { bgcolor: "#453f78", color: "white" },
+                borderRadius: "31px",
+                width: "250px",
+                height: "50px",
+                margin: "10px",
+                fontSize: "16px",
+                padding: "5px 8px",
+                textDecoration: "none",
+              }}
+            >
+              ADD
+            </Button>
+            {/* <CustomButton
               sx={{
                 ":hover": { bgcolor: "#C42B0A" },
                 borderRadius: "31px",
@@ -296,7 +312,7 @@ export default function AddExpense() {
               onClick={handleSubmit}
             >
               ADD
-            </CustomButton>
+            </CustomButton> */}
             {/* Alert Message */}
             <Box sx={{ mt: 1 }}>{alert}</Box>
           </form>

@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
+import DialogDeleteTransaction from "./DialogDeleteTransaction";
 
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
@@ -44,6 +45,8 @@ export default function Transactions() {
   const [endDate, setEndDate] = useState();
   const [open, setOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [tranDeleteName, setTranDeleteName] = useState("false");
+  const [tranDeleteId, setTranDeleteId] = useState(null);
   //navigate
   const navigate = useNavigate();
   //context
@@ -242,6 +245,15 @@ export default function Transactions() {
         paddingBottom: styling.paddingBottom,
       }}
     >
+      {dialogOpen ? (
+        <DialogDeleteTransaction
+          setDialogOpen={setDialogOpen}
+          tranDeleteName={tranDeleteName}
+          tranDeleteId={tranDeleteId}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
+      ) : null}
       <Box
         sx={{
           transform: "translateZ(0px)",
@@ -398,7 +410,12 @@ export default function Transactions() {
                     </Typography>
                     <Button
                       sx={{ p: 1 }}
-                      onClick={() => handleDeleteTransaction(element._id)}
+                      onClick={() => {
+                        setDialogOpen(true);
+                        setTranDeleteName(element.tran_description);
+                        setTranDeleteId(element._id);
+                      }}
+                      // handleDeleteTransaction(element._id)}
                     >
                       <Trash style={{ width: "20px", height: "20px" }} />
                     </Button>

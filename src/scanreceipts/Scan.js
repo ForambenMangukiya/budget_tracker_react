@@ -23,7 +23,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid var(--red)",
+  border: "2px solid #453f78",
   boxShadow: 24,
   p: 4,
 };
@@ -106,6 +106,7 @@ export default function Scan() {
                     variant="outlined"
                     sx={{
                       mt: 4,
+                      mb: 2,
                       transition: "all 0.3s ease",
                       "&:hover": { transform: "scale(1.1)" },
                     }}
@@ -151,10 +152,26 @@ export default function Scan() {
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
-                  paddingBottom: "20px",
+                  paddingBottom: "0px",
                 }}
               >
                 <Button
+                  type="submit"
+                  variant="outlined"
+                  sx={{
+                    ":hover": { bgcolor: "#453f78", color: "white" },
+                    borderRadius: "31px",
+                    width: "250px",
+                    height: "50px",
+                    margin: "10px",
+                    fontSize: "16px",
+                    padding: "5px 8px",
+                    textDecoration: "none",
+                  }}
+                >
+                  Submit
+                </Button>
+                {/* <Button
                   type="submit"
                   variant="contained"
                   sx={{
@@ -176,9 +193,32 @@ export default function Scan() {
                   }}
                 >
                   <Typography variant="h5"> Submit</Typography>
-                </Button>
+                </Button> */}
 
                 <Button
+                  onClick={handleClose}
+                  type="submit"
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid var(--red)",
+                    color: "var(--red)",
+                    borderRadius: "31px",
+                    width: "250px",
+                    height: "50px",
+                    margin: "10px",
+                    fontSize: "16px",
+                    padding: "5px 8px",
+                    textDecoration: "none",
+                    ":hover": {
+                      bgcolor: "var(--red)",
+                      color: "white",
+                      border: "1px solid var(--red)",
+                    },
+                  }}
+                >
+                  CLOSE
+                </Button>
+                {/* <Button
                   variant="outlined"
                   onClick={handleClose}
                   sx={{
@@ -204,7 +244,7 @@ export default function Scan() {
                   }}
                 >
                   <Typography variant="h5"> CLOSE</Typography>
-                </Button>
+                </Button> */}
               </Box>
 
               {error && (
