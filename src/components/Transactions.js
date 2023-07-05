@@ -415,7 +415,10 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}>
+              <Typography
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
+              >
                 {" "}
                 Earned{" "}
               </Typography>

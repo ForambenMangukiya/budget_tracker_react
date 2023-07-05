@@ -15,7 +15,7 @@ export default function ThemeContextProvider(props) {
     backgroundBoard: theme === "dark" ? "var(--bg-board)" : "snow",
     txtColor: theme === "dark" ? "white" : "black",
     borders: theme === "dark" ? "1px solid white" : "1px solid var(--gray-4)",
-    paddingBottom: "80px",
+    paddingBottom: "90px",
     tabsBorders: theme === "dark" ? "white 1px solid" : "var(--red) 1px solid",
     tabsColor: theme === "dark" ? "white" : "var(--red)",
     pagination: theme === "dark" ? "white" : "snow",
