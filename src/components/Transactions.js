@@ -10,17 +10,21 @@ import ManualEntry from "./svg/IconManuallyEnter";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import Tabs from "@mui/material/Tabs";
+import Button from "@mui/material/Button";
+
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import { ReactComponent as Trash } from "./svgCategories/trash-icon.svg";
+import DialogDeleteTransaction from "./DialogDeleteTransaction";
 
 import { useState, useEffect, useContext } from "react";
 import { MenuItem, InputLabel, Alert, OutlinedInput } from "@mui/material";
-
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 import "./styles/transactions.css";
-import AddIcon from '@mui/icons-material/Add';
-
+import AddIcon from "@mui/icons-material/Add";
+import { Padding } from "@mui/icons-material";
 
 const actions = [
   { icon: <LinkAccount />, name: "Link", route: "/link" },
@@ -37,14 +41,19 @@ export default function Transactions() {
   const [transaction, setTransaction] = useState("expenses");
   const [filter, setFilter] = useState("");
   const [category_name, setCategory] = useState("");
-  const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [tranDeleteName, setTranDeleteName] = useState("false");
+  const [tranDeleteId, setTranDeleteId] = useState(null);
   //navigate
   const navigate = useNavigate();
   //context
-  const { tranData, setTranData } = useContext(DataContext);
+  const { tranData, setTranData, refresh, setRefresh } =
+    useContext(DataContext);
   const { token } = useContext(AuthContext);
+  const { styling } = useContext(ThemeContext);
   console.log(tranData);
 
   //handlers
@@ -64,8 +73,42 @@ export default function Transactions() {
   const handleChange = (event, newValue) => {
     setTransaction(newValue);
   };
+
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
+  };
+
+  // delete transactions
+
+  const handleDeleteTransaction = async (id) => {
+    try {
+      console.log(id);
+      const response = await fetch(
+        `https://piggybank-api.onrender.com/transaction/${id}`,
+
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Transaction successfully deleted
+        const deletedTransaction = await response.json();
+        console.log(deletedTransaction);
+        // Perform any necessary actions after deletion
+      } else {
+        // Transaction not found or other error occurred
+        const errorData = await response.json();
+        console.error(errorData.error);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the transaction:", error);
+    }
+    setRefresh(!refresh);
   };
 
   const paperStyles = {
@@ -194,33 +237,60 @@ export default function Transactions() {
       sx={{
         paddingTop: "100px",
         paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
       }}
     >
-      <Box sx={{ height: 900, transform: "translateZ(0px)", flexGrow: 1 }}>
+      {dialogOpen ? (
+        <DialogDeleteTransaction
+          setDialogOpen={setDialogOpen}
+          tranDeleteName={tranDeleteName}
+          tranDeleteId={tranDeleteId}
+          refresh={refresh}
+          setRefresh={setRefresh}
+        />
+      ) : null}
+      <Box
+        sx={{
+          transform: "translateZ(0px)",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          textDecoration: "none",
+        }}
+      >
         <Tabs
           value={transaction}
           onChange={handleChange}
           centered
           className="tabs-div"
           sx={{ "& .MuiTabs-indicator": { display: "none" } }}
+          style={{ background: "snow" }}
         >
           <Tab
             label="expenses"
             value="expenses"
-            style={{fontSize: '18px'}}
+            style={{ fontSize: "16px" }}
             className={transaction === "expenses" ? "active tab" : "tab"}
           />
           <Tab
             label="income"
             value="income"
-            style={{fontSize: '18px'}}
+            style={{ fontSize: "16px" }}
             className={transaction === "income" ? "active tab" : "tab"}
           />
         </Tabs>
+
         {/* Filtering by Date */}
         <Box component="div" className="transaction-filter" sx={{ m: 2 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label" sx={{ fontSize: '12px' }}>Filter</InputLabel>
+            <InputLabel id="demo-simple-select-label" sx={{ fontSize: "12px" }}>
+              Filter
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -232,15 +302,31 @@ export default function Transactions() {
                 "& fieldset": {
                   borderRadius: "31px",
                 },
-                fontSize: '14px',
+                fontSize: "14px",
+              }}
+              style={{
+                backgroundColor: styling.backgroundBoard,
+                borderRadius: "31px",
               }}
             >
-              <MenuItem value={"all"} sx={{ fontSize: '14px' }}>All</MenuItem>
-              <MenuItem value={"week"} sx={{ fontSize: '14px' }}>Last Week</MenuItem>
-              <MenuItem value={"month"} sx={{ fontSize: '14px' }}>Last Month</MenuItem>
-              <MenuItem value={"3months"} sx={{ fontSize: '14px' }}>Last 3 Months</MenuItem>
-              <MenuItem value={"6months"} sx={{ fontSize: '14px' }}>Last 6 Months</MenuItem>
-              <MenuItem value={"year"} sx={{ fontSize: '14px' }}>Last Year</MenuItem>
+              <MenuItem value={"all"} sx={{ fontSize: "14px" }}>
+                All
+              </MenuItem>
+              <MenuItem value={"week"} sx={{ fontSize: "14px" }}>
+                Last Week
+              </MenuItem>
+              <MenuItem value={"month"} sx={{ fontSize: "14px" }}>
+                Last Month
+              </MenuItem>
+              <MenuItem value={"3months"} sx={{ fontSize: "14px" }}>
+                Last 3 Months
+              </MenuItem>
+              <MenuItem value={"6months"} sx={{ fontSize: "14px" }}>
+                Last 6 Months
+              </MenuItem>
+              <MenuItem value={"year"} sx={{ fontSize: "14px" }}>
+                Last Year
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -255,7 +341,12 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>Spent</Typography>
+              <Typography
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
+              >
+                Spent
+              </Typography>
             </Box>
 
             {tranData
@@ -276,11 +367,13 @@ export default function Transactions() {
                 const newLocalDate = newDate
                   .toLocaleDateString("en-GB") //ADD different Country code here to format it
                   .replace(/[/]/g, ".");
+                let capitalizedDesc = "Others";
+                if (element.tran_description) {
+                  capitalizedDesc = element.tran_description.replace(/./, (c) =>
+                    c.toUpperCase()
+                  );
+                }
 
-                const capitalizedDesc = element.tran_description.replace(
-                  /./,
-                  (c) => c.toUpperCase()
-                );
                 return (
                   <Box
                     component="div"
@@ -291,6 +384,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
+                    style={{ backgroundColor: " var(--gray-0)" }}
                   >
                     <Typography
                       variant="p"
@@ -298,7 +392,7 @@ export default function Transactions() {
                       className="transaction-item"
                       sx={{ fontWeight: "bold" }}
                     >
-                      {USDollar.format(element.tran_amount)}
+                      {euro.format(element.tran_amount)}
                     </Typography>
                     <Typography
                       variant="p"
@@ -314,6 +408,17 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    <Button
+                      sx={{ p: 1 }}
+                      onClick={() => {
+                        setDialogOpen(true);
+                        setTranDeleteName(element.tran_description);
+                        setTranDeleteId(element._id);
+                      }}
+                      // handleDeleteTransaction(element._id)}
+                    >
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}
@@ -329,7 +434,10 @@ export default function Transactions() {
                 ml: 0.5,
               }}
             >
-              <Typography sx={{ fontSize: '16px', fontWeight: "bold", mb: 1 }}>
+              <Typography
+                style={{ color: styling.txtColor }}
+                sx={{ fontSize: "16px", fontWeight: "bold", mb: 1 }}
+              >
                 {" "}
                 Earned{" "}
               </Typography>
@@ -368,6 +476,7 @@ export default function Transactions() {
                       justifyContent: "space-around",
                       alignItems: "center",
                     }}
+                    style={{ backgroundColor: " var(--gray-0)" }}
                   >
                     <Typography
                       variant="p"
@@ -375,7 +484,7 @@ export default function Transactions() {
                       className="transaction-item"
                       sx={{ fontWeight: "bold" }}
                     >
-                      {USDollar.format(element.tran_amount)}
+                      {euro.format(element.tran_amount)}
                     </Typography>
                     <Typography
                       variant="p"
@@ -391,44 +500,52 @@ export default function Transactions() {
                     >
                       {newLocalDate}
                     </Typography>
+                    <Button
+                      sx={{ p: 1 }}
+                      onClick={() => handleDeleteTransaction(element._id)}
+                    >
+                      <Trash style={{ width: "20px", height: "20px" }} />
+                    </Button>
                   </Box>
                 );
               })}
           </Box>
         )}
-        </Box>
+      </Box>
 
-        <Backdrop open={open} />
-        <SpeedDial
-          ariaLabel="SpeedDial tooltip example"
-          style={{
-            zIndex: 5,
-            transform: 'translateX(+40%)',
-          }}
-          sx={{ position: "sticky", bottom: 70,
-          '& .MuiFab-root': {
-            width: '64px', // Increase the width
-            height: '64px', // Increase the height
+      <Backdrop open={open} />
+      <SpeedDial
+        ariaLabel="SpeedDial tooltip example"
+        style={{
+          zIndex: 5,
+          transform: "translateX(+40%)",
+        }}
+        sx={{
+          position: "sticky",
+          bottom: 70,
+          "& .MuiFab-root": {
+            width: "64px", // Increase the width
+            height: "64px", // Increase the height
           },
         }}
-          icon={<AddIcon sx={{ color: "#FFFF", fontSize: '30px'  }} />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-          FabProps={{ 
-            style: paperStyles,
-          }}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              tooltipOpen
-              onClick={() => handleActionClick(action.route)}
-            />
-          ))}
-        </SpeedDial>
+        icon={<AddIcon sx={{ color: "#FFFF", fontSize: "30px" }} />}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        open={open}
+        FabProps={{
+          style: paperStyles,
+        }}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            tooltipOpen
+            onClick={() => handleActionClick(action.route)}
+          />
+        ))}
+      </SpeedDial>
     </Container>
   );
 }

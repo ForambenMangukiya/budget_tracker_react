@@ -18,7 +18,7 @@ export default function DataContextProvider(props) {
   console.log("token", token);
   console.log("decodedToken:", decodedToken);
   console.log("_id:", decodedToken?._id);
-  console.log("refresh data?", refresh)
+  console.log("refresh data?", refresh);
 
   // =============================
   // Fetching Data
@@ -30,7 +30,6 @@ export default function DataContextProvider(props) {
       try {
         const res = await fetch(
           `https://piggybank-api.onrender.com/transaction?timeperiod=all`,
-          // `${process.env.REACT_APP_BACKEND_URL}/transaction?timeperiod=all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -59,13 +58,12 @@ export default function DataContextProvider(props) {
         const res = await fetch(
           // `http://localhost:8080/users/${decodedToken._id}`
           `https://piggybank-api.onrender.com/users/${decodedToken._id}`
-          // `${process.env.REACT_APP_BACKEND_URL}/users/${decodedToken._id}`
         );
         const data = await res.json();
         console.log("###budget data", data);
 
         Array.isArray(data) ? setBudgetData(data) : console.log(data);
-        console.log("budget function is working");
+        // setBudgetData(data);
         // setLoading(false)
       } catch (error) {
         console.log(error);
@@ -73,7 +71,7 @@ export default function DataContextProvider(props) {
       }
     };
     if (decodedToken) getBudget();
-  }, [decodedToken]);
+  }, [decodedToken, refresh]);
 
   // console.log("transaction data in data Context :", tranData);
 
@@ -88,9 +86,15 @@ export default function DataContextProvider(props) {
         const groupedObjects = debitTrans.reduce((result, obj) => {
           const { category_name, tran_amount } = obj;
           if (!result[category_name]) {
-            result[category_name] = { name: category_name, spent: 0, limit: 0 };
+            result[category_name] = {
+              name: category_name,
+              spent: 0,
+              limit: 0,
+              transactions: 0,
+            };
           }
           result[category_name].spent += Number(tran_amount);
+          result[category_name].transactions += 1;
           return result;
         }, {});
 

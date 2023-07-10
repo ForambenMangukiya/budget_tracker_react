@@ -9,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 // import Login from "@mui/icons-material/Login";
 // import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
@@ -16,18 +17,25 @@ import Logout from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import { Typography } from "@mui/material";
+import { ThemeContext } from "../context/ThemeContext";
+import { DataContext } from "../context/DataContext";
 
 export default function Navbar() {
   const { token, logout } = useContext(AuthContext);
+  const { toggleTheme, theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const location = useLocation();
+  const { setTranData, setBudgetData, setCategories } = useContext(DataContext);
 
   console.log("Current route:", location.pathname);
 
   const handleClick = () => {
     localStorage.removeItem("token");
+    setTranData([]);
+    setBudgetData([]);
+    setCategories([]);
     logout();
     navigate("/");
   };
@@ -88,7 +96,15 @@ export default function Navbar() {
       return "Add Budget";
     }
 
+    if (token && location.pathname == "/scan") {
+      return "Scan Receipt";
+    }
+
     return "";
+  };
+
+  const handleClick2 = () => {
+    navigate("/scan");
   };
   const currentPage = page();
   console.log("Current page:", currentPage);
@@ -102,38 +118,45 @@ export default function Navbar() {
     <Container
       style={{ maxWidth: "600px" }}
       sx={{
-        maxWidth: "600px",
         background: "linear-gradient(#c80048, #961c48)",
         // height: "100%",
         padding: "20px",
         paddingTop: "30px",
-        display: "flex",
-        justifyContent: "space-evenly",
+        // display: "flex",
+        // justifyContent: "space-between",
+        alignItems: "center",
         boxSizing: "border-box",
         position: "fixed",
         zIndex: 5,
+        borderRadius: "0 0 1.5em 1.5em",
+        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25);",
       }}
     >
-      <Box>
-        <Typography
-          variant="h5"
-          gutterBottom
-          component="a"
-          sx={{
-            ml: 8,
-            fontFamily: "Inter",
-            fontWeight: 500,
-            color: "#FFFF",
-            textDecoration: "none",
-          }}
-        >
-          {currentPage}
-        </Typography>
-      </Box>
+      <Typography
+        variant="h5"
+        gutterBottom
+        component="a"
+        style={{ justifySelf: "center", width: "100%" }}
+        sx={{
+          ml: 7,
+          fontFamily: "Inter",
+          fontWeight: 700,
+          color: "#FFFF",
+          fontSize: "20px",
+
+          // textDecoration: "none",
+          // justifySelf: "center",
+          // flex: "2",
+          // margin: "auto 0",
+        }}
+      >
+        {currentPage}
+      </Typography>
 
       <Fragment>
         <Box
-          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
+          style={{ float: "right" }}
+          // sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
           <Tooltip title="Account settings">
             <IconButton
@@ -229,6 +252,7 @@ export default function Navbar() {
               <ListItemIcon sx={{ color: "#FFFF" }}>
                 <Logout sx={{ fontSize: "25px" }} />
               </ListItemIcon>
+
               <Typography
                 sx={{
                   fontFamily: "Inter",
@@ -248,7 +272,7 @@ export default function Navbar() {
           {token !== null && (
             <MenuItem onClick={handleClose}>
               <Box
-                onClick={handleClose}
+                onClick={handleClick2}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -268,13 +292,40 @@ export default function Navbar() {
                     fontSize: "16px",
                   }}
                 >
-                  Settings
+                  Scan Receipt
                 </Typography>
               </Box>
             </MenuItem>
           )}
+          <Divider />
+          <MenuItem>
+            <Box
+              onClick={toggleTheme}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <ListItemIcon sx={{ color: "#FFFF" }}>
+                <DarkModeIcon sx={{ fontSize: "25px" }} />
+              </ListItemIcon>
+              <Typography
+                sx={{
+                  fontFamily: "Inter",
+                  fontWeight: 700,
+                  color: "#FFFF",
+                  textDecoration: "none",
+                  fontSize: "16px",
+                }}
+              >
+                {theme === "dark" ? "Light mode" : "Dark Mode"}
+              </Typography>
+            </Box>
+          </MenuItem>
         </Menu>
       </Fragment>
+      <Box style={{ width: "50px", justifySelf: "left" }}></Box>
 
       {/* <div className="title">
         <Link to="/">PiggyBank</Link>

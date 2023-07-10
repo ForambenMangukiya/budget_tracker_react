@@ -22,12 +22,15 @@ import "./styles/addbudget.css";
 import axios from "axios"; //last
 import { DataContext } from "../context/DataContext";
 import { AuthContext } from "../context/AuthContext";
+import { border } from "@mui/system";
+import { ThemeContext } from "../context/ThemeContext";
 // import { useJwt } from "react-jwt";
 
 export default function Addbudget() {
   const { budgetData, setBudgetData, refresh, setRefresh } =
     useContext(DataContext);
   const { token } = useContext(AuthContext);
+  const { styling } = useContext(ThemeContext);
   const [alert, setAlert] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(null);
   // console.log("user_id:", decodedToken._id);
@@ -35,7 +38,7 @@ export default function Addbudget() {
 
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(null);
-  const [currency, setCurrency] = useState("$");
+  const [currency, setCurrency] = useState("€");
   const [amount, setAmount] = useState(""); //last
   const [category, setCategory] = useState("");
 
@@ -50,29 +53,29 @@ export default function Addbudget() {
     } else {
       setIsLoading(true);
       try {
-        // //Get existing budgets
-        // const res = await fetch(
-        //   `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
-        //   {
-        //     method: "GET", // Fetch the current data first
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //       "Content-Type": "application/json",
-        //     },
-        //   }
-        // );
-        // const data = await res.json();
-        // const currentBudgets = data || []; // Get the current budgets array
+        //Get existing budgets
+        const res = await fetch(
+          `https://piggybank-api.onrender.com/users/${decodedToken._id}`,
+          {
+            method: "GET", // Fetch the current data first
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+        const currentBudgets = data || []; // Get the current budgets array
 
-        // const updatedBudgets = [
-        //   ...currentBudgets,
-        //   {
-        //     category_name: category,
-        //     budget_description: description,
-        //     budget_date: date,
-        //     limit_amount: amount,
-        //   },
-        // ];
+        const budgets = [
+          ...currentBudgets,
+          {
+            category_name: category,
+            budget_description: description,
+            budget_date: date,
+            limit_amount: amount,
+          },
+        ];
         // Append the new object to the existing array
 
         const resPut = await fetch(
@@ -84,12 +87,13 @@ export default function Addbudget() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              budgets: {
-                category_name: category,
-                budget_description: description,
-                budget_date: date,
-                limit_amount: amount,
-              },
+              budgets,
+              // budgets: {
+              //   category_name: category,
+              //   budget_description: description,
+              //   budget_date: date,
+              //   limit_amount: amount,
+              // },
             }),
           }
         );
@@ -118,8 +122,14 @@ export default function Addbudget() {
   return (
     <Container
       sx={{
-        maxWidth: "sm",
         paddingTop: "100px",
+        paddingBottom: "100px",
+        maxWidth: "sm",
+        minHeight: "100vh",
+      }}
+      style={{
+        background: styling.backgroundColor,
+        paddingBottom: styling.paddingBottom,
       }}
     >
       {isLoading ? (
@@ -136,7 +146,8 @@ export default function Addbudget() {
         <Box sx={{ minWidth: 120, p: 2 }} className="addexp_box">
           <form>
             {/*Category */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <InputLabel id="category-label">Category</InputLabel>
               <Select
                 required
@@ -146,7 +157,11 @@ export default function Addbudget() {
                 label="Category"
                 className="background_grey"
                 onChange={(e) => setCategory(e.target.value)}
-                sx={{ textAlign: "left", borderRadius: "31px" }}
+                sx={{
+                  textAlign: "left",
+                  borderRadius: "31px",
+                  fontSize: "16px",
+                }}
               >
                 <MenuItem value={"education"}>Education</MenuItem>
                 <MenuItem value={"communication"}>Communication</MenuItem>
@@ -165,9 +180,11 @@ export default function Addbudget() {
             </FormControl>
 
             {/*Date*/}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                  disableFuture
                   label="Date"
                   className="background_grey"
                   // inputFormat="DD/MM/YYYY"
@@ -178,13 +195,17 @@ export default function Addbudget() {
                     "& fieldset": {
                       borderRadius: "30px",
                     },
+                    "& .MuiInputBase-input": {
+                      fontSize: "16px", // Set the desired font size
+                    },
                   }}
                 />
               </LocalizationProvider>
             </FormControl>
 
             {/*Amount */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ marginBottom: "1.5em" }}>
               <InputLabel htmlFor="outlined-adornment-amount">
                 Amount
               </InputLabel>
@@ -192,17 +213,21 @@ export default function Addbudget() {
                 id="outlined-adornment-amount"
                 type="number"
                 startAdornment={
-                  <InputAdornment position="start">$</InputAdornment>
+                  <InputAdornment position="start">€</InputAdornment>
                 }
                 label="Amount"
                 className="background_grey"
                 onChange={(e) => setAmount(e.target.value)}
                 value={amount}
-                sx={{ borderRadius: "31px" }}
+                sx={{
+                  borderRadius: "31px",
+                  fontSize: "16px",
+                }}
               />
             </FormControl>
             {/*Description */}
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
+            <FormControl fullWidth sx={{ mb: 4 }}>
               <TextField
                 id="outlined-basic"
                 label="Description"
@@ -215,17 +240,40 @@ export default function Addbudget() {
                   "& fieldset": {
                     borderRadius: "30px",
                   },
+                  "& .MuiInputBase-input": {
+                    fontSize: "16px", // Set the desired font size
+                  },
                 }}
               />
             </FormControl>
             {/* Submit Button */}
             <Button
+              variant="outlined"
+              onClick={handleSubmit}
               sx={{
-                ":hover": { bgcolor: "grey" },
+                ":hover": { bgcolor: "#453f78", color: "white" },
+                borderRadius: "31px",
+                width: "250px",
+                height: "50px",
+                margin: "10px",
+                fontSize: "16px",
+                padding: "5px 8px",
+                textDecoration: "none",
+              }}
+            >
+              ADD
+            </Button>
+            {/* <Button
+              sx={{
+                ":hover": {
+                  bgcolor: "white",
+                  color: "var(--red)",
+                  border: "1px solid var(--red) ",
+                },
                 borderRadius: "31px",
                 background: "#c80048",
-                width: "150px",
-                height: "50px",
+                width: "100px",
+                height: "35px",
                 margin: "20px",
                 color: "white",
               }}
@@ -233,9 +281,23 @@ export default function Addbudget() {
               className="btn_add"
             >
               Add
-            </Button>
+            </Button> */}
             {/* Alert Message */}
-            <Box sx={{ mt: 1 }}>{alert}</Box>
+            <Box sx={{ mt: 1 }}>
+              {/* {alert}  */}
+              {alert && (
+                <Alert
+                  severity="success"
+                  sx={{
+                    "& .MuiAlert-message": {
+                      fontSize: "14px", // Set the desired font size
+                    },
+                  }}
+                >
+                  {alert}
+                </Alert>
+              )}
+            </Box>
           </form>
         </Box>
       )}
